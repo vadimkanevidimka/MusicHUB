@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:Models="clr-namespace:MusicHUB.Models" 
+             xmlns:ViewModels="clr-namespace:MusicHUB.ViewModels" 
+             xmlns:Models1="clr-namespace:IF.Lastfm.Core.Objects;assembly=IF.Lastfm.Core"
+             x:Class="MusicHUB.Pages.Player">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="buttonStyle" TargetType="ImageButton">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
+                <Setter Property="WidthRequest" Value="40"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+            </Style>
+            <Style x:Key="MainButtonStyle" TargetType="ImageButton">
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
+                <Setter Property="WidthRequest" Value="70"/>
+                <Setter Property="HeightRequest" Value="70"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView HeightRequest="1200" VerticalOptions="Start" BackgroundColor="White">
+            <StackLayout Padding="0,10">
+                <StackLayout>
+                    <ImageButton Source="arrowdown.png" WidthRequest="50" HeightRequest="20" Aspect="Fill" VerticalOptions="Center" BackgroundColor="Transparent" Clicked="Close_Clicked" HorizontalOptions="Center"/>
+                    <CarouselView ItemsSource="{Binding Tracks}" CurrentItemChangedCommand ="{Binding TrackChange}" CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=CurrentItem}" HeightRequest="300" ItemsUpdatingScrollMode="KeepItemsInView" Loop="False" CurrentItem="{Binding CurrentTrack}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" FlowDirection="MatchParent" IsBounceEnabled="True" PeekAreaInsets="40,0" TranslationX="0" HorizontalScrollBarVisibility="Always" Margin="0,20,0,0">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="Models:Track">
+                                <Image Source="{Binding ImageSource}" Aspect="AspectFit"/>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <ContentView>
+                        <StackLayout Padding="20,20">
+                            <FlexLayout AlignContent="SpaceAround" JustifyContent="SpaceBetween">
+                                <StackLayout WidthRequest="300">
+                                    <Label BindingContext="{Binding CurrentTrack}" FontSize="Large" Padding="10,0" Text="{Binding Title}" LineBreakMode="TailTruncation"/>
+                                    <Label  BindingContext="{Binding CurrentTrack}" Text="{Binding Artist}" Padding="10,0" LineBreakMode="TailTruncation"/>
+                                </StackLayout>
+                                <ImageButton Style="{StaticResource buttonStyle}" Source="options.png" Command="{Binding TrackOptions}" CornerRadius="30"/>
+                            </FlexLayout>
+                            <Slider Minimum="0" Maximum="{Binding CurrentTrack.Duration}" Value="{Binding PlayedTime}" DragCompleted="Slider_DragCompleted" ThumbColor="Wheat" MaximumTrackColor="Wheat" MinimumTrackColor="Wheat" WidthRequest="-1" HeightRequest="35"/>
+                            <FlexLayout JustifyContent="SpaceBetween" Padding="10,0">
+                                <Label Text="{Binding PlayedTimeString}"/>
+                                <Label  BindingContext="{Binding CurrentTrack}" Text="{Binding DurationString}"/>
+                            </FlexLayout>
+                            <StackLayout Orientation="Vertical">
+                                <FlexLayout JustifyContent="SpaceAround" Margin="0,50">
+                                    <ImageButton Source="Previouse.png" Aspect="AspectFill" Command="{Binding PrevTrack}" Style="{StaticResource MainButtonStyle}" CornerRadius="50"></ImageButton>
+                                    <ImageButton Source="{Binding ResourceClass.PlayPause}" Command="{Binding PlayPause}" Style="{StaticResource MainButtonStyle}" CornerRadius="50"></ImageButton>
+                                    <ImageButton Source="Next.png" Command="{Binding NextTrack}" Style="{StaticResource MainButtonStyle}" CornerRadius="50"></ImageButton>
+                                </FlexLayout>
+                                <FlexLayout JustifyContent="SpaceBetween">
+                                    <ImageButton Source="{Binding ResourceClass.Repeat}" Command="{Binding RepeatCommand}" Style="{StaticResource buttonStyle}" CornerRadius="30"></ImageButton>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="volumeDOWN.png" WidthRequest="20"/>
+                                        <Slider Minimum="0" ThumbColor="Wheat" DragCompletedCommand="{Binding SetVolumeCommand}" Value="{Binding VolumeLevel}" Maximum="{Binding MaxVolumeLevel}" MaximumTrackColor="Wheat" MinimumTrackColor="Wheat" WidthRequest="150" HeightRequest="35"/>
+                                        <Image Source="volumeUP.png" WidthRequest="20"/>
+                                    </StackLayout>
+                                    <ImageButton Source="{Binding ResourceClass.Shufle}" Command="{Binding ShuffleCommand}" Style="{StaticResource buttonStyle}" CornerRadius="30"></ImageButton>
+                                </FlexLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </ContentView>
+                    <CarouselView ItemsSource="{Binding Artists}" HeightRequest="150" ItemsUpdatingScrollMode="KeepItemsInView" Loop="False" WidthRequest="350" VerticalOptions="Center" HorizontalOptions="Fill" FlowDirection="MatchParent" IsBounceEnabled="True" PeekAreaInsets="10,0,10,0">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="Models:Artist">
+                                <Frame CornerRadius="20" BackgroundColor="Wheat" HasShadow="True" WidthRequest="100" HeightRequest="150">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer></TapGestureRecognizer>
+                                    </Frame.GestureRecognizers>
+                                    <StackLayout>
+                                        <Label Text="{Binding Name}"/>
+                                        <ScrollView>
+                                            <Label Text="{Binding Bio.Content}"/>
+                                        </ScrollView>
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

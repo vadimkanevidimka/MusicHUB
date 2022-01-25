@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31229.75
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicHUB.Android", "MusicHUB.Android\MusicHUB.Android.csproj", "{17E2E82D-64C2-44E3-AC46-021C0555C0D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicHUB", "MusicHUB\MusicHUB.csproj", "{26CED181-90CC-4C78-BE5A-CA7D6E44A6E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0A52A90B-E1F3-4B92-BF77-A1D7698B4D3B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17E2E82D-64C2-44E3-AC46-021C0555C0D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E2E82D-64C2-44E3-AC46-021C0555C0D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E2E82D-64C2-44E3-AC46-021C0555C0D5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{17E2E82D-64C2-44E3-AC46-021C0555C0D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E2E82D-64C2-44E3-AC46-021C0555C0D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E2E82D-64C2-44E3-AC46-021C0555C0D5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{26CED181-90CC-4C78-BE5A-CA7D6E44A6E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26CED181-90CC-4C78-BE5A-CA7D6E44A6E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26CED181-90CC-4C78-BE5A-CA7D6E44A6E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26CED181-90CC-4C78-BE5A-CA7D6E44A6E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7F4CB5F-55B5-443D-BBA9-918CF99F1B22}
+	EndGlobalSection
+EndGlobal

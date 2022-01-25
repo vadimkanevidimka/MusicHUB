@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS0006: Не удалось найти файл метаданных "D:\Projects\Mus\MusicHUB\MusicHUB\bin\Debug\netstandard2.0\ref\MusicHUB.dll".
+dotnet_diagnostic.CS0006.severity = silent

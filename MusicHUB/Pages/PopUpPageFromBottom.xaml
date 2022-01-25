@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:Models="clr-namespace:MusicHUB.Models"
+    x:Class="MusicHUB.PopUpPageFromBottom">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Bottom"
+            PositionOut="Bottom"
+            DurationIn="200"
+            DurationOut="100"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    
+    <!--You can use any elements here which are extended from Xamarin.Forms.View-->
+    <StackLayout 
+        VerticalOptions="EndAndExpand" 
+        HorizontalOptions="FillAndExpand">
+        <Frame CornerRadius="20"  HorizontalOptions="FillAndExpand" HeightRequest="300" >
+            <StackLayout>
+                <FlexLayout HeightRequest="70" JustifyContent="SpaceAround">
+                    <Image x:Name="AudioImg" Aspect="AspectFit" HeightRequest="60"></Image>
+                    <StackLayout>
+                        <Label x:Name="Title" Text="{Binding Title}"/>
+                        <Label x:Name="Artist" Text="{Binding Artist}"/>
+                    </StackLayout>
+                </FlexLayout>
+                <ListView>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ImageCell />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </Frame>
+
+    </StackLayout>
+</pages:PopupPage>
