@@ -1,4 +1,5 @@
-﻿using MusicHUB.Models;
+﻿using Android.Content;
+using MusicHUB.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +10,7 @@ namespace MusicHUB
     public interface IAudio
     {
         int Time { get; }
+        Context GetContext { get; }
         bool IsExists { get; }
         bool IsLooping { get; }
         bool IsPlaying { get; }

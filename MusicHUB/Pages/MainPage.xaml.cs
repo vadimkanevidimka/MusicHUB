@@ -8,20 +8,22 @@ using Xamarin.Forms;
 using Rg.Plugins.Popup.Extensions;
 using System.Collections.ObjectModel;
 using MusicHUB.Interfaces;
+using MusicHUB.DependencyInjection;
 
 namespace MusicHUB.Pages
 {
     public partial class MainPage : ContentPage
     {
         private IAudio Audio = DependencyService.Get<IAudio>();
-        private IDataBaseService dataBaseService;
+        private Connections Connections { get; set; }
+        private Genius.GeniusClient GeniusClient { get; set; }
         public ObservableCollection<Track> Tracks { get => Audio.Tracks; }
 
-        public MainPage(IDataBaseService dataBaseService)
+        public MainPage(Connections connections)
         {
             InitializeComponent();
             BindingContext = this;
-            this.dataBaseService = dataBaseService;
+            this.Connections = connections;
         }
 
         protected override void OnAppearing()
@@ -38,15 +40,6 @@ namespace MusicHUB.Pages
 
         }//Обновление плейлиста
 
-        public async Task<PermissionStatus> CheckAndRequestPermissionAsync<T>(T permission) where T : Permissions.BasePermission
-        {
-            var status = await permission.CheckStatusAsync();
-            if (status != PermissionStatus.Granted)
-            {
-                status = await permission.RequestAsync();
-            }
-            return (PermissionStatus)status;
-        }
 
         private void filesList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
@@ -72,7 +65,7 @@ namespace MusicHUB.Pages
 
         private void AudioImgBottom_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new Player(), true);
+            Navigation.PushModalAsync(new Player(Connections), true);
         }
 
         private void PlayAllBtn_Clicked(object sender, EventArgs e)

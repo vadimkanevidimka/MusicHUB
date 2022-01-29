@@ -21,3 +21,9 @@ D:\Projects\Mus\MusicHUB\MusicHUB\bin\Debug\netstandard2.0\ref\MusicHUB.dll
 D:\Projects\Mus\MusicHUB\MusicHUB\bin\Debug\netstandard2.0\MusicHUB.pdb
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.0\XamlC.stamp
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.0\Pages\PlayListsPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\bin\Debug\netstandard2.0\Mono.Android.dll
+D:\Projects\Mus\MusicHUB\MusicHUB\bin\Debug\netstandard2.0\Xamarin.Google.Android.Material.dll
+D:\Projects\Mus\MusicHUB\MusicHUB\bin\Debug\netstandard2.0\Mono.Android.pdb
+D:\Projects\Mus\MusicHUB\MusicHUB\bin\Debug\netstandard2.0\Mono.Android.xml
+D:\Projects\Mus\MusicHUB\MusicHUB\bin\Debug\netstandard2.0\Xamarin.Google.Android.Material.pdb
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.0\MusicHUB.csproj.CopyComplete

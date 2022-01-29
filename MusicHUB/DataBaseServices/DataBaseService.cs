@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MusicHUB.DataBaseServices
 {
-    class DataBaseService : BaseDataBaseService
+    public class DataBaseService : BaseDataBaseService
     {
         public DataBaseService(SQLiteAsyncConnection database) 
             : base(database)

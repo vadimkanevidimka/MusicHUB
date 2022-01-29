@@ -1,19 +1,19 @@
-﻿using MusicHUB.DataBaseServices;
-using MusicHUB.Interfaces;
+﻿using MusicHUB.DependencyInjection;
 using MusicHUB.Pages;
-using SQLite;
 using Xamarin.Forms;
 
 namespace MusicHUB
 {
     public partial class App : Application
     {
-        public App(SQLiteAsyncConnection Database)
+        public App(Connections connections)
         {
             Device.SetFlags(new string[] { "AppTheme_Experimental" });
             InitializeComponent();
-            MainPage = new MainTabbedPage(new DataBaseService(Database));
+            MainPage = new MainTabbedPage(connections);
         }
+
+        public Connections Connections { get; set; }
 
         protected override void OnStart()
         {

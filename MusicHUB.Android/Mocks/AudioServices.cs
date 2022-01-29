@@ -33,6 +33,7 @@ namespace SimpleAudioForms.Droid
 
         public bool IsLooping => player.Looping;
 
+        public Context GetContext => Android.App.Application.Context;
 
         public AudioService()
         {

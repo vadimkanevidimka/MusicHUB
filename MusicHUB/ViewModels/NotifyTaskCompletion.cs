@@ -42,7 +42,7 @@ public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
         {
             propertyChanged(this,
               new PropertyChangedEventArgs("IsSuccessfullyCompleted"));
-            propertyChanged(this, new PropertyChangedEventArgs("Result"));
+            propertyChanged(this, new PropertyChangedEventArgs(nameof(Result)));
         }
     }
     public Task<TResult> Task { get; private set; }

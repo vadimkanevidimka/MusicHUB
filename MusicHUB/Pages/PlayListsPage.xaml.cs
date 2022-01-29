@@ -1,11 +1,8 @@
-﻿using MusicHUB.Interfaces;
+﻿using MusicHUB.DependencyInjection;
+using MusicHUB.Interfaces;
 using MusicHUB.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,13 +11,13 @@ namespace MusicHUB.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlayListsPage : ContentPage
     {
-        private IDataBaseService Database;
+        private Connections Connections { get; set; }
         private IAudio Audio = DependencyService.Get<IAudio>();
         public ObservableCollection<Track> Items;
 
-        public PlayListsPage(IDataBaseService dataBaseService)
+        public PlayListsPage(Connections connections)
         {
-            this.Database = dataBaseService;
+            this.Connections = connections;
             InitializeComponent();
         }
 

@@ -1,37 +1,24 @@
 ﻿using MusicHUB.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 using Rg.Plugins.Popup.Extensions;
-using MusicHUB.Pages;
-using System.Collections.ObjectModel;
-using MusicHUB.Interfaces;
-using System.Threading;
-using System.Windows.Input;
 using MusicHUB.ViewModels;
-using Xamarin.Forms.Xaml;
+using MusicHUB.DependencyInjection;
+using System.Windows.Input;
 
 namespace MusicHUB.Pages
 {
     public partial class Player : ContentPage
     {
-        public Player()
+        public Player(Connections connections)
         {
             InitializeComponent();
-            BindingContext = new PlayerViewModel(OpenOptions);
+            BindingContext = new PlayerViewModel(Navigation, connections);
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-        }
-
-        public void OpenOptions()
-        {
-            this.Navigation.PushPopupAsync(new PopUpPageFromBottom(DependencyService.Get<IAudio>().GetCurrentTrack()));
         }
 
         private void Slider_DragCompleted(object sender, EventArgs e)
@@ -43,6 +30,11 @@ namespace MusicHUB.Pages
         private async void Close_Clicked(object sender, EventArgs e)
         {
             await Navigation.PopModalAsync();
+        }
+
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+
         }
     }
 }

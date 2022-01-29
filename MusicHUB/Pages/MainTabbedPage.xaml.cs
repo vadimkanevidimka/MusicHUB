@@ -1,11 +1,4 @@
-﻿using MusicHUB.DataBaseServices;
-using MusicHUB.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using MusicHUB.DependencyInjection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,11 +7,11 @@ namespace MusicHUB.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainTabbedPage : TabbedPage
     {
-        public MainTabbedPage(IDataBaseService dataBaseService)
+        public MainTabbedPage(Connections connections)
         {
             InitializeComponent();
-            Children.Add(new MainPage(dataBaseService));
-            Children.Add(new PlayListsPage(dataBaseService));
+            Children.Add(new MainPage(connections));
+            Children.Add(new PlayListsPage(connections));
         }
     }
 }

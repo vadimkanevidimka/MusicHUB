@@ -16,7 +16,23 @@
             EasingOut="SinIn"
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
-    
+
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="MainButtonStyle" TargetType="ImageButton">
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
+                <Setter Property="HeightRequest" Value="30"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+            </Style>
+            <x:Array x:Key="Actions" Type="{x:Type x:String}">
+                <x:String>Удалить</x:String>
+                <x:String>Обновить</x:String>
+                <x:String>Текст песни</x:String>
+                <x:String>Понравилось</x:String>
+            </x:Array>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
     <!--You can use any elements here which are extended from Xamarin.Forms.View-->
     <StackLayout 
         VerticalOptions="EndAndExpand" 
@@ -30,15 +46,17 @@
                         <Label x:Name="Artist" Text="{Binding Artist}"/>
                     </StackLayout>
                 </FlexLayout>
-                <ListView>
+                <!--<ListView ItemsSource="{Binding contextActions}">
                     <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ImageCell />
+                        <DataTemplate x:DataType="Models:ContextAction">
+                            <ImageCell ImageSource="{Binding Image}" Text="{Binding ActionText}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
+                </ListView>-->
+                <Button Text="Удалить" Command="{Binding Delete_click}"/>
+                <Button Text="Текст песни"/>
+                <Button Text="Понравилось"/>
             </StackLayout>
         </Frame>
-
     </StackLayout>
 </pages:PopupPage>

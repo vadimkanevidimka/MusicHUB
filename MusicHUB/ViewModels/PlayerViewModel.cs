@@ -3,19 +3,16 @@ using MusicHUB.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using System.Net;
-using Xamarin.Forms.Xaml;
-using System.Net.Http;
-using Newtonsoft.Json;
-using System.Globalization;
-using System.Xml.Serialization;
-using System.IO;
+using Genius;
+using System.Threading.Tasks;
+using Genius.Models.Response;
+using MusicHUB.DependencyInjection;
+using MusicHUB.Pages;
+using Rg.Plugins.Popup.Extensions;
 
 namespace MusicHUB.ViewModels
 {
@@ -25,7 +22,11 @@ namespace MusicHUB.ViewModels
 
         private Timer timer;
 
-        private Action OnOptionsClick;
+        private Connections Connections { get; set; }
+
+        private Action TrackChanged { get; set; }
+
+        private INavigation Navigation { get; set; }
 
         public int VolumeLevel { get; set; }
 
@@ -35,9 +36,22 @@ namespace MusicHUB.ViewModels
 
         public ResourceClassPlayerPage ResourceClass { get; set; }
 
-        public List<Artist> Artists { get => GetResponce(CurrentTrack.Artist); }
+        public NotifyTaskCompletion<IEnumerable<SearchResponse>> Artists { get; set; }
 
         public ObservableCollection<Track> Tracks { get => Audio.Tracks; }
+
+        public PlayerViewModel(INavigation navigation, Connections connections)
+        {
+            Navigation = navigation;
+            TrackChanged += TrackChanging;
+            Connections = connections;
+            MaxVolumeLevel = Audio.GetMaxVolumeLevel;
+            VolumeLevel = Audio.GetVolumeLevel;
+            ResourceClass = new ResourceClassPlayerPage();
+            Audio.OnCompleted += (obj, e) => OnPropertyChanged(nameof(CurrentTrack));
+            OnPropertyChanged(nameof(CurrentTrack));
+            InintTimer();
+        }
 
         public Color BackGround { get => BackGround; 
             set 
@@ -57,15 +71,6 @@ namespace MusicHUB.ViewModels
 
         public int PlayedTime { get; set; }
 
-        public ICommand TrackOptions
-        {
-            get
-            {
-                return OnOptionsClick != null ?
-                new Command(OnOptionsClick) : null;
-            }
-        }
-
         public ICommand SetVolumeCommand { 
             get => new Command(() => Audio.SetVolumeLevel(VolumeLevel));
         }
@@ -78,14 +83,18 @@ namespace MusicHUB.ViewModels
             }
         }
 
+        public void TrackChanging()
+        {
+            OnPropertyChanged(nameof(CurrentTrack));
+        }
+
         public ICommand TrackChange
         {
             get => new Command(c =>
             {
                 timer.Dispose();
                 Audio.PlayAudioFile((Track)c);
-                OnPropertyChanged(nameof(CurrentTrack));
-                OnPropertyChanged(nameof(Artists));
+                Artists = new NotifyTaskCompletion<IEnumerable<SearchResponse>>(GetArtists());
                 InintTimer();
             });
         }
@@ -95,7 +104,7 @@ namespace MusicHUB.ViewModels
             {
                 timer.Dispose();
                 Audio.Next();
-                OnPropertyChanged(nameof(CurrentTrack));
+                TrackChanged();
                 InintTimer();
             });
         }
@@ -105,7 +114,7 @@ namespace MusicHUB.ViewModels
             {
                 timer.Dispose();
                 Audio.Prev();
-                OnPropertyChanged(nameof(CurrentTrack));
+                TrackChanged();
                 InintTimer();
             }); 
         }
@@ -128,6 +137,11 @@ namespace MusicHUB.ViewModels
             });
         }
 
+        public Command ArtistPageCommand
+        {
+            get => new Command((c) => this.Navigation.PushModalAsync(new ArtistPage((SearchResponse)c, Connections)));
+        }
+
         public Command RepeatCommand {
             get => new Command(() =>
             {
@@ -137,45 +151,25 @@ namespace MusicHUB.ViewModels
             });
         }
 
-        public PlayerViewModel(Action onoptionsClick)
+        public ICommand OpenOptions
         {
-            MaxVolumeLevel = Audio.GetMaxVolumeLevel;
-            VolumeLevel = Audio.GetVolumeLevel;
-            this.OnOptionsClick = onoptionsClick;
-            ResourceClass = new ResourceClassPlayerPage();
-            Audio.OnCompleted += (obj, e) => OnPropertyChanged(nameof(CurrentTrack));
-            OnPropertyChanged(nameof(CurrentTrack));
-            OnPropertyChanged(nameof(Artists));
-            InintTimer();
+            get => new Command(() => this.Navigation.PushPopupAsync(new PopUpPageFromBottom(CurrentTrack)));
         }
 
-        private List<Artist> GetResponce(string artists)
+        private async Task<IEnumerable<SearchResponse>> GetArtists()
         {
-            List<Artist> images = new List<Artist>(); 
-            try
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                List<SearchResponse> ArtistAndImage = new List<SearchResponse>();
+                var artists = CurrentTrack.Artist.Split(new char[] { ',' });
+                foreach (var item in artists)
                 {
-                    HttpClient client = new HttpClient();
-                    foreach (var item in artists.Split(new char[] { ',' }))
-                    {
-                        var artiststring = item.TrimStart(' ');
-                        string json = client.GetStringAsync($"https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={CurrentTrack.Artist}&api_key=0be0ae24e354e80d2558bd06c94cb2c7&format=xml&lang=Ru").Result;
-                        XmlSerializer serializer = new XmlSerializer(typeof(Artist));
-                        var xml = json.Substring(json.IndexOf("<artist>")).Replace("</lfm>", "");
-                        var artist = (Artist)serializer.Deserialize(new StringReader(xml));
-                        artist.Image.uri = artist.Image.uri ?? "https://lastfm.freetls.fastly.net/i/u/34s/2a96cbd8b46e442fc41c2b86b821562f.png";
-                        images.Add(artist);
-                    }
-                    return images;
+                    var rezult = await Connections.GeniusClient.SearchClient.Search(item);
+                    ArtistAndImage.Add(rezult);
                 }
-                return images;
+                return ArtistAndImage;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return images;
-            }
+            return new List<SearchResponse>();
         }
 
         private void InintTimer()
@@ -194,6 +188,5 @@ namespace MusicHUB.ViewModels
             PlayedTime = Audio.Time;
             OnPropertyChanged(nameof(PlayedTimeString));
         }
-
     }
 }
