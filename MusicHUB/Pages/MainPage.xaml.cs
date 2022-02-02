@@ -40,15 +40,13 @@ namespace MusicHUB.Pages
 
         }//Обновление плейлиста
 
-
         private void filesList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             Track track = (Track)e.Item;
-            UnderPanel.IsVisible = true;
             AudioImgBottom.Source = track.ImageSource;
             Title.Text = track.Title;
             Author.Text = track.Artist;
-            DependencyService.Get<IAudio>().PlayAudioFile(track);
+            Audio.PlayAudioFile(track);
             ((ListView)sender).SelectedItem = null;
         }//НАжатие на элемент для проигрывания
 

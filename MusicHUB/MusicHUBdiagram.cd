@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MusicHUB.DataBaseServices.BaseDataBaseService">
+    <Position X="2.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataBaseServices\BaseDataBaseService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.DataBaseServices.ConnectionCreator">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>DataBaseServices\ConnectionCreator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.DataBaseServices.DataBaseService">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataBaseServices\DataBaseService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.DependencyInjection.Connections">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAQAAAAAAAAA=</HashCode>
+      <FileName>DependencyInjection\Connections.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.App">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAgAEAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Pages\App.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.Pages.MainPage">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAmhAAAAAAAEAABAAAAAAAAAAAQAAACIAAAA=</HashCode>
+      <FileName>Pages\MainPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.Pages.ArtistPage">
+    <Position X="4" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\ArtistPage.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.Pages.Player">
+    <Position X="5.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAgAAAABAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Pages\Player.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.PopUpPageFromBottom">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAEAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pages\PopUpPageFromBottom.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.ViewModels.ArtistPageViewModel">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAACACAAAAAAAAACAAAAA=</HashCode>
+      <FileName>ViewModels\ArtistPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.ViewModels.MainPageViewModel" Collapsed="true">
+    <Position X="9.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\MainPageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.ViewModels.PlayerViewModel">
+    <Position X="7.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgCAAgQEAAAAAAAAEiQAAgAABAICAgpEAg4CAIQgA=</HashCode>
+      <FileName>ViewModels\PlayerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MusicHUB.ViewModels.ResourceClassPlayerPage">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAIAQAAAAAACgAAAAAAAAAAAAAAAIgAAAAAAA=</HashCode>
+      <FileName>ViewModels\ResourceClassPlayerPage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MusicHUB.IAudio">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhIgAAAAAGAAAIIAASAAAAIAAAQAAEAQACAgAAAgGyA=</HashCode>
+      <FileName>Interfaces\IAudio.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MusicHUB.Interfaces.IDataBaseService">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IDataBaseService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MusicHUB.Interfaces.IImage">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAEAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Interfaces\IImage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

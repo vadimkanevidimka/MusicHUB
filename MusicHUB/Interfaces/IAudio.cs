@@ -3,6 +3,7 @@ using MusicHUB.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MusicHUB
@@ -25,7 +26,7 @@ namespace MusicHUB
         void Next();
         void Prev();
         void Pause();
-        void Shuffle();
+        Task Shuffle();
         void Countinue();
         void PlayPause();
         void LoopChange();

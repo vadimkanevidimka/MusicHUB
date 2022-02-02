@@ -10,7 +10,7 @@ namespace MusicHUB
         {
             Device.SetFlags(new string[] { "AppTheme_Experimental" });
             InitializeComponent();
-            MainPage = new MainTabbedPage(connections);
+            MainPage = new NavigationPage(new MainTabbedPage(connections)) { Title = "Главная", BarBackgroundColor = Color.Wheat};
         }
 
         public Connections Connections { get; set; }

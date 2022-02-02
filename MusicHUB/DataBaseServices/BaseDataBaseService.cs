@@ -7,7 +7,7 @@ using System.Text;
 
 namespace MusicHUB.DataBaseServices
 {
-    public abstract class BaseDataBaseService : IDataBaseService
+    public abstract class BaseDataBaseService
     {
         protected SQLiteAsyncConnection DataBase;
 
@@ -15,7 +15,5 @@ namespace MusicHUB.DataBaseServices
         {
             this.DataBase = datatbase;
         }
-
-        SQLiteAsyncConnection IDataBaseService.DataBase => DataBase;
     }
 }

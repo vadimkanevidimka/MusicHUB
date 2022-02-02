@@ -7,6 +7,27 @@
             <Color x:Key="textColor">#fff</Color>
             <Color x:Key="backColor">#000</Color>
             <x:Double x:Key="fontSize">22</x:Double>
+            <Style x:Key="buttonStyle" TargetType="ImageButton">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
+                <Setter Property="WidthRequest" Value="40"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+            </Style>
+            <Style x:Key="MainButtonStyle" TargetType="ImageButton">
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
+                <Setter Property="WidthRequest" Value="70"/>
+                <Setter Property="HeightRequest" Value="70"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+            </Style>
+            <Style x:Key="ButtonOnWheatBackGround" TargetType="ImageButton">
+                <Setter Property="Padding" Value="20"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
+                <Setter Property="WidthRequest" Value="50"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

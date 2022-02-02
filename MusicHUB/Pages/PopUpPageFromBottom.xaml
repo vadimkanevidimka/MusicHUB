@@ -21,7 +21,7 @@
         <ResourceDictionary>
             <Style x:Key="MainButtonStyle" TargetType="ImageButton">
                 <Setter Property="Padding" Value="20"/>
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
                 <Setter Property="HeightRequest" Value="30"/>
                 <Setter Property="Aspect" Value="AspectFit"/>
             </Style>
@@ -53,9 +53,9 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>-->
-                <Button Text="Удалить" Command="{Binding Delete_click}"/>
-                <Button Text="Текст песни"/>
-                <Button Text="Понравилось"/>
+                <Button Text="Удалить" Command="{Binding Delete_click}" TextColor="{AppThemeBinding Dark=#1B1B1B, Light=White}" Style="{StaticResource Key=MainButtonStyle}"/>
+                <Button Text="Текст песни" Style="{StaticResource Key=MainButtonStyle}" TextColor="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
+                <Button Text="Понравилось" Style="{StaticResource Key=MainButtonStyle}" TextColor="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
             </StackLayout>
         </Frame>
     </StackLayout>

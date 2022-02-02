@@ -66,10 +66,10 @@
           "lib/netstandard2.0/Plugin.Permissions.dll": {}
         }
       },
-      "Rg.Plugins.Popup/2.0.0.14": {
+      "Rg.Plugins.Popup/2.1.0": {
         "type": "package",
         "dependencies": {
-          "Xamarin.Forms": "4.5.0.657"
+          "Xamarin.Forms": "5.0.0.2012"
         },
         "compile": {
           "lib/netstandard2.0/Rg.Plugins.Popup.dll": {}
@@ -524,10 +524,10 @@
         "readme.txt"
       ]
     },
-    "Rg.Plugins.Popup/2.0.0.14": {
-      "sha512": "TGUbBSYtKuoqy/kRMw4apwoUY43DATNPUk7t0FJUJjUYnBAJTbRIr84ZvM8xVRltoIctpm5FfCnuliw6dUDywA==",
+    "Rg.Plugins.Popup/2.1.0": {
+      "sha512": "caKjkvimzpUqk4pO/WSFn3uOX43uZNW5rPWCx7eXkOlGG9Br90MTwNVS1nxhtyypB69uUe/0GQPEC3rz+kscbA==",
       "type": "package",
-      "path": "rg.plugins.popup/2.0.0.14",
+      "path": "rg.plugins.popup/2.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -536,9 +536,6 @@
         "lib/monoandroid10.0/Rg.Plugins.Popup.dll",
         "lib/monoandroid10.0/Rg.Plugins.Popup.pdb",
         "lib/monoandroid10.0/Rg.Plugins.Popup.xml",
-        "lib/monoandroid90/Rg.Plugins.Popup.dll",
-        "lib/monoandroid90/Rg.Plugins.Popup.pdb",
-        "lib/monoandroid90/Rg.Plugins.Popup.xml",
         "lib/net472/Rg.Plugins.Popup.dll",
         "lib/net472/Rg.Plugins.Popup.pdb",
         "lib/net472/Rg.Plugins.Popup.xml",
@@ -551,6 +548,10 @@
         "lib/tizen80/Rg.Plugins.Popup.dll",
         "lib/tizen80/Rg.Plugins.Popup.pdb",
         "lib/tizen80/Rg.Plugins.Popup.xml",
+        "lib/uap10.0.18362/Rg.Plugins.Popup.dll",
+        "lib/uap10.0.18362/Rg.Plugins.Popup.pdb",
+        "lib/uap10.0.18362/Rg.Plugins.Popup.pri",
+        "lib/uap10.0.18362/Rg.Plugins.Popup.xml",
         "lib/xamarinios10/Rg.Plugins.Popup.dll",
         "lib/xamarinios10/Rg.Plugins.Popup.pdb",
         "lib/xamarinios10/Rg.Plugins.Popup.xml",
@@ -564,7 +565,7 @@
         "lib/xamarinwatchos10/Rg.Plugins.Popup.pdb",
         "lib/xamarinwatchos10/Rg.Plugins.Popup.xml",
         "readme.txt",
-        "rg.plugins.popup.2.0.0.14.nupkg.sha512",
+        "rg.plugins.popup.2.1.0.nupkg.sha512",
         "rg.plugins.popup.nuspec"
       ]
     },
@@ -1636,7 +1637,7 @@
     ".NETStandard,Version=v2.1": [
       "Genius.NET >= 4.0.1",
       "Plugin.Permissions >= 6.0.1",
-      "Rg.Plugins.Popup >= 2.0.0.14",
+      "Rg.Plugins.Popup >= 2.1.0",
       "Sigil >= 5.0.0",
       "System.Runtime.InteropServices >= 4.3.0",
       "Xamarin.Essentials >= 1.7.1",
@@ -1698,7 +1699,7 @@
           },
           "Rg.Plugins.Popup": {
             "target": "Package",
-            "version": "[2.0.0.14, )"
+            "version": "[2.1.0, )"
           },
           "Sigil": {
             "target": "Package",

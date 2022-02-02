@@ -1,19 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:response="clr-namespace:Genius.Models.Response;assembly=Genius"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:response="clr-namespace:Genius.Models.Response;assembly=Genius" xmlns:artist="clr-namespace:Genius.Models.Artist;assembly=Genius" xmlns:song="clr-namespace:Genius.Models.Song;assembly=Genius"
              x:Class="MusicHUB.Pages.ArtistPage"
              NavigationPage.HasNavigationBar="True"
-             NavigationPage.HasBackButton="True"
-             x:DataType="response:SearchResponse"
-             BackgroundImageSource="{Binding Response.Hits[0].Result.PrimaryArtist.ImageUrl}">
-    
+             NavigationPage.HasBackButton="True">
+
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout>
-                <Image Source="{Binding Response.Hits[0].Result.PrimaryArtist.ImageUrl}"/>
-                <Label/>
-                <Label/>
-            </StackLayout>
-        </ScrollView>
+        <RefreshView>
+            <ScrollView HeightRequest="1000">
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal" HeightRequest="50" BackgroundColor="Wheat">
+                        <ImageButton Source="arrowdown.png" Rotation="90" CornerRadius="30" Style="{StaticResource ButtonOnWheatBackGround}"/>
+                    </StackLayout>
+                    <Image WidthRequest="400" HeightRequest="400" Aspect="Fill" Source="{Binding Response.ImageUrl}"/>
+                    <Frame CornerRadius="20" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HeightRequest="1200" Margin="0,-30,0,0">
+                        <StackLayout>
+                            <Label Text="{Binding ArtistInfo.Result.Response.Artist.Name}" FontSize="Title"/>
+                            <Label Text="{Binding ArtistInfo.Result.Response.Artist.Description}" FontSize="Body"/>
+                            <ListView ItemsSource="{Binding ArtistsSongs.Result.Response.Songs}" SelectionMode="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="song:Song">
+                                        <ImageCell ImageSource="{Binding SongArtImageUrl}" Text="{Binding Title}" TextColor="{AppThemeBinding Dark=white, Light=black}" Detail="{Binding Album}"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>

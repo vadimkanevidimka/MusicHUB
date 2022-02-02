@@ -11,7 +11,7 @@
         "dependencies": {
           "Genius.NET": "4.0.1",
           "Plugin.Permissions": "6.0.1",
-          "Rg.Plugins.Popup": "2.0.0.14",
+          "Rg.Plugins.Popup": "2.1.0",
           "Sigil": "5.0.0",
           "System.Runtime.InteropServices": "4.3.0",
           "Xamarin.Essentials": "1.7.1",
@@ -68,14 +68,14 @@
           }
         }
       },
-      "Rg.Plugins.Popup/2.0.0.14": {
+      "Rg.Plugins.Popup/2.1.0": {
         "dependencies": {
           "Xamarin.Forms": "5.0.0.2337"
         },
         "runtime": {
           "lib/netstandard2.0/Rg.Plugins.Popup.dll": {
-            "assemblyVersion": "2.0.0.12",
-            "fileVersion": "2.0.0.12"
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.0.0"
           }
         }
       },
@@ -326,12 +326,12 @@
       "path": "plugin.permissions/6.0.1",
       "hashPath": "plugin.permissions.6.0.1.nupkg.sha512"
     },
-    "Rg.Plugins.Popup/2.0.0.14": {
+    "Rg.Plugins.Popup/2.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-TGUbBSYtKuoqy/kRMw4apwoUY43DATNPUk7t0FJUJjUYnBAJTbRIr84ZvM8xVRltoIctpm5FfCnuliw6dUDywA==",
-      "path": "rg.plugins.popup/2.0.0.14",
-      "hashPath": "rg.plugins.popup.2.0.0.14.nupkg.sha512"
+      "sha512": "sha512-caKjkvimzpUqk4pO/WSFn3uOX43uZNW5rPWCx7eXkOlGG9Br90MTwNVS1nxhtyypB69uUe/0GQPEC3rz+kscbA==",
+      "path": "rg.plugins.popup/2.1.0",
+      "hashPath": "rg.plugins.popup.2.1.0.nupkg.sha512"
     },
     "Sigil/5.0.0": {
       "type": "package",

@@ -11,6 +11,7 @@ namespace MusicHUB.DataBaseServices
 {
     public static class ConnectionCreator
     {
+
         public static async Task<SQLiteAsyncConnection> Init()
         {
             var dataBasePath = Path.Combine(FileSystem.AppDataDirectory, "MusicHub.db");

@@ -9,7 +9,7 @@ namespace MusicHUB.DataBaseServices
 {
     public class DataBaseService : BaseDataBaseService
     {
-        public DataBaseService(SQLiteAsyncConnection database) 
+        public DataBaseService(SQLiteAsyncConnection database)
             : base(database)
         {
 

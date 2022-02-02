@@ -6,6 +6,7 @@ using MusicHUB.Models;
 using SimpleAudioForms.Droid;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,7 +18,7 @@ namespace SimpleAudioForms.Droid
     {
         private AudioManager AudioManager = (AudioManager)Android.App.Application.Context.GetSystemService(Context.AudioService);
         private MediaPlayer player;
-        private ObservableCollection<Track> Queue = new MusicFilesCollector().GetTracks(new string[] { "/storage/emulated/0/Music/", "/storage/emulated/0/Download/" });
+        private ObservableCollection<Track> Queue = new MusicFilesCollector().GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" });
         private int Position { get; set; }
         private Track CurrentTrack { get; set; }
 
@@ -63,7 +64,10 @@ namespace SimpleAudioForms.Droid
             {
                 player.Start();
             };
-            player.Completion += setNext;
+            if (OnCompleted == null)
+            {
+                player.Completion += setNext;
+            }
         }
 
         public void SetVolumeLevel(int volume)
@@ -136,7 +140,12 @@ namespace SimpleAudioForms.Droid
             else player.Start();
         }
 
-        public void Shuffle()
+        public Task Shuffle()
+        {
+           return Task.Run(() => ShuffleQueue());
+        }
+
+        private void ShuffleQueue()
         {
             Random rand = new Random();
 

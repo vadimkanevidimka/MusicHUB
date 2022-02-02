@@ -13,6 +13,9 @@ using Genius.Models.Response;
 using MusicHUB.DependencyInjection;
 using MusicHUB.Pages;
 using Rg.Plugins.Popup.Extensions;
+using Genius.Models.Artist;
+using Genius.Models;
+using System.Linq;
 
 namespace MusicHUB.ViewModels
 {
@@ -24,8 +27,6 @@ namespace MusicHUB.ViewModels
 
         private Connections Connections { get; set; }
 
-        private Action TrackChanged { get; set; }
-
         private INavigation Navigation { get; set; }
 
         public int VolumeLevel { get; set; }
@@ -36,14 +37,13 @@ namespace MusicHUB.ViewModels
 
         public ResourceClassPlayerPage ResourceClass { get; set; }
 
-        public NotifyTaskCompletion<IEnumerable<SearchResponse>> Artists { get; set; }
+        public NotifyTaskCompletion<IEnumerable<Artist>> Artists { get; set; }
 
         public ObservableCollection<Track> Tracks { get => Audio.Tracks; }
 
         public PlayerViewModel(INavigation navigation, Connections connections)
         {
             Navigation = navigation;
-            TrackChanged += TrackChanging;
             Connections = connections;
             MaxVolumeLevel = Audio.GetMaxVolumeLevel;
             VolumeLevel = Audio.GetVolumeLevel;
@@ -53,6 +53,8 @@ namespace MusicHUB.ViewModels
             InintTimer();
         }
 
+        public Artist CurrentArtist { get; set; }
+
         public Color BackGround { get => BackGround; 
             set 
             {
@@ -60,7 +62,9 @@ namespace MusicHUB.ViewModels
             }
         }
 
-        public string PlayedTimeString { get 
+        public string PlayedTimeString 
+        { 
+            get 
             {
                 OnPropertyChanged(nameof(PlayedTime));
                 int min = (PlayedTime / 1000) / 60;
@@ -94,8 +98,10 @@ namespace MusicHUB.ViewModels
             {
                 timer.Dispose();
                 Audio.PlayAudioFile((Track)c);
-                Artists = new NotifyTaskCompletion<IEnumerable<SearchResponse>>(GetArtists());
+                TrackChanging();
+                Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
                 InintTimer();
+                ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             });
         }
 
@@ -104,8 +110,10 @@ namespace MusicHUB.ViewModels
             {
                 timer.Dispose();
                 Audio.Next();
-                TrackChanged();
+                TrackChanging();
+                Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
                 InintTimer();
+                ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             });
         }
 
@@ -114,8 +122,10 @@ namespace MusicHUB.ViewModels
             {
                 timer.Dispose();
                 Audio.Prev();
-                TrackChanged();
+                TrackChanging();
+                Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
                 InintTimer();
+                ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             }); 
         }
 
@@ -129,7 +139,7 @@ namespace MusicHUB.ViewModels
         }
 
         public Command ShuffleCommand {
-            get => new Command(() =>
+            get => new Command(async () =>
             {
                 Audio.Shuffle();
                 ResourceClass.Shufle = ResourceClassPlayerPage.ShuffledImg;
@@ -139,7 +149,7 @@ namespace MusicHUB.ViewModels
 
         public Command ArtistPageCommand
         {
-            get => new Command((c) => this.Navigation.PushModalAsync(new ArtistPage((SearchResponse)c, Connections)));
+            get => new Command((c) => this.Navigation.PushModalAsync(new ArtistPage(CurrentArtist, Connections), false));
         }
 
         public Command RepeatCommand {
@@ -156,20 +166,22 @@ namespace MusicHUB.ViewModels
             get => new Command(() => this.Navigation.PushPopupAsync(new PopUpPageFromBottom(CurrentTrack)));
         }
 
-        private async Task<IEnumerable<SearchResponse>> GetArtists()
+        private async Task<IEnumerable<Artist>> GetArtists()
         {
+            List<Artist> ArtistAndImage = new List<Artist>();
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                List<SearchResponse> ArtistAndImage = new List<SearchResponse>();
-                var artists = CurrentTrack.Artist.Split(new char[] { ',' });
-                foreach (var item in artists)
+                var rezult = await Connections.GeniusClient.SearchClient.Search($"{CurrentTrack.Title} {CurrentTrack.Artist}");
+                var artists = await Connections.GeniusClient.SongClient.GetSong(rezult.Response.Hits.First().Result.Id);
+                
+                ArtistAndImage.Add(artists.Response.Song.PrimaryArtist);
+                if (artists.Response.Song.FeaturedArtists != null)
                 {
-                    var rezult = await Connections.GeniusClient.SearchClient.Search(item);
-                    ArtistAndImage.Add(rezult);
+                    ArtistAndImage.AddRange(artists.Response.Song.FeaturedArtists);
                 }
                 return ArtistAndImage;
             }
-            return new List<SearchResponse>();
+            return ArtistAndImage;
         }
 
         private void InintTimer()

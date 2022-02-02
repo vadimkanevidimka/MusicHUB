@@ -5,6 +5,7 @@ using Rg.Plugins.Popup.Extensions;
 using MusicHUB.ViewModels;
 using MusicHUB.DependencyInjection;
 using System.Windows.Input;
+using Android.Widget;
 
 namespace MusicHUB.Pages
 {
@@ -12,8 +13,19 @@ namespace MusicHUB.Pages
     {
         public Player(Connections connections)
         {
-            InitializeComponent();
-            BindingContext = new PlayerViewModel(Navigation, connections);
+            try
+            {
+                InitializeComponent();
+                BindingContext = new PlayerViewModel(Navigation, connections);
+
+            }
+            catch (Exception ex)
+            {
+                var context = DependencyService.Get<IAudio>().GetContext;
+                var toast = Toast.MakeText(context, ex.Message, ToastLength.Long);
+                toast.Show();
+                Close_Clicked(this, new EventArgs());
+            }
         }
 
         protected override void OnAppearing()
@@ -32,7 +44,7 @@ namespace MusicHUB.Pages
             await Navigation.PopModalAsync();
         }
 
-        private void ImageButton_Clicked(object sender, EventArgs e)
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
 
         }
