@@ -118,6 +118,10 @@
               "target": "Package",
               "version": "[6.0.1, )"
             },
+            "Refractored.MvvmHelpers": {
+              "target": "Package",
+              "version": "[1.6.2, )"
+            },
             "Rg.Plugins.Popup": {
               "target": "Package",
               "version": "[2.1.0, )"

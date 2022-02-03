@@ -2,10 +2,6 @@
 using Genius.Models.Artist;
 using Genius.Models.Response;
 using MusicHUB.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MusicHUB.ViewModels
@@ -18,7 +14,7 @@ namespace MusicHUB.ViewModels
             this.Connections = connections;
             this.Navigation = navigation;
             ArtistInfo = new NotifyTaskCompletion<ArtistResponse>(Connections.GeniusClient.ArtistClient.GetArtist(Response.Id));
-            ArtistsSongs = new NotifyTaskCompletion<ArtistsSongsResponse>(Connections.GeniusClient.ArtistClient.GetArtistsSongs(Response.Id, "popularity", "7"));
+            ArtistsSongs = new NotifyTaskCompletion<ArtistsSongsResponse>(Connections.GeniusClient.ArtistClient.GetArtistsSongs(Response.Id, "popularity", "10"));
         }
 
         public Artist Response { get; set; }

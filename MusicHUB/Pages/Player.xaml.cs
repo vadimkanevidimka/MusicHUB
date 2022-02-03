@@ -33,12 +33,6 @@ namespace MusicHUB.Pages
             base.OnAppearing();
         }
 
-        private void Slider_DragCompleted(object sender, EventArgs e)
-        {
-            Slider slider = sender as Slider;
-            DependencyService.Get<IAudio>().SetTime((int)slider.Value);
-        }
-
         private async void Close_Clicked(object sender, EventArgs e)
         {
             await Navigation.PopModalAsync();

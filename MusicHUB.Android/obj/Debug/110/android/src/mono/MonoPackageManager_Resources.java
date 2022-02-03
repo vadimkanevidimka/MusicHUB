@@ -7,6 +7,7 @@ public class MonoPackageManager_Resources {
 		"Genius.dll",
 		"Jil.dll",
 		"MusicHUB.dll",
+		"MvvmHelpers.dll",
 		"Plugin.Permissions.dll",
 		"Rg.Plugins.Popup.dll",
 		"Sigil.dll",

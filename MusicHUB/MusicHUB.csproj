@@ -18,6 +18,7 @@
   <ItemGroup>
     <PackageReference Include="Genius.NET" Version="4.0.1" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
     <PackageReference Include="Sigil" Version="5.0.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
@@ -39,8 +40,8 @@
     <Compile Update="Pages\PlayListsPage.xaml.cs">
       <DependentUpon>PlayListsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Pages\PopUpPageFromBottom.xaml.cs">
-      <DependentUpon>PopUpPageFromBottom.xaml</DependentUpon>
+    <Compile Update="Pages\PopUpContextActionsOnTrack.xaml.cs">
+      <DependentUpon>PopUpContextActionsOnTrack.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -54,29 +55,18 @@
     <EmbeddedResource Update="Pages\MainTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\Notification.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Pages\Player.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Pages\PlayerDetail.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Pages\PlayerFlyout.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Pages\PlayerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\PlayListsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\PopUpPageFromBottom.xaml">
+    <EmbeddedResource Update="Pages\PopUpContextActionsOnTrack.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\TrackList.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
 </Project>

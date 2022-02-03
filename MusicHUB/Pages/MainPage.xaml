@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:customelements="clr-namespace:MusicHUB.CustomElements"
              x:Class="MusicHUB.Pages.MainPage"
              Title="Моя музыка">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="ButtonOnWheatBackGround" TargetType="ImageButton">
-                <Setter Property="Padding" Value="20"/>
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
                 <Setter Property="WidthRequest" Value="50"/>
                 <Setter Property="HeightRequest" Value="50"/>
@@ -19,7 +18,7 @@
     <ContentPage.Content>
         <StackLayout VerticalOptions="Fill">
             <StackLayout Padding="0,0,0,-5">
-                <ListView x:Name="filesList" ItemTapped="filesList_ItemTapped" RefreshControlColor="Wheat" HorizontalScrollBarVisibility="Default" SelectionMode="Single" Refreshing="RefreshView_Refreshing" IsPullToRefreshEnabled="True" ItemsSource="{Binding Tracks}">
+                <ListView x:Name="filesList" ItemTapped="filesList_ItemTapped" RefreshControlColor="Wheat" SelectionMode="Single" Refreshing="RefreshView_Refreshing" IsPullToRefreshEnabled="True" ItemsSource="{Binding Tracks}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ImageCell ImageSource="{Binding ImageSource}" Text="{Binding Title}" TextColor="{AppThemeBinding Dark=white, Light=black}" Detail="{Binding Artist}"/>
@@ -27,19 +26,19 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-            <Frame x:Name="UnderPanel" CornerRadius="20" BackgroundColor="Wheat" WidthRequest="300">
+            <Frame x:Name="UnderPanel" CornerRadius="20" BackgroundColor="Wheat" Margin="0,0,0,-20" Padding="20,20,20,20" >
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="AudioImgBottom_Clicked"/>
                 </Frame.GestureRecognizers>
                 <StackLayout Orientation="Vertical" HorizontalOptions="Center">
                     <ProgressBar ProgressColor="DimGray" Progress="10" HeightRequest="4" Visual="Material"/>
-                    <FlexLayout Position="Absolute" AlignContent="Stretch" BindingContext="{Binding Tracks}">
-                        <Image x:Name="AudioImgBottom" Aspect="AspectFit" HeightRequest="60" WidthRequest="60" Source="{Binding Tracks}"/>
-                        <StackLayout WidthRequest="180" Padding="20,0,0,0">
+                    <FlexLayout AlignContent="SpaceBetween" BindingContext="{Binding Tracks}">
+                        <Image x:Name="AudioImgBottom" Aspect="AspectFit" HeightRequest="40" WidthRequest="40" Source="{Binding Tracks}"/>
+                        <StackLayout WidthRequest="240" Padding="20,0,0,0">
                             <Label x:Name="Title" FontSize="18" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation"/>
                             <Label x:Name="Author" LineBreakMode="TailTruncation"/>
                         </StackLayout>
-                        <ImageButton Source="Pause.png" Style="{StaticResource ButtonOnWheatBackGround}" CornerRadius="50"/>
+                        <customelements:WheatButton Source="Pause.png" Style="{StaticResource ButtonOnWheatBackGround}"/>
                     </FlexLayout>
                 </StackLayout>
             </Frame>

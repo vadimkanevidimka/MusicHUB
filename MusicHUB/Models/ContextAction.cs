@@ -8,5 +8,6 @@ namespace MusicHUB.Models
     {
         public string Image { get; set; }
         public string ActionText { get; set; }
+        public Action<Track> Action { get; set; }
     }
 }

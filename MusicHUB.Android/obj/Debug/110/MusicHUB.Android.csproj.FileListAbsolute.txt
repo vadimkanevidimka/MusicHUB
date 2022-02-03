@@ -693,3 +693,5 @@ D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\src\mono\com\goo
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\src\mono\com\google\android\material\slider\BaseOnSliderTouchListenerImplementor.java
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\src\mono\com\google\android\material\textfield\TextInputLayout_OnEditTextAttachedListenerImplementor.java
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\src\mono\com\google\android\material\textfield\TextInputLayout_OnEndIconChangedListenerImplementor.java
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\MvvmHelpers.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\MvvmHelpers.pdb

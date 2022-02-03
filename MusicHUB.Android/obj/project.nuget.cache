@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "59SuOErMz+qtEUoPnyYX2wU52CoFIjTe8SYli4lI5nGwOCSXosxhHfg+KH19dRnCN5ZpwS4ByBgaEPT3xGuRrw==",
+  "dgSpecHash": "QP9r49zELOsOFniyED5CRbERotrXRpUtNr3X+Yagr7krNHRY4B2618dKGcr90rYya7+Tw0GVbY8KaMvlM8egQA==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Mus\\MusicHUB\\MusicHUB.Android\\MusicHUB.Android.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\jil\\2.17.0\\jil.2.17.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.csharp\\4.4.0\\microsoft.csharp.4.4.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\plugin.permissions\\6.0.1\\plugin.permissions.6.0.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\refractored.mvvmhelpers\\1.6.2\\refractored.mvvmhelpers.1.6.2.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\rg.plugins.popup\\2.1.0\\rg.plugins.popup.2.1.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\sigil\\5.0.0\\sigil.5.0.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\sqlite-net-pcl\\1.8.116\\sqlite-net-pcl.1.8.116.nupkg.sha512",
@@ -20,6 +21,7 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.runtime.interopservices\\4.3.0\\system.runtime.interopservices.4.3.0.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.androidx.activity\\1.2.4.1\\xamarin.androidx.activity.1.2.4.1.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.androidx.annotation\\1.2.0.1\\xamarin.androidx.annotation.1.2.0.1.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.androidx.annotation.experimental\\1.1.0.1\\xamarin.androidx.annotation.experimental.1.1.0.1.nupkg.sha512",

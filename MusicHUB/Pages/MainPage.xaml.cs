@@ -75,7 +75,7 @@ namespace MusicHUB.Pages
         {
             ImageButton button = sender as ImageButton;
             ViewCell viewCell = button.Parent.Parent as ViewCell;
-            Navigation.PushPopupAsync(new PopUpPageFromBottom((Track)viewCell.BindingContext));
+            Navigation.PushPopupAsync(new PopUpContextActionsOnTrack((Track)viewCell.BindingContext));
         }
     }
 }

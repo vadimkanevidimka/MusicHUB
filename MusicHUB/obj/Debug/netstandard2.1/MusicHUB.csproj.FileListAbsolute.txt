@@ -11,14 +11,8 @@ D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\MusicHUB.csprojAssemb
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\App.xaml.g.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\MainPage.xaml.g.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\MainTabbedPage.xaml.g.cs
-D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\Notification.xaml.g.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\Player.xaml.g.cs
-D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\PlayerDetail.xaml.g.cs
-D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\PlayerFlyout.xaml.g.cs
-D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\PlayerPage.xaml.g.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\PlayListsPage.xaml.g.cs
-D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\PopUpPageFromBottom.xaml.g.cs
-D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\TrackList.xaml.g.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\MusicHUB.AssemblyInfoInputs.cache
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\MusicHUB.AssemblyInfo.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\MusicHUB.csproj.CoreCompileInputs.cache
@@ -28,3 +22,4 @@ D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\MusicHUB.dll
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\ref\MusicHUB.dll
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\MusicHUB.pdb
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\ArtistPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\PopUpContextActionsOnTrack.xaml.g.cs

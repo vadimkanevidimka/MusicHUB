@@ -4,6 +4,8 @@
             x:Class="MusicHUB.Pages.MainTabbedPage"
             BarBackgroundColor="Wheat"
             BarTextColor="white"
-            Title="Главная">
-  <!--Pages can be added as references or inline-->
+            Title="Главная"
+            xmlns:android ="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom">
+    <!--Pages can be added as references or inline-->
 </TabbedPage>

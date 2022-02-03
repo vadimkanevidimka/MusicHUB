@@ -16,6 +16,9 @@ using Rg.Plugins.Popup.Extensions;
 using Genius.Models.Artist;
 using Genius.Models;
 using System.Linq;
+using MusicHUB.ViewModels.Properties;
+using MvvmHelpers.Commands;
+using Google.Android.Material.BottomSheet;
 
 namespace MusicHUB.ViewModels
 {
@@ -29,11 +32,13 @@ namespace MusicHUB.ViewModels
 
         private INavigation Navigation { get; set; }
 
+        public PlayerPosition PlayerPosition { get; set; }
+
         public int VolumeLevel { get; set; }
 
         public int MaxVolumeLevel { get; set; }
 
-        public NotifyTaskCompletion<Color> PrimaryColor { get => new NotifyTaskCompletion<Color>(DependencyService.Get<IImage>().ConfigColorAsync(CurrentTrack.Uri)); } 
+        public NotifyTaskCompletion<Color> PrimaryColor { get; set; } 
 
         public ResourceClassPlayerPage ResourceClass { get; set; }
 
@@ -45,12 +50,13 @@ namespace MusicHUB.ViewModels
         {
             Navigation = navigation;
             Connections = connections;
+            PlayerPosition = new PlayerPosition();
             MaxVolumeLevel = Audio.GetMaxVolumeLevel;
             VolumeLevel = Audio.GetVolumeLevel;
             ResourceClass = new ResourceClassPlayerPage();
             Audio.OnCompleted += (obj, e) => OnPropertyChanged(nameof(CurrentTrack));
             OnPropertyChanged(nameof(CurrentTrack));
-            InintTimer();
+            InitTimer();
         }
 
         public Artist CurrentArtist { get; set; }
@@ -62,21 +68,8 @@ namespace MusicHUB.ViewModels
             }
         }
 
-        public string PlayedTimeString 
-        { 
-            get 
-            {
-                OnPropertyChanged(nameof(PlayedTime));
-                int min = (PlayedTime / 1000) / 60;
-                int sec = (PlayedTime / 1000) % 60;
-                return sec < 10 ? $"{min}:0{sec}" : $"{min}:{sec}";
-            }
-        }
-
-        public int PlayedTime { get; set; }
-
         public ICommand SetVolumeCommand { 
-            get => new Command(() => Audio.SetVolumeLevel(VolumeLevel));
+            get => new MvvmHelpers.Commands.Command(() => Audio.SetVolumeLevel(VolumeLevel));
         }
 
         public Track CurrentTrack
@@ -92,45 +85,62 @@ namespace MusicHUB.ViewModels
             OnPropertyChanged(nameof(CurrentTrack));
         }
 
+        public ICommand SeekPlayerSlider
+        {
+            get => new MvvmHelpers.Commands.Command(() =>
+            {
+                Audio.SetTime(PlayerPosition.CurrentPosition);
+                InitTimer();
+            });
+        }
+
+        public ICommand DragPlayerStartedCommand
+        {
+            get => new MvvmHelpers.Commands.Command(()=>
+                {
+                    timer.Dispose();
+                });
+        }
+
         public ICommand TrackChange
         {
-            get => new Command(c =>
+            get => new MvvmHelpers.Commands.Command(c =>
             {
                 timer.Dispose();
                 Audio.PlayAudioFile((Track)c);
                 TrackChanging();
                 Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
-                InintTimer();
+                InitTimer();
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             });
         }
 
         public ICommand NextTrack {
-            get => new Command(() =>
+            get => new MvvmHelpers.Commands.Command(() =>
             {
                 timer.Dispose();
                 Audio.Next();
                 TrackChanging();
+                InitTimer();
                 Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
-                InintTimer();
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             });
         }
 
         public ICommand PrevTrack {
-            get => new Command(() =>
+            get => new MvvmHelpers.Commands.Command(() =>
             {
                 timer.Dispose();
                 Audio.Prev();
                 TrackChanging();
                 Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
-                InintTimer();
+                InitTimer();
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             }); 
         }
 
         public ICommand PlayPause {
-            get => new Command(() =>
+            get => new MvvmHelpers.Commands.Command(() =>
             {
                 Audio.PlayPause();
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
@@ -138,22 +148,24 @@ namespace MusicHUB.ViewModels
             });
         }
 
-        public Command ShuffleCommand {
-            get => new Command(async () =>
-            {
-                Audio.Shuffle();
-                ResourceClass.Shufle = ResourceClassPlayerPage.ShuffledImg;
-                OnPropertyChanged(nameof(ResourceClass));
-            });
+        public AsyncCommand ShuffleCommand {
+            get => new AsyncCommand(async () => await Shufle());
         }
 
-        public Command ArtistPageCommand
+        private async Task Shufle()
         {
-            get => new Command((c) => this.Navigation.PushModalAsync(new ArtistPage(CurrentArtist, Connections), false));
+            await Audio.Shuffle();
+            ResourceClass.Shufle = ResourceClassPlayerPage.ShuffledImg;
+            OnPropertyChanged(nameof(ResourceClass));
         }
 
-        public Command RepeatCommand {
-            get => new Command(() =>
+        public ICommand ArtistPageCommand
+        {
+            get => new MvvmHelpers.Commands.Command((c) => this.Navigation.PushModalAsync(new ArtistPage(CurrentArtist, Connections), false));
+        }
+
+        public ICommand RepeatCommand {
+            get => new MvvmHelpers.Commands.Command(() =>
             {
                 Audio.LoopChange();
                 ResourceClass.Repeat = Audio.IsLooping ? ResourceClassPlayerPage.LoopedImg : ResourceClassPlayerPage.LoopImg;
@@ -163,7 +175,7 @@ namespace MusicHUB.ViewModels
 
         public ICommand OpenOptions
         {
-            get => new Command(() => this.Navigation.PushPopupAsync(new PopUpPageFromBottom(CurrentTrack)));
+            get => new MvvmHelpers.Commands.Command(() => this.Navigation.PushPopupAsync(new PopUpContextActionsOnTrack(CurrentTrack)));
         }
 
         private async Task<IEnumerable<Artist>> GetArtists()
@@ -184,21 +196,18 @@ namespace MusicHUB.ViewModels
             return ArtistAndImage;
         }
 
-        private void InintTimer()
+        private void InitTimer()
         {
             TimerCallback callback = CurrentTime;
             timer = new Timer(callback, null, 0, 500);
         }
 
-        private NetworkAccess Ethernet()
-        {
-            return Connectivity.NetworkAccess;
-        }
-
         private void CurrentTime(object c)
         {
-            PlayedTime = Audio.Time;
-            OnPropertyChanged(nameof(PlayedTimeString));
+            PlayerPosition.CurrentPosition = Audio.Time;
+            VolumeLevel = Audio.GetVolumeLevel;
+            OnPropertyChanged(nameof(PlayerPosition));
+            OnPropertyChanged(nameof(VolumeLevel));
         }
     }
 }

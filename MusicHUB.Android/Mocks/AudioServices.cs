@@ -1,6 +1,7 @@
 ﻿using Android.Content;
 using Android.Media;
 using MusicHUB;
+using MusicHUB.DataBaseServices;
 using MusicHUB.Droid;
 using MusicHUB.Models;
 using SimpleAudioForms.Droid;
@@ -18,7 +19,7 @@ namespace SimpleAudioForms.Droid
     {
         private AudioManager AudioManager = (AudioManager)Android.App.Application.Context.GetSystemService(Context.AudioService);
         private MediaPlayer player;
-        private ObservableCollection<Track> Queue = new MusicFilesCollector().GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" });
+        private ObservableCollection<Track> Queue;
         private int Position { get; set; }
         private Track CurrentTrack { get; set; }
 
@@ -38,6 +39,7 @@ namespace SimpleAudioForms.Droid
 
         public AudioService()
         {
+            Queue = new MusicFilesCollector().GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" });
             Init();
         }
 
