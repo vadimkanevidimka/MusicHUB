@@ -1,5 +1,6 @@
 ﻿using Genius;
 using MusicHUB.DataBaseServices;
+using MusicHUB.Interfaces;
 
 namespace MusicHUB.DependencyInjection
 {
@@ -11,7 +12,7 @@ namespace MusicHUB.DependencyInjection
             GeniusClient = geniusClient;
         }
 
-        public BaseDataBaseService BaseDataBaseService { get; }
+        public IDataBaseService BaseDataBaseService { get; }
 
         public GeniusClient GeniusClient { get; }
     }

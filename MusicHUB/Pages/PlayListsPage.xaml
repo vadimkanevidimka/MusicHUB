@@ -3,32 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:models="clr-namespace:MusicHUB.Models"
              x:Class="MusicHUB.Pages.PlayListsPage"
              Title="Плейлисты">
-    
-  <ListView x:Name="MyListView"
-            ItemsSource="{Binding Items}"
+
+    <ListView x:Name="MyListView"
+            ItemsSource="{Binding Items.Result}"
             ItemTapped="Handle_ItemTapped"
             CachingStrategy="RecycleElement">
-    <!--Built in Cells-->
         <ListView.ItemTemplate>
             <DataTemplate x:DataType="models:Track">
                 <ImageCell ImageSource="{Binding ImageSource}" Text="{Binding Title}" TextColor="Black" Detail="{Binding Artist}"/>
             </DataTemplate>
         </ListView.ItemTemplate>
-
-        <!--Custom View Cells-->
-    <!--
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-          <StackLayout>
-            <Label Text="{Binding Text}" 
-                   Style="{DynamicResource ListItemTextStyle}" />
-            <Label Text="{Binding Detail}" 
-                   Style="{DynamicResource ListItemDetailTextStyle}"/>
-          </StackLayout>
-        </ViewCell>
-      </DataTemplate>
-    </ListView.ItemTemplate>
-    -->
-  </ListView>
+    </ListView>
 </ContentPage>

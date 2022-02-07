@@ -1,13 +1,10 @@
-﻿using MusicHUB.Interfaces;
-using MusicHUB.Models;
-using System;
+﻿using MusicHUB.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Genius;
 using System.Threading.Tasks;
 using Genius.Models.Response;
 using MusicHUB.DependencyInjection;
@@ -19,12 +16,16 @@ using System.Linq;
 using MusicHUB.ViewModels.Properties;
 using MvvmHelpers.Commands;
 using Google.Android.Material.BottomSheet;
+using Android.Widget;
+using System.ComponentModel;
 
 namespace MusicHUB.ViewModels
 {
-    public class PlayerViewModel : BindableObject
+    public class PlayerViewModel : BindableObject, INotifyPropertyChanged
     {
         private readonly IAudio Audio = DependencyService.Get<IAudio>();
+
+        private Toast ToastMessage { get; set; }
 
         private Timer timer;
 
@@ -83,6 +84,9 @@ namespace MusicHUB.ViewModels
         public void TrackChanging()
         {
             OnPropertyChanged(nameof(CurrentTrack));
+            Artists = null;
+            Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
+            OnPropertyChanged(nameof(Artists));
         }
 
         public ICommand SeekPlayerSlider
@@ -109,7 +113,6 @@ namespace MusicHUB.ViewModels
                 timer.Dispose();
                 Audio.PlayAudioFile((Track)c);
                 TrackChanging();
-                Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
                 InitTimer();
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             });
@@ -122,7 +125,6 @@ namespace MusicHUB.ViewModels
                 Audio.Next();
                 TrackChanging();
                 InitTimer();
-                Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             });
         }
@@ -133,7 +135,6 @@ namespace MusicHUB.ViewModels
                 timer.Dispose();
                 Audio.Prev();
                 TrackChanging();
-                Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
                 InitTimer();
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             }); 
@@ -161,7 +162,12 @@ namespace MusicHUB.ViewModels
 
         public ICommand ArtistPageCommand
         {
-            get => new MvvmHelpers.Commands.Command((c) => this.Navigation.PushModalAsync(new ArtistPage(CurrentArtist, Connections), false));
+            get => new MvvmHelpers.Commands.Command(
+            async (c) =>
+            {
+                await App.Current.MainPage.Navigation.PopModalAsync();
+                await App.Current.MainPage.Navigation.PushAsync(new ArtistPage(CurrentArtist, Connections));
+            });
         }
 
         public ICommand RepeatCommand {
@@ -175,8 +181,33 @@ namespace MusicHUB.ViewModels
 
         public ICommand OpenOptions
         {
-            get => new MvvmHelpers.Commands.Command(() => this.Navigation.PushPopupAsync(new PopUpContextActionsOnTrack(CurrentTrack)));
+            get => new MvvmHelpers.Commands.Command(async () => await this.Navigation.PushPopupAsync(new PopUpContextActionsOnTrack(CurrentTrack), true));
         }
+
+        public ICommand LikeCommand
+        {
+            get => new MvvmHelpers.Commands.AsyncCommand(async () =>
+            {
+                var liked = await Connections.BaseDataBaseService.DataBase.Table<DBLikedTracks>().ToListAsync();
+                if (liked.Exists((context) => context.TrackId == CurrentTrack.Id))
+                {
+                    //await Connections.BaseDataBaseService.DataBase.DeleteAsync<DBLikedTracks>(CurrentTrack.Id);
+                    ResourceClass.Like = ResourceClassPlayerPage.LikeImg;
+                    ToastMessage = Toast.MakeText(Audio.GetContext, $"{CurrentTrack.Title} удалена из любимого", ToastLength.Short);
+                    ToastMessage.Show();
+                }
+                else
+                {
+                    //await Connections.BaseDataBaseService.DataBase.InsertAsync(CurrentTrack.Id, typeof(DBLikedTracks));
+                    ToastMessage = Toast.MakeText(Audio.GetContext, $"{CurrentTrack.Title} добавлена в любимое", ToastLength.Short);
+                    ToastMessage.Show();
+                    ResourceClass.Like = ResourceClassPlayerPage.LikedImg;
+                }
+                OnPropertyChanged(nameof(ResourceClass));
+            });
+        }
+
+        public ICommand ClosePlayerCommand => new MvvmHelpers.Commands.Command(() => this.Navigation.PopModalAsync());
 
         private async Task<IEnumerable<Artist>> GetArtists()
         {

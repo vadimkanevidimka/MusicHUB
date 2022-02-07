@@ -31,8 +31,9 @@ namespace MusicHUB
         void PlayPause();
         void LoopChange();
         void PlayerDispose();
-        void SetVolumeLevel(int volume);
         void SetTime(double Time);
         void PlayAudioFile(Track track);
+        void SetVolumeLevel(int volume);
+        void SetQueue(List<Track> Tracks);
     }
 }

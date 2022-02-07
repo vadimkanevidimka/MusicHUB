@@ -42,6 +42,10 @@
       "frameworks": {
         "monoandroid11.0": {
           "dependencies": {
+            "DLToolkit.Forms.Controls.FlowListView": {
+              "target": "Package",
+              "version": "[2.0.11, )"
+            },
             "Genius.NET": {
               "target": "Package",
               "version": "[4.0.1, )"
@@ -110,6 +114,10 @@
         "netstandard2.1": {
           "targetAlias": "netstandard2.1",
           "dependencies": {
+            "DLToolkit.Forms.Controls.FlowListView": {
+              "target": "Package",
+              "version": "[2.0.11, )"
+            },
             "Genius.NET": {
               "target": "Package",
               "version": "[4.0.1, )"

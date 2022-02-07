@@ -16,6 +16,6 @@ namespace MusicHUB.DataBaseServices
             this.DataBase = datatbase;
         }
 
-        SQLiteAsyncConnection IDataBaseService.DataBase => throw new NotImplementedException();
+        SQLiteAsyncConnection IDataBaseService.DataBase => DataBase;
     }
 }

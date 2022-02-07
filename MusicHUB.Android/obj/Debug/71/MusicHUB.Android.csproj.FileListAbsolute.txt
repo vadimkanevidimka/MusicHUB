@@ -1,0 +1,3 @@
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\71\MonoAndroid,Version=v7.1.AssemblyAttributes.cs
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\71\build.props
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\71\adb.props

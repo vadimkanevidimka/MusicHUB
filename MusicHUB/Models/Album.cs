@@ -11,7 +11,7 @@ namespace MusicHUB.Models
         public int Id { get; set; }
         public byte[] Image { get; set; }
         public string AlbumName { get; set; }
-        public List<string> TracksPaths { get; set; }
+        public List<int> TracksId { get; set; }
         public DateTime CreateDate { get; set; }
     }
 }

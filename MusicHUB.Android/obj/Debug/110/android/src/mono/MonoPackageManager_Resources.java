@@ -3,6 +3,7 @@ public class MonoPackageManager_Resources {
 	public static String[] Assemblies = new String[]{
 		/* We need to ensure that "MusicHUB.Android.dll" comes first in this list. */
 		"MusicHUB.Android.dll",
+		"DLToolkit.Forms.Controls.FlowListView.dll",
 		"FormsViewGroup.dll",
 		"Genius.dll",
 		"Jil.dll",

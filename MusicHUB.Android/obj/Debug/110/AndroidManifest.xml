@@ -6,11 +6,11 @@
     the contents are regenerated.
     -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.musichub" android:installLocation="auto">
-  <uses-sdk android:minSdkVersion="22" android:targetSdkVersion="30" />
+  <uses-sdk android:minSdkVersion="29" android:targetSdkVersion="30" />
   <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  <application android:label="MusicHUB.Android" android:theme="@style/MainTheme" android:name="android.app.Application" android:allowBackup="true" android:icon="@mipmap/musichub" android:debuggable="true" android:extractNativeLibs="true">
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <application android:label="MusicHUB.Android" android:theme="@style/MainTheme" android:icon="@mipmap/musichub" android:name="android.app.Application" android:allowBackup="true" android:debuggable="true" android:extractNativeLibs="true">
     <activity android:configChanges="orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:icon="@mipmap/musichub" android:label="MusicHUB" android:theme="@style/MainTheme" android:name="crc641d083f1fece1a6b9.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

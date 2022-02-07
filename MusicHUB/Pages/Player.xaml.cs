@@ -24,23 +24,13 @@ namespace MusicHUB.Pages
                 var context = DependencyService.Get<IAudio>().GetContext;
                 var toast = Toast.MakeText(context, ex.Message, ToastLength.Long);
                 toast.Show();
-                Close_Clicked(this, new EventArgs());
+                this.Navigation.PopModalAsync();
             }
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-        }
-
-        private async void Close_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PopModalAsync();
-        }
-
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-
         }
     }
 }

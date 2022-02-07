@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MusicHUB.ViewModels
+﻿namespace MusicHUB.ViewModels
 {
     public class ResourceClassPlayerPage
     {
@@ -12,6 +8,9 @@ namespace MusicHUB.ViewModels
         internal const string ShuffledImg = "shuffle_active.png";
         internal const string LoopImg = "Repeat.png";
         internal const string LoopedImg = "RepeatOnce.png";
+        internal const string LikeImg = "heart.png";
+        internal const string LikedImg = "heartliked.png";
+
 
         internal ResourceClassPlayerPage()
         {
@@ -23,5 +22,6 @@ namespace MusicHUB.ViewModels
         public string PlayPause { get; set; }
         public string Shufle { get; set; }
         public string Repeat { get; set; }
+        public string Like { get; set; }
     }
 }

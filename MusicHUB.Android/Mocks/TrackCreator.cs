@@ -1,15 +1,21 @@
 ﻿using Android.Media;
 using Java.IO;
-using MusicHUB.Interfaces;
+using MusicHUB.Droid;
 using MusicHUB.Models;
+using MusicHUB.Interfaces;
 using System;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
+[assembly: Dependency(typeof(TrackCreator))]
 namespace MusicHUB.Droid
 {
-    class TrackCreator
+    public class TrackCreator : ICreateTrack
     {
+        public TrackCreator()
+        {
+
+        }
+
         public Track CreateTrack(string filename)
         {
             if (string.IsNullOrEmpty(filename))
@@ -17,7 +23,7 @@ namespace MusicHUB.Droid
                 throw new ArgumentNullException(nameof(filename));
             }
 
-            using (FileInputStream inputStream = new FileInputStream(new Java.IO.File(filename)))
+            using (FileInputStream inputStream = new FileInputStream(new File(filename)))
             {
                 MediaMetadataRetriever mmdr = new MediaMetadataRetriever();
                 mmdr.SetDataSource(inputStream.FD);

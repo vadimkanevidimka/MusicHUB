@@ -5,13 +5,14 @@
              xmlns:ViewModels="clr-namespace:MusicHUB.ViewModels" 
              xmlns:Models2="clr-namespace:Java.Util;assembly=Mono.Android" 
              xmlns:response="clr-namespace:Genius.Models.Response;assembly=Genius" xmlns:response1="clr-namespace:Genius.Models.Artist;assembly=Genius"
-             x:Class="MusicHUB.Pages.Player">
+             x:Class="MusicHUB.Pages.Player"
+             NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Content>
-        <ScrollView VerticalOptions="Fill" BackgroundColor="White" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+        <ScrollView BackgroundColor="White" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
             <StackLayout Padding="0,10">
                 <StackLayout>
-                    <ImageButton Source="arrowdown.png" WidthRequest="50" HeightRequest="20" Aspect="Fill" VerticalOptions="Center" BackgroundColor="Transparent" Clicked="Close_Clicked" HorizontalOptions="Center"/>
+                    <ImageButton Source="arrowdown.png" WidthRequest="50" HeightRequest="20" Aspect="Fill" VerticalOptions="Center" BackgroundColor="Transparent" Command="{Binding ClosePlayerCommand}" HorizontalOptions="Center"/>
                     <CarouselView ItemsSource="{Binding Tracks}" CurrentItemChangedCommand ="{Binding TrackChange}" CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = CurrentItem}" Loop="False" HeightRequest="300" ItemsUpdatingScrollMode="KeepItemsInView" CurrentItem="{Binding CurrentTrack}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" IsBounceEnabled="True" PeekAreaInsets="40,0" HorizontalScrollBarVisibility="Never" Margin="0,20,0,0">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="Models:Track">
@@ -22,10 +23,11 @@
                     <ContentView>
                         <StackLayout Padding="20,20">
                             <FlexLayout AlignContent="SpaceAround" JustifyContent="SpaceBetween">
-                                <StackLayout WidthRequest="300">
+                                <StackLayout WidthRequest="270">
                                     <Label BindingContext="{Binding CurrentTrack}" FontSize="Large" Padding="10,0" Text="{Binding Title}" LineBreakMode="TailTruncation"/>
                                     <Label  BindingContext="{Binding CurrentTrack}" Text="{Binding Artist}" Padding="10,0" LineBreakMode="TailTruncation"/>
                                 </StackLayout>
+                                <ImageButton Style="{StaticResource buttonStyle}" Source="{Binding ResourceClass.Like}" Command="{Binding LikeCommand}" CornerRadius="30"/>
                                 <ImageButton Style="{StaticResource buttonStyle}" Source="options.png" Command="{Binding OpenOptions}" CornerRadius="30"/>
                             </FlexLayout>
                             <Slider Minimum="0" Maximum="{Binding PlayerPosition.Maximum}" Value="{Binding PlayerPosition.CurrentPosition}" DragStartedCommand="{Binding DragPlayerStartedCommand}" DragCompletedCommand="{Binding SeekPlayerSlider}" ThumbColor="Wheat" MaximumTrackColor="Wheat" MinimumTrackColor="Wheat" WidthRequest="-1" HeightRequest="35"/>
@@ -53,14 +55,11 @@
                     </ContentView>
                     <ActivityIndicator IsVisible="{Binding Artists.IsNotCompleted}" Color="Wheat" IsRunning="{Binding Artists.IsNotCompleted}"/>
                     <CarouselView ItemsSource="{Binding Artists.Result}" HeightRequest="150" ItemsUpdatingScrollMode="KeepItemsInView" CurrentItem="{Binding CurrentArtist}" Loop="False" IsBounceEnabled="True" PeekAreaInsets="10,0" HorizontalOptions="Center">
-                        <CarouselView.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                        </CarouselView.GestureRecognizers>
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <Frame CornerRadius="20" BackgroundColor="Wheat" HasShadow="True" Padding="0">
                                     <AbsoluteLayout>
-                                        <Image x:DataType="response1:Artist" AbsoluteLayout.LayoutBounds="0,0,150,150" Source="{Binding ImageUrl}"/>
+                                        <Image x:DataType="response1:Artist" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0,0,150,150" Source="{Binding ImageUrl}"/>
                                         <Label x:DataType="response1:Artist" Text="{Binding Name}" AbsoluteLayout.LayoutBounds="170,20,180,50" FontSize="Body" TextColor="DimGray"/>
                                         <ImageButton Source="arrowdown.png" Command="{Binding Source={RelativeSource AncestorType={Type ViewModels:PlayerViewModel}}, Path=ArtistPageCommand}" CommandParameter="{Binding Source={RelativeSource Mode=Self}, Path=CurrentItem}" Style="{StaticResource Key=ButtonOnWheatBackGround}" CornerRadius="30" Rotation="-90" AbsoluteLayout.LayoutBounds="310,90,60,60"/>
                                     </AbsoluteLayout>

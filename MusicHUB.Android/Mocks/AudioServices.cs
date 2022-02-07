@@ -6,6 +6,7 @@ using MusicHUB.Droid;
 using MusicHUB.Models;
 using SimpleAudioForms.Droid;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -19,17 +20,17 @@ namespace SimpleAudioForms.Droid
     {
         private AudioManager AudioManager = (AudioManager)Android.App.Application.Context.GetSystemService(Context.AudioService);
         private MediaPlayer player;
-        private ObservableCollection<Track> Queue;
+        private List<Track> Queue;
         private int Position { get; set; }
         private Track CurrentTrack { get; set; }
 
         bool IAudio.IsExists { get { return !(player is null); } }
         int IAudio.Time { get => player != null ? player.CurrentPosition : 0; }
         bool IAudio.Looping { get => player.Looping; }
-        int IAudio.GetVolumeLevel => AudioManager.GetStreamVolume(Android.Media.Stream.Music);
-        int IAudio.GetMaxVolumeLevel => AudioManager.GetStreamMaxVolume(Android.Media.Stream.Music);
+        int IAudio.GetVolumeLevel => AudioManager.GetStreamVolume(Stream.Music);
+        int IAudio.GetMaxVolumeLevel => AudioManager.GetStreamMaxVolume(Stream.Music);
 
-        public ObservableCollection<Track> Tracks => Queue;
+        public ObservableCollection<Track> Tracks => new ObservableCollection<Track>(Queue);
 
         public bool IsPlaying => player.IsPlaying;
 
@@ -39,7 +40,6 @@ namespace SimpleAudioForms.Droid
 
         public AudioService()
         {
-            Queue = new MusicFilesCollector().GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" });
             Init();
         }
 
@@ -62,6 +62,7 @@ namespace SimpleAudioForms.Droid
             player?.Stop();
             player?.Reset();
             player = new MediaPlayer();
+            player.SetAudioStreamType(Stream.Music);
             player.Prepared += (s, e) =>
             {
                 player.Start();
@@ -101,7 +102,7 @@ namespace SimpleAudioForms.Droid
         {
             if (CurrentTrack is null) CurrentTrack = track;
             else if (CurrentTrack.Id == track.Id) return;
-            Position = track.Id;
+            Position = Queue.IndexOf(track);
             CurrentTrack = track;
             if (player != null)
             {
@@ -133,6 +134,10 @@ namespace SimpleAudioForms.Droid
 
         public Track GetCurrentTrack()
         {
+            if (Queue == null || Queue.Count == 0)
+            {
+                return null;
+            }
             return Queue[Position];
         }
 
@@ -159,6 +164,11 @@ namespace SimpleAudioForms.Droid
                 Queue[j] = Queue[i];
                 Queue[i] = tmp;
             }
+        }
+
+        public void SetQueue(List<Track> Tracks)
+        {
+            Queue = Tracks;
         }
     }
 }

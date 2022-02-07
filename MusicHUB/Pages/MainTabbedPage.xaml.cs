@@ -11,7 +11,9 @@ namespace MusicHUB.Pages
         {
             InitializeComponent();
             Children.Add(new MainPage(connections));
+            Children[0].IconImageSource = "library.png";
             Children.Add(new PlayListsPage(connections));
+            Children[1].IconImageSource = "playlist2.png";
         }
     }
 }

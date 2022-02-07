@@ -9,6 +9,8 @@ using Rg.Plugins.Popup.Extensions;
 using System.Collections.ObjectModel;
 using MusicHUB.Interfaces;
 using MusicHUB.DependencyInjection;
+using MusicHUB.Droid;
+using System.Threading;
 
 namespace MusicHUB.Pages
 {
@@ -17,31 +19,38 @@ namespace MusicHUB.Pages
         private IAudio Audio = DependencyService.Get<IAudio>();
         private Connections Connections { get; set; }
         private Genius.GeniusClient GeniusClient { get; set; }
-        public ObservableCollection<Track> Tracks { get => Audio.Tracks; }
+        public bool isUpdating { get; set; }
+        MusicFilesCollector MusicFilesCollector = new MusicFilesCollector();
+        public List<Track> Tracks { get; set; }//GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" })
 
         public MainPage(Connections connections)
         {
             InitializeComponent();
             BindingContext = this;
+            isUpdating = false;
+            Tracks = new List<Track>();
             this.Connections = connections;
+            UpdateFileList();
         }
 
         protected override void OnAppearing()
         {
-            Track track = Audio.GetCurrentTrack();
-            UnderPanel.IsVisible = true;
-            AudioImgBottom.Source = track.ImageSource;
-            Title.Text = track.Title;
-            Author.Text = track.Artist;
+            
         }
 
-        void UpdateFileList()
+        async void UpdateFileList()
         {
-
-        }//Обновление плейлиста
+            isUpdating = true;
+            Tracks.Clear();
+            var tracks = await MusicFilesCollector.GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" });
+            Tracks.AddRange(tracks);
+            OnPropertyChanged(nameof(Tracks));
+            isUpdating = false;
+        }
 
         private void filesList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+            Audio.SetQueue(Tracks.ToList());
             Track track = (Track)e.Item;
             AudioImgBottom.Source = track.ImageSource;
             Title.Text = track.Title;
@@ -63,7 +72,10 @@ namespace MusicHUB.Pages
 
         private void AudioImgBottom_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new Player(Connections), true);
+            if (Navigation.NavigationStack.Count == 1)
+            {
+                Navigation.PushModalAsync(new Player(Connections), true);
+            }
         }
 
         private void PlayAllBtn_Clicked(object sender, EventArgs e)

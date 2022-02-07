@@ -11,12 +11,12 @@ namespace MusicHUB.DataBaseServices
 {
     public static class ConnectionCreator
     {
-
         public static async Task<SQLiteAsyncConnection> Init()
         {
             var dataBasePath = Path.Combine(FileSystem.AppDataDirectory, "MusicHub.db");
             SQLiteAsyncConnection DataBase = new SQLiteAsyncConnection(dataBasePath);
-            await DataBase.CreateTableAsync<DbTrack>();
+            await DataBase.CreateTableAsync<Track>();
+            await DataBase.CreateTableAsync<DBLikedTracks>();
             return DataBase;
         }
     }

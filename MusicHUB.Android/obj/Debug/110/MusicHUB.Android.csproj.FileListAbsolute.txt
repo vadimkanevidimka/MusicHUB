@@ -548,11 +548,9 @@ D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\volumeup.pn
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\xamarin_logo.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\arrowdown.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\boyonnine.jpg
-D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\disk.gif
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\icon_about.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\icon_feed.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\next.png
-D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\nice.jpg
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\options.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\82\jl\files.cache
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\SQLite-net.dll
@@ -573,7 +571,6 @@ D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\horizontal_
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\horizontallineremovebutton.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\library.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\list.png
-D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\midnight.jpg
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\playlist1.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\playlist2.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\playlist3.png
@@ -695,3 +692,17 @@ D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\src\mono\com\goo
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\src\mono\com\google\android\material\textfield\TextInputLayout_OnEndIconChangedListenerImplementor.java
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\MvvmHelpers.dll
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\MvvmHelpers.pdb
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\search.png
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\heart.png
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\heartliked.png
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\DLToolkit.Forms.Controls.FlowListView.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\System.Collections.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\System.Diagnostics.Debug.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\System.Linq.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\System.ObjectModel.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\System.Reflection.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\System.Reflection.Extensions.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\System.Resources.ResourceManager.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\System.Runtime.Extensions.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\System.Threading.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\assets\System.Threading.Tasks.dll

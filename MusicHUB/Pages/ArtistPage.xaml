@@ -1,29 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:response="clr-namespace:Genius.Models.Response;assembly=Genius" xmlns:artist="clr-namespace:Genius.Models.Artist;assembly=Genius" xmlns:song="clr-namespace:Genius.Models.Song;assembly=Genius"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:response="clr-namespace:Genius.Models.Response;assembly=Genius" xmlns:artist="clr-namespace:Genius.Models.Artist;assembly=Genius" xmlns:song="clr-namespace:Genius.Models.Song;assembly=Genius" xmlns:controls="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              x:Class="MusicHUB.Pages.ArtistPage"
              NavigationPage.HasNavigationBar="True"
-             NavigationPage.HasBackButton="True">
+             NavigationPage.HasBackButton="True"
+             Title="{Binding ArtistInfo.Result.Response.Artist.Name}">
 
     <ContentPage.Content>
         <RefreshView>
             <ScrollView HeightRequest="1000">
                 <StackLayout>
-                    <StackLayout Orientation="Horizontal" HeightRequest="50" BackgroundColor="Wheat">
-                        <ImageButton Source="arrowdown.png" Rotation="90" CornerRadius="30" Style="{StaticResource ButtonOnWheatBackGround}"/>
-                    </StackLayout>
-                    <Image WidthRequest="400" HeightRequest="400" Aspect="Fill" Source="{Binding Response.ImageUrl}"/>
-                    <Frame CornerRadius="20" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HeightRequest="1200" Margin="0,-30,0,0">
+                    <ImageButton Source="arrowdown.png" Rotation="90" CornerRadius="30" Style="{StaticResource ButtonOnWheatBackGround}"/>
+                    <Image WidthRequest="400" HeightRequest="400" Aspect="AspectFill" Margin="0,-60,0,0" Source="{Binding Response.ImageUrl}"/>
+                    <Frame CornerRadius="20" BackgroundColor="White" Margin="0,-30,0,0">
                         <StackLayout>
-                            <Label Text="{Binding ArtistInfo.Result.Response.Artist.Name}" FontSize="Title"/>
-                            <Label Text="{Binding ArtistInfo.Result.Response.Artist.Description}" FontSize="Body"/>
-                            <ListView ItemsSource="{Binding ArtistsSongs.Result.Response.Songs}" SelectionMode="None">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="song:Song">
-                                        <ImageCell ImageSource="{Binding SongArtImageUrl}" Text="{Binding Title}" TextColor="{AppThemeBinding Dark=white, Light=black}" Detail="{Binding Album}"/>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
+                            <StackLayout>
+                                <Label Text="{Binding ArtistInfo.Result.Response.Artist.Name}" TextColor="Black" FontSize="Title"/>
+                                <Label TextType="Html" Text="{Binding ArtistInfo.Result.Response.Artist.Description.Html}" FontSize="Body"/>
+                            </StackLayout>
+                            <StackLayout>
+                                <Label Text="Популярные треки" FontSize="Large"/>
+                                <ListView ItemsSource="{Binding ArtistsSongs.Result.Response.Songs}" HeightRequest="500" SelectionMode="None" FlowDirection="MatchParent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="song:Song">
+                                            <ImageCell ImageSource="{Binding SongArtImageUrl}" Text="{Binding Title}" TextColor="{AppThemeBinding Dark=white, Light=black}" Detail="{Binding Album}"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <Label Text="Популярные альбомы" FontSize="Large"/>
+                                <ActivityIndicator IsVisible="{Binding ArtistsAlbums.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistsAlbums.IsNotCompleted}" HorizontalOptions="End"/>
+                                <CollectionView x:Name="MessagesListView"
+                                          ItemsSource="{Binding ArtistsAlbums.Result}"
+                                          VerticalOptions="Start"
+                                          HeightRequest="400"
+                                          WidthRequest="150"
+                                          Rotation="270"
+                                          HorizontalOptions="Center">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="song:Album">
+                                            <ViewCell>
+                                                <ContentView Rotation="90">
+                                                    <Image Source="{Binding CoverArtUrl}" Aspect="AspectFit" />
+                                                </ContentView>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
                         </StackLayout>
                     </Frame>
                 </StackLayout>
