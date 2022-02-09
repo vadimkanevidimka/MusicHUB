@@ -4,6 +4,10 @@ public class MonoPackageManager_Resources {
 		/* We need to ensure that "MusicHUB.Android.dll" comes first in this list. */
 		"MusicHUB.Android.dll",
 		"DLToolkit.Forms.Controls.FlowListView.dll",
+		"FFImageLoading.dll",
+		"FFImageLoading.Forms.dll",
+		"FFImageLoading.Forms.Platform.dll",
+		"FFImageLoading.Platform.dll",
 		"FormsViewGroup.dll",
 		"Genius.dll",
 		"Jil.dll",

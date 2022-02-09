@@ -23,3 +23,5 @@ D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\ref\MusicHUB.dll
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\MusicHUB.pdb
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\ArtistPage.xaml.g.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\PopUpContextActionsOnTrack.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\CutPopupPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\QueuePopupPage.xaml.g.cs

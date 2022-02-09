@@ -26,23 +26,25 @@ namespace MusicHUB.Droid
             Rg.Plugins.Popup.Popup.Init(this);
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 27, 27, 27));
             Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.ForceNotFullscreen);
-            GrantPermissions(new string[] { "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE" }, 1);
+            GrantPermissions();
             var DataBase = await ConnectionCreator.Init();
             Genius.GeniusClient geniusClient = new GeniusClient("AkUpkfIcZocLUFBxkZT8kUUb4pUxiHjo7ioK7eGPdsjy3TtE596RAN5iQZIH9G1B");
             Connections connections = new Connections(new DataBaseService(DataBase), geniusClient);
             LoadApplication(new App(connections));
         }
 
-        private void GrantPermissions(string[] permissions,int requestCode)
+        private async void GrantPermissions()
         {
-            foreach (var item in permissions)
+            var StorrageRead = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+            if (StorrageRead == PermissionStatus.Denied)
             {
-                var rezult = base.CheckSelfPermission(item);
-                if (base.CheckSelfPermission(item) == Permission.Denied)
-                {
-                    base.RequestPermissions(permissions, requestCode);
-                    return;
-                }
+                await Permissions.RequestAsync<Permissions.StorageRead>();
+            }
+
+            var StorrageWrite = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+            if (StorrageWrite == PermissionStatus.Denied)
+            {
+                await Permissions.RequestAsync<Permissions.StorageWrite>();
             }
         }
 

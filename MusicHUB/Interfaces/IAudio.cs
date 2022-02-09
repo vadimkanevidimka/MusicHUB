@@ -32,8 +32,10 @@ namespace MusicHUB
         void LoopChange();
         void PlayerDispose();
         void SetTime(double Time);
+        void AddToQueue(Track track);
         void PlayAudioFile(Track track);
         void SetVolumeLevel(int volume);
+        void RemoveFromQueue(Track track);
         void SetQueue(List<Track> Tracks);
     }
 }

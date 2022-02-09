@@ -1,18 +1,27 @@
-﻿using MusicHUB.Models;
+﻿using Android.Widget;
+using MusicHUB.Models;
 using System.IO;
+using Xamarin.Forms;
 
 namespace MusicHUB.ViewModels.ContextActions
 {
-    class DeleteContextAction : IContextAction
+    class DeleteContextAction : BaseContextAction
     {
-        public string ImageURl => "deletebutton.png";
-        public string DescriptionText => "Удалить";
+        public override string ImageURl => "deletebutton.png";
+        public override string DescriptionText => "Удалить";
 
-        public void ExcecuteAction<T>(object someobject)
+        public override void ExcecuteAction<T>(object someobject)
         {
+            if (someobject == null)
+            {
+                return;
+            }
+
             if (typeof(T) == typeof(Track))
             {
+                DependencyService.Get<IAudio>().Pause();
                 File.Delete(((Track)someobject).Uri);
+                base.MakeToast($"Композиция {((Track)someobject).Title} удалена");
             }
             else
             {

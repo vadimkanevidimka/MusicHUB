@@ -6,12 +6,12 @@ using Xamarin.Forms;
 
 namespace MusicHUB.ViewModels.ContextActions
 {
-    class GetLirycsContextAction : IContextAction
+    class GetLirycsContextAction : BaseContextAction
     {
-        public string ImageURl => "text.png";
-        public string DescriptionText => "Найти текст песни";
+        public override string ImageURl => "text.png";
+        public override string DescriptionText => "Найти текст песни";
 
-        public void ExcecuteAction<T>(object someobject)
+        public override void ExcecuteAction<T>(object someobject)
         {
             if (typeof(T) == typeof(Track))
             {

@@ -170,5 +170,15 @@ namespace SimpleAudioForms.Droid
         {
             Queue = Tracks;
         }
+
+        public void AddToQueue(Track track)
+        {
+            Queue.Insert(Position + 1, track);
+        }
+
+        public void RemoveFromQueue(Track track)
+        {
+            Queue.Remove(track);
+        }
     }
 }

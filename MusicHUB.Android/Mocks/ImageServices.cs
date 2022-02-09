@@ -1,4 +1,5 @@
-﻿using Android.Media;
+﻿using Android.Graphics;
+using Android.Media;
 using Java.IO;
 using MusicHUB.Droid.Mocks;
 using MusicHUB.Interfaces;
@@ -69,7 +70,7 @@ namespace MusicHUB.Droid.Mocks
                 Red = image is null ? 200 : Convert.ToInt32(redBucket / pixelCount);
                 Green = image is null ? 200 : Convert.ToInt32(greenBucket / pixelCount);
                 Blue = image is null ? 200 : Convert.ToInt32(blueBucket / pixelCount);
-                return new Color(Red, Green, Blue);
+                return new Xamarin.Forms.Color(Red, Green, Blue);
             }
             catch (Exception ex)
             {
@@ -85,10 +86,9 @@ namespace MusicHUB.Droid.Mocks
                 MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
                 Java.IO.File file = new Java.IO.File(fileName);
                 FileInputStream inputStream = new FileInputStream(file);
-                mediaMetadataRetriever = new MediaMetadataRetriever();
                 mediaMetadataRetriever.SetDataSource(inputStream.FD);
                 byte[] picture = mediaMetadataRetriever.GetEmbeddedPicture();
-                Android.Graphics.Bitmap bitmap = Android.Graphics.BitmapFactory.DecodeByteArray(picture, 0, picture.Length);
+                if (picture is null || picture.Length == 0) throw new ArgumentNullException();
                 return ImageSource.FromStream(() => new MemoryStream(picture));
             }
             catch (Exception ex)

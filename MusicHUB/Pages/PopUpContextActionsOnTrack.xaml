@@ -10,7 +10,7 @@
         <animations:ScaleAnimation 
             PositionIn="Bottom"
             PositionOut="Bottom"
-            DurationIn="200"
+            DurationIn="250"
             DurationOut="100"
             EasingIn="SinOut"
             EasingOut="SinIn"
@@ -31,20 +31,21 @@
     <StackLayout 
         VerticalOptions="EndAndExpand" 
         HorizontalOptions="FillAndExpand">
-        <Frame CornerRadius="20" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="300">
+        <Frame CornerRadius="20" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="350">
             <StackLayout>
                 <FlexLayout JustifyContent="Start" VerticalOptions="Center">
                     <Image Source="{Binding Tracks.ImageSource}" Aspect="AspectFit" HeightRequest="60"></Image>
-                    <StackLayout Padding="20,0,0,0" >
-                        <Label x:Name="Title" Text="{Binding Tracks.Title}" FontSize="22"/>
-                        <Label x:Name="Artist" Text="{Binding Tracks.Artist}"/>
+                    <StackLayout Padding="20,0,0,0">
+                        <Label x:Name="Title" Text="{Binding Tracks.Title}" FontSize="20"/>
+                        <Label x:Name="Artist" Text="{Binding Tracks.Artist}" FontSize="16"/>
+                        <Label Text="{Binding Tracks.DurationString}"/>
                     </StackLayout>
                 </FlexLayout>
-                <ListView ItemsSource="{Binding ContextActions.TrackContextActions}" Margin="0,10,0,0" SeparatorColor="#3C2E0B" ItemSelected="ListView_ItemSelected">
+                <ListView ItemsSource="{Binding ContextActions.TrackContextActions}" ItemSelected="ListView_ItemSelected" Margin="-10,0">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="Models1:IContextAction">
                             <ViewCell>
-                                <Grid VerticalOptions="Center" ColumnSpacing="20">
+                                <Grid VerticalOptions="Center" ColumnSpacing="20" Padding="10,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="25" />
                                         <ColumnDefinition Width="*" />

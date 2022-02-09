@@ -21,5 +21,10 @@ namespace MusicHUB.Models
         public ImageSource ImageSource { get => DependencyService.Get<IImage>().GetTrackPic(this.Uri);}
         [Ignore]
         public ImageSource LowResolutionImage { get => DependencyService.Get<IImage>().GetLowerResImage(this.Uri); }
+
+        public Track MemberWiseClone()
+        {
+            return (Track)base.MemberwiseClone();
+        }
     }
 }

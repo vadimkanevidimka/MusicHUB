@@ -31,11 +31,7 @@
                                 <ActivityIndicator IsVisible="{Binding ArtistsAlbums.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistsAlbums.IsNotCompleted}" HorizontalOptions="End"/>
                                 <CollectionView x:Name="MessagesListView"
                                           ItemsSource="{Binding ArtistsAlbums.Result}"
-                                          VerticalOptions="Start"
-                                          HeightRequest="400"
-                                          WidthRequest="150"
-                                          Rotation="270"
-                                          HorizontalOptions="Center">
+                                          VerticalOptions="Start" ItemsLayout="HorizontalList">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="song:Album">
                                             <ViewCell>

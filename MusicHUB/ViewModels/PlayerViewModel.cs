@@ -81,9 +81,10 @@ namespace MusicHUB.ViewModels
             }
         }
 
-        public void TrackChanging()
+        public async void TrackChanging()
         {
             OnPropertyChanged(nameof(CurrentTrack));
+            await IsTrackLiked(CurrentTrack);
             Artists = null;
             Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
             OnPropertyChanged(nameof(Artists));
@@ -181,30 +182,42 @@ namespace MusicHUB.ViewModels
 
         public ICommand OpenOptions
         {
-            get => new MvvmHelpers.Commands.Command(async () => await this.Navigation.PushPopupAsync(new PopUpContextActionsOnTrack(CurrentTrack), true));
+            get => new MvvmHelpers.Commands.Command(async () => { await this.Navigation.PushPopupAsync(new PopUpContextActionsOnTrack(CurrentTrack), true); });
         }
 
         public ICommand LikeCommand
         {
             get => new MvvmHelpers.Commands.AsyncCommand(async () =>
             {
-                var liked = await Connections.BaseDataBaseService.DataBase.Table<DBLikedTracks>().ToListAsync();
-                if (liked.Exists((context) => context.TrackId == CurrentTrack.Id))
+                if (await IsTrackLiked(CurrentTrack))
                 {
-                    //await Connections.BaseDataBaseService.DataBase.DeleteAsync<DBLikedTracks>(CurrentTrack.Id);
-                    ResourceClass.Like = ResourceClassPlayerPage.LikeImg;
-                    ToastMessage = Toast.MakeText(Audio.GetContext, $"{CurrentTrack.Title} удалена из любимого", ToastLength.Short);
-                    ToastMessage.Show();
+                    await Connections.BaseDataBaseService.DataBase.QueryAsync<DBLikedTracks>("Delete from LikedTracks where TrackId = ?", CurrentTrack.Id);
+                    Toast.MakeText(Audio.GetContext, $"{CurrentTrack.Title} удалена из любимого", ToastLength.Short).Show();
                 }
                 else
                 {
-                    //await Connections.BaseDataBaseService.DataBase.InsertAsync(CurrentTrack.Id, typeof(DBLikedTracks));
-                    ToastMessage = Toast.MakeText(Audio.GetContext, $"{CurrentTrack.Title} добавлена в любимое", ToastLength.Short);
-                    ToastMessage.Show();
-                    ResourceClass.Like = ResourceClassPlayerPage.LikedImg;
+                    await Connections.BaseDataBaseService.DataBase.InsertAsync(new DBLikedTracks() { TrackId = CurrentTrack.Id });
+                    Toast.MakeText(Audio.GetContext, $"{CurrentTrack.Title} добавлена в любимое", ToastLength.Short).Show();
                 }
-                OnPropertyChanged(nameof(ResourceClass));
+                await IsTrackLiked(CurrentTrack);
             });
+        }
+
+        private async Task<bool> IsTrackLiked(Track track)
+        {
+            var liked = await Connections.BaseDataBaseService.DataBase.Table<DBLikedTracks>().ToListAsync();
+            if(liked.Exists((context) => context.TrackId == CurrentTrack.Id))
+            {
+                ResourceClass.Like = ResourceClassPlayerPage.LikedImg;
+                OnPropertyChanged(nameof(ResourceClass));
+                return true;
+            }
+            else
+            {
+                ResourceClass.Like = ResourceClassPlayerPage.LikeImg;
+                OnPropertyChanged(nameof(ResourceClass));
+                return false;
+            }
         }
 
         public ICommand ClosePlayerCommand => new MvvmHelpers.Commands.Command(() => this.Navigation.PopModalAsync());

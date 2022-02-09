@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7uTLApVSpPYVCodzAM6g0fceXHGa10vPnLrvRy8RKoMaRy3gUJq52IEercrGzYbgDlqJ8AlC4tY7fqzMrv79eQ==",
+  "dgSpecHash": "KpyiNekgh7Q30to2+o4D3IhkA6yS6iJXg+T2mbCsFfS/I5R5Vskzqyfeo4OS4GRWBNfaoyPxXQDOUrui1r+pTA==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Mus\\MusicHUB\\MusicHUB.Android\\MusicHUB.Android.csproj",
   "expectedPackageFiles": [
@@ -77,6 +77,8 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.androidx.viewpager\\1.0.0.8\\xamarin.androidx.viewpager.1.0.0.8.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.androidx.viewpager2\\1.0.0.10\\xamarin.androidx.viewpager2.1.0.0.10.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.essentials\\1.7.1\\xamarin.essentials.1.7.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.ffimageloading\\2.4.11.982\\xamarin.ffimageloading.2.4.11.982.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.ffimageloading.forms\\2.4.11.982\\xamarin.ffimageloading.forms.2.4.11.982.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.forms\\5.0.0.2337\\xamarin.forms.5.0.0.2337.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.google.android.material\\1.4.0.2\\xamarin.google.android.material.1.4.0.2.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.google.guava.listenablefuture\\1.0.0.2\\xamarin.google.guava.listenablefuture.1.0.0.2.nupkg.sha512"
