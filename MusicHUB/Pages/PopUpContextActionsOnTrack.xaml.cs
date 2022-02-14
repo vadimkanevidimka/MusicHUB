@@ -17,19 +17,29 @@ namespace MusicHUB
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PopUpContextActionsOnTrack : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public ContextActionsResourses ContextActions { get; set; }
+        public IEnumerable<IContextAction> ContextActions { get; set; }
         public Track Tracks { get; set; }
-        public PopUpContextActionsOnTrack(Track track)
+        public PopUpContextActionsOnTrack(Track track, TrackContextActionState contextActionState)
         {
             InitializeComponent();
-            ContextActions = new ContextActionsResourses();
+            switch (contextActionState)
+            {
+                case TrackContextActionState.AtList:
+                    ContextActions = new ContextActionsResourses().TrackListContextActions;
+                    break;
+                case TrackContextActionState.AtPlayerPage:
+                    ContextActions = new ContextActionsResourses().TrackContextActions;
+                    break;
+                default:
+                    break;
+            }
             Tracks = track;
             BindingContext = this;
         }
 
-        private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            IContextAction contextAction = e.SelectedItem as IContextAction;
+            IContextAction contextAction = e.Item as IContextAction;
             contextAction.ExcecuteAction<Track>(Tracks);
             await this.Navigation.PopPopupAsync();
         }

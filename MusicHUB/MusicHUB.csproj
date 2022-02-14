@@ -40,6 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Pages\AddingAlbumPopupPage.xaml.cs">
+      <DependentUpon>AddingAlbumPopupPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Pages\QueuePopupPage.xaml.cs">
       <DependentUpon>QueuePopupPage.xaml</DependentUpon>
     </Compile>
@@ -52,7 +55,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Pages\AlbumPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Pages\ArtistPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\ChosePlayListPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\CutPopupPage.xaml">

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  
+            xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+            xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+            xmlns:models="clr-namespace:MusicHUB.Models" xmlns:viewmodels="clr-namespace:MusicHUB.ViewModels"
+            x:Class="MusicHUB.Pages.AddingAlbumPopupPage">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Bottom"
+            PositionOut="Bottom"
+            DurationIn="150"
+            DurationOut="150"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="MainButtonStyle" TargetType="Button">
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="CornerRadius" Value="30"/>
+            </Style>
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+
+    <StackLayout 
+        VerticalOptions="EndAndExpand" 
+        HorizontalOptions="FillAndExpand">
+        <Frame CornerRadius="20" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="150">
+            <StackLayout>
+                <Label Text="Новый плейлист" FontSize="20" Padding="10"/>
+                <StackLayout Orientation="Horizontal">
+                    <Entry Placeholder="Название плейлиста." Text="{Binding NewAlbum.Title, Mode=TwoWay}" WidthRequest="300" ClearButtonVisibility="WhileEditing"/>
+                    <ImageButton Style="{StaticResource ButtonOnWheatBackGround}" Source="library.png" Command="{Binding ChoseAlbumPic}"/>
+                </StackLayout>
+                <Button Style="{StaticResource MainButtonStyle}" BackgroundColor="White" Text="Добавить" Command="{Binding AddNewAlbumCommand}"/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

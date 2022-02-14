@@ -56,7 +56,6 @@ namespace MusicHUB.Pages
             Title.Text = track.Title;
             Author.Text = track.Artist;
             Audio.PlayAudioFile(track);
-            ((ListView)sender).SelectedItem = null;
         }//НАжатие на элемент для проигрывания
 
         private void UnderPanelButton_Clicked(object sender, EventArgs e)
@@ -87,7 +86,12 @@ namespace MusicHUB.Pages
         {
             ImageButton button = sender as ImageButton;
             ViewCell viewCell = button.Parent.Parent as ViewCell;
-            Navigation.PushPopupAsync(new PopUpContextActionsOnTrack((Track)viewCell.BindingContext));
+            Navigation.PushPopupAsync(new PopUpContextActionsOnTrack((Track)viewCell.BindingContext, ViewModels.ContextActions.TrackContextActionState.AtList));
+        }
+
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+
         }
     }
 }

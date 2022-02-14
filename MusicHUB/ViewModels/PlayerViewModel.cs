@@ -21,7 +21,7 @@ using System.ComponentModel;
 
 namespace MusicHUB.ViewModels
 {
-    public class PlayerViewModel : BindableObject, INotifyPropertyChanged
+    public class PlayerViewModel : BindableObject
     {
         private readonly IAudio Audio = DependencyService.Get<IAudio>();
 
@@ -43,7 +43,7 @@ namespace MusicHUB.ViewModels
 
         public ResourceClassPlayerPage ResourceClass { get; set; }
 
-        public NotifyTaskCompletion<IEnumerable<Artist>> Artists { get; set; }
+        public NotifyTaskCompletion<IList<Artist>> Artists { get; set; }
 
         public ObservableCollection<Track> Tracks { get => Audio.Tracks; }
 
@@ -85,9 +85,10 @@ namespace MusicHUB.ViewModels
         {
             OnPropertyChanged(nameof(CurrentTrack));
             await IsTrackLiked(CurrentTrack);
-            Artists = null;
-            Artists = new NotifyTaskCompletion<IEnumerable<Artist>>(GetArtists());
+            Artists = new NotifyTaskCompletion<IList<Artist>>(GetArtists());
             OnPropertyChanged(nameof(Artists));
+            InitTimer();
+            await Task.Run(() => { Task.Delay(1000); ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg; } );
         }
 
         public ICommand SeekPlayerSlider
@@ -114,7 +115,6 @@ namespace MusicHUB.ViewModels
                 timer.Dispose();
                 Audio.PlayAudioFile((Track)c);
                 TrackChanging();
-                InitTimer();
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             });
         }
@@ -125,7 +125,6 @@ namespace MusicHUB.ViewModels
                 timer.Dispose();
                 Audio.Next();
                 TrackChanging();
-                InitTimer();
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             });
         }
@@ -136,8 +135,6 @@ namespace MusicHUB.ViewModels
                 timer.Dispose();
                 Audio.Prev();
                 TrackChanging();
-                InitTimer();
-                ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
             }); 
         }
 
@@ -156,8 +153,9 @@ namespace MusicHUB.ViewModels
 
         private async Task Shufle()
         {
-            await Audio.Shuffle();
+            Audio.Shuffle();
             ResourceClass.Shufle = ResourceClassPlayerPage.ShuffledImg;
+            OnPropertyChanged(nameof(Tracks));
             OnPropertyChanged(nameof(ResourceClass));
         }
 
@@ -182,7 +180,7 @@ namespace MusicHUB.ViewModels
 
         public ICommand OpenOptions
         {
-            get => new MvvmHelpers.Commands.Command(async () => { await this.Navigation.PushPopupAsync(new PopUpContextActionsOnTrack(CurrentTrack), true); });
+            get => new MvvmHelpers.Commands.AsyncCommand(async () => { await this.Navigation.PushPopupAsync(new PopUpContextActionsOnTrack(CurrentTrack, ContextActions.TrackContextActionState.AtPlayerPage), true); OnPropertyChanging(nameof(Tracks)); });
         }
 
         public ICommand LikeCommand
@@ -220,9 +218,9 @@ namespace MusicHUB.ViewModels
             }
         }
 
-        public ICommand ClosePlayerCommand => new MvvmHelpers.Commands.Command(() => this.Navigation.PopModalAsync());
+        public ICommand ClosePlayerCommand => new MvvmHelpers.Commands.AsyncCommand( async () => {await this.Navigation.PopModalAsync(); Audio.OnCompleted -= (obj, e) => OnPropertyChanged(nameof(CurrentTrack)); });
 
-        private async Task<IEnumerable<Artist>> GetArtists()
+        private async Task<IList<Artist>> GetArtists()
         {
             List<Artist> ArtistAndImage = new List<Artist>();
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)

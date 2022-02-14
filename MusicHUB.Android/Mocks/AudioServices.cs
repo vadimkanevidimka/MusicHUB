@@ -20,7 +20,7 @@ namespace SimpleAudioForms.Droid
     {
         private AudioManager AudioManager = (AudioManager)Android.App.Application.Context.GetSystemService(Context.AudioService);
         private MediaPlayer player;
-        private List<Track> Queue;
+        private List<Track> Queue = new List<Track>();
         private int Position { get; set; }
         private Track CurrentTrack { get; set; }
 
@@ -67,10 +67,7 @@ namespace SimpleAudioForms.Droid
             {
                 player.Start();
             };
-            if (OnCompleted == null)
-            {
-                player.Completion += setNext;
-            }
+            player.Completion += setNext;
         }
 
         public void SetVolumeLevel(int volume)
@@ -81,7 +78,6 @@ namespace SimpleAudioForms.Droid
         private void setNext(object sender, EventArgs e)
         {
             Next();
-            if (OnCompleted != null) OnCompleted(sender, e);
         }
 
         public void LoopChange()
@@ -100,6 +96,7 @@ namespace SimpleAudioForms.Droid
 
         public void PlayAudioFile(Track track)
         {
+            if (track is null) return;
             if (CurrentTrack is null) CurrentTrack = track;
             else if (CurrentTrack.Id == track.Id) return;
             Position = Queue.IndexOf(track);
@@ -118,14 +115,17 @@ namespace SimpleAudioForms.Droid
 
         public void Next()
         {
+            if (Queue is null) return;
             if (Position != Queue.Count - 1)
             {
                 PlayAudioFile(Queue[Position + 1]);
             }
+            if (OnCompleted != null) OnCompleted(null, new EventArgs());
         }
 
         public void Prev()
         {
+            if (Queue is null) return;
             if (Position != 0)
             {
                 PlayAudioFile(Queue[Position - 1]);
@@ -147,9 +147,9 @@ namespace SimpleAudioForms.Droid
             else player.Start();
         }
 
-        public Task Shuffle()
+        public async Task Shuffle()
         {
-           return Task.Run(() => ShuffleQueue());
+           await Task.Run(() => ShuffleQueue());
         }
 
         private void ShuffleQueue()

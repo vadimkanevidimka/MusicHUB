@@ -29,12 +29,14 @@ namespace MusicHUB.Droid.Mocks
         {
             try
             {
-                MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-                Java.IO.File file = new Java.IO.File(filename);
-                FileInputStream inputStream = new FileInputStream(file);
-                mediaMetadataRetriever.SetDataSource(inputStream.FD);
-                byte[] picture = mediaMetadataRetriever.GetEmbeddedPicture();
-                image = Android.Graphics.BitmapFactory.DecodeByteArray(picture, 0, picture.Length);
+                using (MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever())
+                {
+                    Java.IO.File file = new Java.IO.File(filename);
+                    FileInputStream inputStream = new FileInputStream(file);
+                    mediaMetadataRetriever.SetDataSource(inputStream.FD);
+                    byte[] picture = mediaMetadataRetriever.GetEmbeddedPicture();
+                    image = Android.Graphics.BitmapFactory.DecodeByteArray(picture, 0, picture.Length);
+                }
             }
             catch (Exception ex)
             {
@@ -89,6 +91,7 @@ namespace MusicHUB.Droid.Mocks
                 mediaMetadataRetriever.SetDataSource(inputStream.FD);
                 byte[] picture = mediaMetadataRetriever.GetEmbeddedPicture();
                 if (picture is null || picture.Length == 0) throw new ArgumentNullException();
+                mediaMetadataRetriever.Release();
                 return ImageSource.FromStream(() => new MemoryStream(picture));
             }
             catch (Exception ex)

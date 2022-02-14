@@ -17,6 +17,8 @@ namespace MusicHUB.DataBaseServices
             SQLiteAsyncConnection DataBase = new SQLiteAsyncConnection(dataBasePath);
             await DataBase.CreateTableAsync<Track>();
             await DataBase.CreateTableAsync<DBLikedTracks>();
+            await DataBase.CreateTableAsync<Album>();
+            await DataBase.CreateTableAsync<AlbumsTracks>();
             return DataBase;
         }
     }

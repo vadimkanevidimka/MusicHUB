@@ -1,4 +1,7 @@
-﻿using Android.Widget;
+﻿using Android.Content;
+using Android.Provider;
+using Android.Widget;
+using MusicHUB.Interfaces;
 using MusicHUB.Models;
 using System.IO;
 using Xamarin.Forms;
@@ -19,9 +22,15 @@ namespace MusicHUB.ViewModels.ContextActions
 
             if (typeof(T) == typeof(Track))
             {
+                Track track = someobject as Track;
                 DependencyService.Get<IAudio>().Pause();
-                File.Delete(((Track)someobject).Uri);
-                base.MakeToast($"Композиция {((Track)someobject).Title} удалена");
+                if (DependencyService.Get<IFileProvider>().DeleteFile(track.Uri))
+                {
+                    base.MakeToast($"{track.Title} удален");
+                    DependencyService.Get<IAudio>().RemoveFromQueue(track);
+                    DependencyService.Get<IAudio>().Next();
+                }
+                base.MakeToast($"{track.Title} не удален");
             }
             else
             {

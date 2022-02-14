@@ -23,7 +23,7 @@ namespace MusicHUB.ViewModels
             set
             {
                 queue = value;
-                OnPropertyChanged("Title");
+                OnPropertyChanged(nameof(Queue));
             }
         }
 

@@ -3,9 +3,10 @@
             xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-            xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup" xmlns:models="clr-namespace:MusicHUB.Models" xmlns:viewmodels="clr-namespace:MusicHUB.ViewModels"
-    x:Class="MusicHUB.Pages.QueuePopupPage">
-
+            xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+            xmlns:models="clr-namespace:MusicHUB.Models" xmlns:viewmodels="clr-namespace:MusicHUB.ViewModels"
+            x:Class="MusicHUB.Pages.QueuePopupPage">
+    
     <pages:PopupPage.BindingContext>
         <viewmodels:QueuePopupPageViewModel/>
     </pages:PopupPage.BindingContext>
@@ -14,8 +15,8 @@
         <animations:ScaleAnimation 
             PositionIn="Bottom"
             PositionOut="Bottom"
-            DurationIn="250"
-            DurationOut="100"
+            DurationIn="150"
+            DurationOut="150"
             EasingIn="SinOut"
             EasingOut="SinIn"
             HasBackgroundAnimation="True"/>
@@ -36,13 +37,35 @@
         VerticalOptions="EndAndExpand" 
         HorizontalOptions="FillAndExpand">
         <Frame CornerRadius="20" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="350">
-            <ListView ItemsSource="{Binding Queue}" SelectionMode="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Track">
-                        <ImageCell ImageSource="{Binding ImageSource}" Text="{Binding Title}" Detail="{Binding Artist}" TextColor="Black"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <StackLayout>
+                <Label Text="Список проигрывания" FontSize="20" Padding="10"/>
+                <ListView ItemsSource="{Binding Queue}" CachingStrategy="RetainElement" SelectionMode="None" HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Track">
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid Padding="10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="35"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Line Grid.Column="0" StrokeLineCap="Round" WidthRequest="10" X1="0" Y1="17" Y2="17" X2="10" Stroke="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
+                                        <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                            <Label Text="{Binding Title}" LineBreakMode="TailTruncation" FontSize="16"/>
+                                            <Label Text="{Binding Artist}" LineBreakMode="TailTruncation" FontSize="12"/>
+                                        </StackLayout>
+                                        <ImageButton Source="options.png" CornerRadius="30" Padding="5" Style="{StaticResource ButtonOnWheatBackGround}" Grid.Column="2"/>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    </ListView>
+            </StackLayout>
         </Frame>
     </StackLayout>
 </pages:PopupPage>

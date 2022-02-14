@@ -41,7 +41,7 @@
                         <Label Text="{Binding Tracks.DurationString}"/>
                     </StackLayout>
                 </FlexLayout>
-                <ListView ItemsSource="{Binding ContextActions.TrackContextActions}" ItemSelected="ListView_ItemSelected" Margin="-10,0">
+                <ListView ItemsSource="{Binding ContextActions}" SelectionMode="None" ItemTapped="ListView_ItemTapped" Margin="-10,0">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="Models1:IContextAction">
                             <ViewCell>

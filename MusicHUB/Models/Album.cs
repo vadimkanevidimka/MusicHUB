@@ -7,7 +7,7 @@ using System.Text;
 namespace MusicHUB.Models
 {
     [Table("Albums")]
-    public class Album : IAlbum
+    public class Album
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

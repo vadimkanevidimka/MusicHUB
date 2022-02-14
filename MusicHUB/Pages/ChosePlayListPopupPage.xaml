@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  
+            xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+            xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+            xmlns:models="clr-namespace:MusicHUB.Models" xmlns:viewmodels="clr-namespace:MusicHUB.ViewModels" xmlns:converters="clr-namespace:MusicHUB.Helpers.Converters"
+    x:Class="MusicHUB.Pages.ChosePlayListPopupPage">
+
+    <pages:PopupPage.BindingContext>
+        <viewmodels:QueuePopupPageViewModel/>
+    </pages:PopupPage.BindingContext>
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Bottom"
+            PositionOut="Bottom"
+            DurationIn="150"
+            DurationOut="150"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+
+    <pages:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="MainButtonStyle" TargetType="Button">
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
+                <Setter Property="HeightRequest" Value="30"/>
+                <Setter Property="CornerRadius" Value="30"/>
+            </Style>
+            <converters:ImageConverter x:Key="ImgConvert" />
+        </ResourceDictionary>
+    </pages:PopupPage.Resources>
+
+    <StackLayout 
+        VerticalOptions="EndAndExpand" 
+        HorizontalOptions="FillAndExpand">
+        <Frame CornerRadius="20" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="250">
+            <StackLayout>
+                <CollectionView x:Name="PlayLists"
+                            ItemsSource="{Binding Albums}" HeightRequest="210" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectedItem="{Binding SelectedAlbum}">
+                    <CollectionView.EmptyView>
+                        <StackLayout HorizontalOptions="Center">
+                            <Image Source="NotFound.png"/>
+                            <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Horizontal"
+                                        Span="1" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Album">
+                            <Grid ColumnSpacing="20">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"/>
+                                    <RowDefinition Height="25"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="20"/>
+                                </Grid.ColumnDefinitions>
+                                <Frame CornerRadius="10" Padding="0">
+                                    <Image x:Name="AudioImgBottom" Aspect="AspectFill" Source="{Binding Image, Converter={StaticResource ImgConvert}, Mode=OneWay}" Grid.ColumnSpan="2" Grid.Row="0"/>
+                                </Frame>
+                                <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
+                                    <Label Text="{Binding Title}" FontSize="20" TextColor="Black" LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding Artist}" LineBreakMode="TailTruncation"/>
+                                </StackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <Button Text="Добавить" HeightRequest="40" Command="{Binding AddCommand}"  Style="{StaticResource MainButtonStyle}"/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

@@ -2,16 +2,106 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:models="clr-namespace:MusicHUB.Models"
              x:Class="MusicHUB.Pages.PlayListsPage"
-             Title="Плейлисты">
+             xmlns:local="clr-namespace:MusicHUB.ViewModels" xmlns:converters="clr-namespace:MusicHUB.Helpers.Converters"
+             Title="Плейлисты"
+             BackgroundColor="White">
 
-    <ListView x:Name="MyListView"
-            ItemsSource="{Binding Items.Result}"
-            ItemTapped="Handle_ItemTapped"
-            CachingStrategy="RecycleElement">
-        <ListView.ItemTemplate>
-            <DataTemplate x:DataType="models:Track">
-                <ImageCell ImageSource="{Binding ImageSource}" Text="{Binding Title}" TextColor="Black" Detail="{Binding Artist}"/>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    <ContentPage.BindingContext>
+        <local:PLayListViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageConverter x:Key="ImgConvert" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+            <ScrollView HeightRequest="1500">
+                <StackLayout Padding="10" Spacing="10" VerticalOptions="Fill">
+                    <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
+                    <Label Text="Любимые композиции" FontSize="20"/>
+                    <CollectionView x:Name="MyListView"
+                            ItemsSource="{Binding LikedTracks}" HeightRequest="150" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectLikedCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
+                        <CollectionView.EmptyView>
+                            <StackLayout HorizontalOptions="Center">
+                                <Image Source="NotFound.png"/>
+                                <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal"
+                                        Span="3" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Track">
+                                <Grid ColumnSpacing="20">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="45"/>
+                                        <ColumnDefinition Width="190"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image x:Name="AudioImgBottom" Aspect="AspectFit" Source="{Binding ImageSource}" Grid.Column="0"/>
+                                    <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                        <Label Text="{Binding Title}" LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Artist}" LineBreakMode="TailTruncation"/>
+                                    </StackLayout>
+                                    <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="2"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
+                    <FlexLayout JustifyContent="SpaceBetween" VerticalOptions="Start">
+                        <Label Text="Плейлисты" FontSize="20"/>
+                        <ImageButton Source="addtoplaylist.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding AddNewAlbum}"/>
+                    </FlexLayout>
+                    <CollectionView x:Name="PlayLists"
+                            ItemsSource="{Binding Albums}" HeightRequest="210" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectAlbum}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
+                        <CollectionView.EmptyView>
+                            <StackLayout HorizontalOptions="Center">
+                                <Image Source="NotFound.png"/>
+                                <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal"
+                                        Span="1" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Album">
+                                <Grid Padding="10" ColumnSpacing="20">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="150"/>
+                                        <RowDefinition Height="40"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="40"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Frame CornerRadius="10" Padding="0" Grid.ColumnSpan="2"  Grid.Row="0">
+                                        <Image x:Name="AudioImgBottom" Aspect="AspectFill" Source="{Binding Image, Converter={StaticResource ImgConvert}, Mode=OneWay}"/>
+                                    </Frame>
+                                    <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
+                                        <Label Text="{Binding Title}" FontSize="20" TextColor="Black" LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Artist}" LineBreakMode="TailTruncation"/>
+                                    </StackLayout>
+                                    <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="1" Grid.Row="1"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
 </ContentPage>

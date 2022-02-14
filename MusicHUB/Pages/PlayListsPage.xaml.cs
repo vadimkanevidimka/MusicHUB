@@ -30,15 +30,9 @@ namespace MusicHUB.Pages
             return await Connections.BaseDataBaseService.DataBase.Table<Track>().ToListAsync();
         }
 
-        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        private void MyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.Item == null)
-                return;
 
-            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
-
-            //Deselect Item
-            ((ListView)sender).SelectedItem = null;
         }
     }
 }

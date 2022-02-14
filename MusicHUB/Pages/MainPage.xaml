@@ -20,8 +20,27 @@
 
     <ContentPage.Content>
         <StackLayout VerticalOptions="Fill">
+            <Grid BackgroundColor="Wheat">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <ImageButton Source="filterresultsbutton.png" Style="{StaticResource ButtonOnWheatBackGround}" Padding="10" CornerRadius="30" Grid.Column="1" Clicked="ImageButton_Clicked"/>
+                <customelements:WheatPicker BackgroundColor="Wheat">
+                    <customelements:WheatPicker.Items>
+                        <x:String>По артистам</x:String>
+                        <x:String>По продолжительности</x:String>
+                        <x:String>По размеру</x:String>
+                        <x:String>По названию</x:String>
+                    </customelements:WheatPicker.Items>
+                </customelements:WheatPicker>
+            </Grid>
             <StackLayout Padding="0,0,0,-5">
-                <ListView x:Name="filesList" ItemsSource="{Binding Tracks}" CachingStrategy="RecycleElementAndDataTemplate" HasUnevenRows="True" HorizontalOptions="FillAndExpand"  ItemTapped="filesList_ItemTapped">
+                <ListView x:Name="filesList" ItemsSource="{Binding Tracks}" CachingStrategy="RetainElement" HasUnevenRows="True" SelectionMode="None" HorizontalOptions="FillAndExpand"  ItemTapped="filesList_ItemTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
