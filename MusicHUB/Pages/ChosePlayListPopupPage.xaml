@@ -55,17 +55,17 @@
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Album">
-                            <Grid ColumnSpacing="20">
+                            <Grid Padding="10" ColumnSpacing="10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="150"/>
-                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="40"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="150"/>
-                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="40"/>
                                 </Grid.ColumnDefinitions>
-                                <Frame CornerRadius="10" Padding="0">
-                                    <Image x:Name="AudioImgBottom" Aspect="AspectFill" Source="{Binding Image, Converter={StaticResource ImgConvert}, Mode=OneWay}" Grid.ColumnSpan="2" Grid.Row="0"/>
+                                <Frame CornerRadius="10" Padding="0" Grid.ColumnSpan="2"  Grid.Row="0">
+                                    <Image x:Name="AudioImgBottom" Aspect="AspectFill" Source="{Binding Image, Converter={StaticResource ImgConvert}, Mode=OneWay}"/>
                                 </Frame>
                                 <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
                                     <Label Text="{Binding Title}" FontSize="20" TextColor="Black" LineBreakMode="TailTruncation" />

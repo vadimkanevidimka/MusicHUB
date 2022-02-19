@@ -11,40 +11,44 @@ using MusicHUB.Interfaces;
 using MusicHUB.DependencyInjection;
 using MusicHUB.Droid;
 using System.Threading;
+using System.Windows.Input;
+using MvvmHelpers.Commands;
+using MusicHUB.Helpers.Sorters;
 
 namespace MusicHUB.Pages
 {
     public partial class MainPage : ContentPage
     {
         private IAudio Audio = DependencyService.Get<IAudio>();
+        private ObservableCollection<Track> tracks { get; set; }
         private Connections Connections { get; set; }
         private Genius.GeniusClient GeniusClient { get; set; }
+        private SortParams SorterParams { get; set; }
         public bool isUpdating { get; set; }
         MusicFilesCollector MusicFilesCollector = new MusicFilesCollector();
-        public List<Track> Tracks { get; set; }//GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" })
+        public ObservableCollection<Track> Tracks { get => tracks; set { tracks = value; OnPropertyChanged(nameof(Tracks)); } }
 
         public MainPage(Connections connections)
         {
             InitializeComponent();
             BindingContext = this;
             isUpdating = false;
-            Tracks = new List<Track>();
+            Tracks = new ObservableCollection<Track>();
+            SorterParams = new SortParams();
             this.Connections = connections;
             UpdateFileList();
         }
 
         protected override void OnAppearing()
         {
-            
+
         }
 
         async void UpdateFileList()
         {
             isUpdating = true;
             Tracks.Clear();
-            var tracks = await MusicFilesCollector.GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" });
-            Tracks.AddRange(tracks);
-            OnPropertyChanged(nameof(Tracks));
+            Tracks = new ObservableCollection<Track>(await MusicFilesCollector.GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" }));
             isUpdating = false;
         }
 
@@ -65,7 +69,7 @@ namespace MusicHUB.Pages
         private void RefreshView_Refreshing(object sender, EventArgs e)
         {
             filesList.IsRefreshing = true;
-            filesList.RefreshCommand = new Command(() => UpdateFileList());
+            filesList.RefreshCommand = new Xamarin.Forms.Command(() => UpdateFileList());
             filesList.IsRefreshing = false;
         }
 
@@ -89,9 +93,16 @@ namespace MusicHUB.Pages
             Navigation.PushPopupAsync(new PopUpContextActionsOnTrack((Track)viewCell.BindingContext, ViewModels.ContextActions.TrackContextActionState.AtList));
         }
 
-        private void ImageButton_Clicked(object sender, EventArgs e)
+        public ICommand Sort
         {
-
+            get => new Xamarin.Forms.Command(() => {
+                App.Current.MainPage.Navigation.PushModalAsync(new SortPopupPage(SorterParams,
+                    async () =>
+                    {
+                        if (SorterParams is null) return;
+                        Tracks = new ObservableCollection<Track>(await SorterParams.Sorter.SortAsync(Tracks, SorterParams.OrderType));
+                    }));
+            });
         }
     }
 }

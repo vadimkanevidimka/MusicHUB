@@ -3,9 +3,10 @@
   <Class Name="MusicHUB.DataBaseServices.BaseDataBaseService">
     <Position X="2.25" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>DataBaseServices\BaseDataBaseService.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MusicHUB.DataBaseServices.ConnectionCreator">
     <Position X="2.25" Y="0.5" Width="1.5" />
@@ -38,7 +39,7 @@
   <Class Name="MusicHUB.Pages.MainPage">
     <Position X="5.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAAmhAAAAAAAEAABAAAAAAAAAAAQAAACIAAAA=</HashCode>
+      <HashCode>AAAAASAAAmhAAAAAAAUAABAAAAAAAAAAAQAABCIAAAA=</HashCode>
       <FileName>Pages\MainPage.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -50,51 +51,44 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MusicHUB.Pages.Player">
-    <Position X="5.75" Y="4.75" Width="1.5" />
+    <Position X="5.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAgAAAABAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Pages\Player.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="MusicHUB.PopUpPageFromBottom">
-    <Position X="4" Y="6.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAEAAEAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Pages\PopUpPageFromBottom.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MusicHUB.ViewModels.ArtistPageViewModel">
     <Position X="7.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAACACAAAAAAAAACAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAACAgAAAAAUAQACIAQAA=</HashCode>
       <FileName>ViewModels\ArtistPageViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MusicHUB.ViewModels.MainPageViewModel" Collapsed="true">
-    <Position X="9.25" Y="6.5" Width="1.5" />
+  <Class Name="MusicHUB.ViewModels.MainPageViewModel">
+    <Position X="9.25" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\MainPageViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MusicHUB.ViewModels.PlayerViewModel">
-    <Position X="7.5" Y="3" Width="1.5" />
+    <Position X="7.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQgCAAgQEAAAAAAAAEiQAAgAABAICAgpEAg4CAIQgA=</HashCode>
+      <HashCode>AAwgCAAAIEEAAIAAABEiQAQgAABAAiggpECgwCBIQgA=</HashCode>
       <FileName>ViewModels\PlayerViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="MusicHUB.ViewModels.ResourceClassPlayerPage">
     <Position X="2.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAIAQAAAAAACgAAAAAAAAAAAAAAAIgAAAAAAA=</HashCode>
-      <FileName>ViewModels\ResourceClassPlayerPage.cs</FileName>
+      <HashCode>AAAAAAEAIAQAABAAACgAEAAAAAAAAAAAAAIgAAABAAA=</HashCode>
+      <FileName>ViewModels\Properties\ResourceClassPlayerPage.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="MusicHUB.IAudio">
     <Position X="9.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AhIgAAAAAGAAAIIAASAAAAIAAAQAAEAQACAgAAAgGyA=</HashCode>
+      <HashCode>AhIgAAAAAGAAAMJAASAAAAICAAQAAEAQACAgAAAgGyA=</HashCode>
       <FileName>Interfaces\IAudio.cs</FileName>
     </TypeIdentifier>
   </Interface>

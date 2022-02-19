@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MusicHUB.Pages.SortPopupPage">
+    
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="End" Margin="0,-100,0,0" BackgroundColor="Transparent">
+            <ScrollView VerticalOptions="Start" BackgroundColor="Transparent">
+                <StackLayout Padding="0,300,0,0" BackgroundColor="Transparent">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClosePopupPage}"/>
+                    </StackLayout.GestureRecognizers>
+                    <Frame CornerRadius="20" VerticalOptions="End" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="300">
+                        <StackLayout>
+                            <Label Text="Сортировать по"/>
+                            <ListView ItemsSource="{Binding SortActions}" SelectionMode="None" ItemTapped="ListView_ItemTapped">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding .}" TextColor="Black"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

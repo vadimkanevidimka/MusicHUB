@@ -28,3 +28,5 @@ D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\QueuePopupPage.
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\AddingAlbumPopupPage.xaml.g.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\AlbumPage.xaml.g.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\ChosePlayListPopupPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\TrackLirycsPopupPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\SortPopupPage.xaml.g.cs

@@ -33,6 +33,8 @@ namespace MusicHUB.ViewModels
 
         private INavigation Navigation { get; set; }
 
+        private NotifyTaskCompletion<IList<Artist>> artist;
+
         public PlayerPosition PlayerPosition { get; set; }
 
         public int VolumeLevel { get; set; }
@@ -43,7 +45,7 @@ namespace MusicHUB.ViewModels
 
         public ResourceClassPlayerPage ResourceClass { get; set; }
 
-        public NotifyTaskCompletion<IList<Artist>> Artists { get; set; }
+        public NotifyTaskCompletion<IList<Artist>> Artists { get => artist; set { artist = value; OnPropertyChanged(nameof(Artists)); } }
 
         public ObservableCollection<Track> Tracks { get => Audio.Tracks; }
 
@@ -56,7 +58,6 @@ namespace MusicHUB.ViewModels
             VolumeLevel = Audio.GetVolumeLevel;
             ResourceClass = new ResourceClassPlayerPage();
             Audio.OnCompleted += (obj, e) => OnPropertyChanged(nameof(CurrentTrack));
-            OnPropertyChanged(nameof(CurrentTrack));
             InitTimer();
         }
 
@@ -86,7 +87,6 @@ namespace MusicHUB.ViewModels
             OnPropertyChanged(nameof(CurrentTrack));
             await IsTrackLiked(CurrentTrack);
             Artists = new NotifyTaskCompletion<IList<Artist>>(GetArtists());
-            OnPropertyChanged(nameof(Artists));
             InitTimer();
             await Task.Run(() => { Task.Delay(1000); ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg; } );
         }

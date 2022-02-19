@@ -78,7 +78,7 @@
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Album">
-                                <Grid Padding="10" ColumnSpacing="20">
+                                <Grid Padding="10" ColumnSpacing="10">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="150"/>
                                         <RowDefinition Height="40"/>

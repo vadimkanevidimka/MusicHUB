@@ -1,4 +1,6 @@
 ﻿using MusicHUB.Models;
+using MusicHUB.Pages;
+using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,11 +13,13 @@ namespace MusicHUB.ViewModels.ContextActions
         public override string ImageURl => "text.png";
         public override string DescriptionText => "Найти текст песни";
 
-        public override void ExcecuteAction<T>(object someobject)
+        public override async void ExcecuteAction<T>(object someobject)
         {
             if (typeof(T) == typeof(Track))
             {
-                var tr = DependencyService.Get<IAudio>().GetCurrentTrack();
+                Track track = someobject as Track;
+                await App.Current.MainPage.Navigation.PopPopupAsync();
+                await App.Current.MainPage.Navigation.PushModalAsync(new TrackLirycsPopupPage());
             }
         }
     }

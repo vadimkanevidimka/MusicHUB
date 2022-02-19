@@ -73,7 +73,7 @@ namespace MusicHUB.Droid
         /// </summary>
         /// <param name="files"></param>
         /// <returns></returns>
-        public async Task<List<Track>> GetTracks(IEnumerable<string> directories)
+        public async Task<IList<Track>> GetTracks(IEnumerable<string> directories)
         {
             if (directories is null)
             {
@@ -81,16 +81,16 @@ namespace MusicHUB.Droid
             }
            
             ICreateTrack creator = DependencyService.Get<ICreateTrack>();
-            int id = 0;
             var files = GetAllFiles(directories);
             List<Track> Tracks = new List<Track>();
+            var bdtracks = await App.Connections.BaseDataBaseService.DataBase.Table<Track>().ToListAsync();
+            await DeleteAllNotExists(bdtracks);
             foreach (var file in files)
             {
                 var track = creator.CreateTrack(file);
-                var bdtracks = await App.Connections.BaseDataBaseService.DataBase.Table<Track>().ToListAsync();
                 if (!bdtracks.Exists((c) => c.Uri == track.Uri))
                 {
-                    await App.Connections.BaseDataBaseService.DataBase.InsertAsync(track, typeof(DBLikedTracks));
+                    await App.Connections.BaseDataBaseService.DataBase.InsertAsync(track);
                 }
             }
             Tracks.AddRange(await App.Connections.BaseDataBaseService.DataBase.Table<Track>().ToListAsync());
@@ -102,9 +102,16 @@ namespace MusicHUB.Droid
             return await App.Connections.BaseDataBaseService.DataBase.Table<Track>().ToListAsync();
         }
 
-        //private async Task<IEnumerable<Track>> GetTracks()
-        //{
-        //    return await DataBaseService.DataBase.Table<Track>().ToListAsync();
-        //}
+        private async Task DeleteAllNotExists(List<Track> tracks)
+        {
+            foreach (var item in tracks)
+            {
+                if (!File.Exists(item.Uri))
+                {
+                    await App.Connections.BaseDataBaseService.DataBase.DeleteAsync<Track>(item.Id);
+                    var deletetrack = await App.Connections.BaseDataBaseService.DataBase.QueryAsync<LikedTracks>("Delete from LikedTracks where trackid = ?", item.Id);
+                }
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace MusicHUB.ViewModels
             get => new AsyncCommand(async () => {
                 if (SelectedAlbum is null) return;
                 await App.Connections.BaseDataBaseService.DataBase.InsertOrReplaceAsync(new AlbumsTracks() { AlbumId = SelectedAlbum.Id, TrackId = TrackToPlayList.Id });
-                App.Current.MainPage.Navigation.PopPopupAsync();
+                await App.Current.MainPage.Navigation.PopPopupAsync();
             });
         }
 

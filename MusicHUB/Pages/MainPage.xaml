@@ -19,70 +19,58 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Fill">
-            <Grid BackgroundColor="Wheat">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                </Grid.ColumnDefinitions>
-                <ImageButton Source="filterresultsbutton.png" Style="{StaticResource ButtonOnWheatBackGround}" Padding="10" CornerRadius="30" Grid.Column="1" Clicked="ImageButton_Clicked"/>
-                <customelements:WheatPicker BackgroundColor="Wheat">
-                    <customelements:WheatPicker.Items>
-                        <x:String>По артистам</x:String>
-                        <x:String>По продолжительности</x:String>
-                        <x:String>По размеру</x:String>
-                        <x:String>По названию</x:String>
-                    </customelements:WheatPicker.Items>
-                </customelements:WheatPicker>
-            </Grid>
-            <StackLayout Padding="0,0,0,-5">
-                <ListView x:Name="filesList" ItemsSource="{Binding Tracks}" CachingStrategy="RetainElement" HasUnevenRows="True" SelectionMode="None" HorizontalOptions="FillAndExpand"  ItemTapped="filesList_ItemTapped">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <Grid Padding="10" ColumnSpacing="20">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="50"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="45"/>
-                                            <ColumnDefinition Width="240"/>
-                                            <ColumnDefinition Width="50"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Image x:Name="AudioImgBottom" Aspect="AspectFit" Source="{Binding ImageSource}" Grid.Column="0"/>
-                                        <StackLayout Grid.Column="1" VerticalOptions="Center">
-                                            <Label Text="{Binding Title}" LineBreakMode="TailTruncation" />
-                                            <Label Text="{Binding Artist}" LineBreakMode="TailTruncation"/>
-                                        </StackLayout>
-                                        <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Clicked="Options_Clicked" Grid.Column="2"/>
-                                    </Grid>
-                                </ViewCell.View>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-            <Frame x:Name="UnderPanel" CornerRadius="20" BackgroundColor="Wheat" Margin="0,0,0,0" Padding="10,10,10,0" >
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="AudioImgBottom_Clicked"/>
-                </Frame.GestureRecognizers>
-                <StackLayout Orientation="Vertical" HorizontalOptions="Center">
-                    <ProgressBar ProgressColor="DimGray" Progress="10" HeightRequest="4" Visual="Material"/>
-                    <FlexLayout AlignContent="SpaceBetween" BindingContext="{Binding Tracks}">
-                        <Image x:Name="AudioImgBottom" Aspect="AspectFit" HeightRequest="40" WidthRequest="40" Source="{Binding Tracks}"/>
-                        <StackLayout WidthRequest="240" Padding="20,0,0,0">
-                            <Label x:Name="Title" FontSize="18" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation"/>
-                            <Label x:Name="Author" LineBreakMode="TailTruncation"/>
-                        </StackLayout>
-                        <customelements:WheatButton Source="Pause.png" Style="{StaticResource ButtonOnWheatBackGround}"/>
+        <RefreshView Refreshing="RefreshView_Refreshing" IsRefreshing="{Binding isUpdating}" RefreshColor="Wheat">
+            <StackLayout>
+                <StackLayout Padding="10,10,10,0">
+                    <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
+                    <FlexLayout JustifyContent="SpaceBetween" VerticalOptions="Start">
+                        <ImageButton Source="filterresultsbutton.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding Sort}"/>
+                        <ImageButton Source="shuffle_non_active.png" CornerRadius="30" Style="{StaticResource buttonStyle}"/>
                     </FlexLayout>
+                    <ListView x:Name="filesList" ItemsSource="{Binding Tracks}" CachingStrategy="RetainElement" HasUnevenRows="True" SelectionMode="None" HorizontalOptions="FillAndExpand" ItemTapped="filesList_ItemTapped">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Grid ColumnSpacing="20">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="50"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="45"/>
+                                                <ColumnDefinition Width="235"/>
+                                                <ColumnDefinition Width="50"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image x:Name="AudioImgBottom" Aspect="AspectFit" Source="{Binding ImageSource}" Grid.Column="0"/>
+                                            <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label Text="{Binding Title}" LineBreakMode="TailTruncation" />
+                                                <Label Text="{Binding Artist}" LineBreakMode="TailTruncation"/>
+                                            </StackLayout>
+                                            <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Clicked="Options_Clicked" Grid.Column="2"/>
+                                        </Grid>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackLayout>
-            </Frame>
-        </StackLayout>
+                <Frame x:Name="UnderPanel" CornerRadius="20" BackgroundColor="Wheat" Margin="0,0,0,0" Padding="10,10,10,0" >
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AudioImgBottom_Clicked"/>
+                    </Frame.GestureRecognizers>
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Center">
+                        <ProgressBar ProgressColor="DimGray" Progress="10" HeightRequest="4" Visual="Material"/>
+                        <FlexLayout AlignContent="SpaceBetween" BindingContext="{Binding Tracks}">
+                            <Image x:Name="AudioImgBottom" Aspect="AspectFit" HeightRequest="40" WidthRequest="40" Source="{Binding Tracks}"/>
+                            <StackLayout WidthRequest="240" Padding="20,0,0,0">
+                                <Label x:Name="Title" FontSize="18" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation"/>
+                                <Label x:Name="Author" LineBreakMode="TailTruncation"/>
+                            </StackLayout>
+                            <customelements:WheatButton Source="Pause.png" Style="{StaticResource ButtonOnWheatBackGround}"/>
+                        </FlexLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>
