@@ -6,14 +6,14 @@
              x:Class="MusicHUB.Pages.TrackLirycsPopupPage">
 
     <ContentPage.Content>
-        <StackLayout VerticalOptions="End" Margin="0,-100,0,0" BackgroundColor="Transparent">
-            <ScrollView VerticalOptions="Start" BackgroundColor="Transparent">
+        <StackLayout VerticalOptions="Fill" Margin="0,-100,0,0" BackgroundColor="Transparent">
+            <ScrollView VerticalOptions="Fill" BackgroundColor="Transparent">
                 <StackLayout Padding="0,600,0,0" BackgroundColor="Transparent">
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ClosePopupPage}"/>
                     </StackLayout.GestureRecognizers>
-                    <Frame CornerRadius="20" VerticalOptions="End" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="700">
-
+                    <Frame CornerRadius="20" Grid.Row="0" VerticalOptions="FillAndExpand" Padding="0" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HeightRequest="3000">
+                        <WebView Source="{Binding Lyrics.Result}" Margin="0,-55,0,0" VerticalOptions="FillAndExpand"/>
                     </Frame>
                 </StackLayout>
             </ScrollView>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MusicHUB.Pages.SettingsPage"
+             BackgroundColor="White" Padding="10"
+             Title="Настройки">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <TableView Intent="Menu">
+            <TableView.Root>
+                <TableRoot>
+                    <TableSection Title="Персональные данные" TextColor="Black">
+                        <EntryCell Label="Логин" Keyboard="Default" Placeholder="Введите логин"/>
+                        <SwitchCell Text="Сохранить" />
+                    </TableSection>
+                    <TableSection Title="Помощь" TextColor="Black">
+                        <TextCell Text="Политика конфиденциальности" TextColor="Black"/>
+                        <TextCell Text="Отзыв" TextColor="Black"/>
+                        <TextCell Text="Оцените нас" TextColor="Black"/>
+                        <TextCell Text="Условия пользование" TextColor="Black"/>
+                    </TableSection>
+                    <TableSection Title="О приложении" TextColor="Black">
+                        <TextCell Text="Версия" Detail="1.0.0.0" TextColor="Black"/>
+                    </TableSection>
+                </TableRoot>
+            </TableView.Root>
+        </TableView>
+    </ContentPage.Content>
+</ContentPage>

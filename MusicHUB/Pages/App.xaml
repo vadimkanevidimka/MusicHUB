@@ -29,6 +29,9 @@
                 <Setter Property="HeightRequest" Value="60"/>
                 <Setter Property="Aspect" Value="AspectFit"/>
             </Style>
+            <Style x:Key="HeaderLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

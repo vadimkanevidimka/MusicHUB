@@ -1,13 +1,19 @@
-﻿using Android.Content;
+﻿using Android.App;
+using Android.Content;
 using Android.Media;
+using Android.Support.V4.Media.Session;
+using AndroidX.Core.App;
 using MusicHUB;
 using MusicHUB.DataBaseServices;
 using MusicHUB.Droid;
+using MusicHUB.EventArgumentss;
+using MusicHUB.Interfaces;
 using MusicHUB.Models;
 using SimpleAudioForms.Droid;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -20,9 +26,12 @@ namespace SimpleAudioForms.Droid
     {
         private AudioManager AudioManager = (AudioManager)Android.App.Application.Context.GetSystemService(Context.AudioService);
         private MediaPlayer player;
+        MediaSessionCompat MediaSessionCompat { get; set; }
+        private NotificationManager notificationManager = (NotificationManager)DependencyService.Get<IAndroidSystem>().AppContext.GetSystemService(Context.NotificationService);
         private List<Track> Queue = new List<Track>();
         private int Position { get; set; }
         private Track CurrentTrack { get; set; }
+        private Timer timer;
 
         bool IAudio.IsExists { get { return !(player is null); } }
         int IAudio.Time { get => player != null ? player.CurrentPosition : 0; }
@@ -41,9 +50,41 @@ namespace SimpleAudioForms.Droid
         public AudioService()
         {
             Init();
+            InitTimer();
+            MediaSessionCompat = new MediaSessionCompat(DependencyService.Get<IAndroidSystem>().AppContext, "MusicHUB");
+            MediaSessionCompat.Active = true;
         }
 
         private EventHandler OnCompleted;
+        private EventHandler OntrackChanged;
+        private PlayerTimeEventHandler OnPlayerTimeChanged;
+
+        event PlayerTimeEventHandler IAudio.OnPlayerTimeChanged
+        {
+            add
+            {
+                OnPlayerTimeChanged += value;
+            }
+
+            remove
+            {
+                OnPlayerTimeChanged -= value;
+            }
+        }
+
+        event EventHandler IAudio.OntrackChanged
+        {
+            add
+            {
+                OntrackChanged += value;
+            }
+
+            remove
+            {
+                OntrackChanged -= value;
+            }
+        }
+
         event EventHandler IAudio.OnCompleted
         {
             add
@@ -60,24 +101,26 @@ namespace SimpleAudioForms.Droid
         private void Init()
         {
             player?.Stop();
-            player?.Reset();
+            player = null;
             player = new MediaPlayer();
             player.SetAudioStreamType(Stream.Music);
+            player.SetWakeMode(DependencyService.Get<IAndroidSystem>().AppContext, Android.OS.WakeLockFlags.Partial);
             player.Prepared += (s, e) =>
             {
                 player.Start();
             };
-            player.Completion += setNext;
+            player.Completion += (sender, args) => Next();
+        }
+
+        private void InitTimer()
+        {
+            TimerCallback callback = (c) => { if (OnPlayerTimeChanged != null && player != null) OnPlayerTimeChanged(new PlayerTimeEventArgs(player.CurrentPosition, player.Duration)); };
+            timer = new Timer(callback, null, 0, 1000);
         }
 
         public void SetVolumeLevel(int volume)
         {
-            AudioManager.SetStreamVolume(Stream.Music, volume, VolumeNotificationFlags.AllowRingerModes);
-        }
-
-        private void setNext(object sender, EventArgs e)
-        {
-            Next();
+            AudioManager.SetStreamVolume(Stream.Music, volume, VolumeNotificationFlags.ShowUi);
         }
 
         public void LoopChange()
@@ -87,7 +130,7 @@ namespace SimpleAudioForms.Droid
 
         void IAudio.PlayerDispose()
         {
-            player.Dispose();
+            player = null;
         }
 
         void IAudio.Pause() => player.Pause();
@@ -97,6 +140,7 @@ namespace SimpleAudioForms.Droid
         public void PlayAudioFile(Track track)
         {
             if (track is null) return;
+            if (CurrentTrack != null) AddToRecentlyPlayed(CurrentTrack);
             if (CurrentTrack is null) CurrentTrack = track;
             else if (CurrentTrack.Id == track.Id) return;
             Position = Queue.IndexOf(track);
@@ -107,6 +151,8 @@ namespace SimpleAudioForms.Droid
                 player.SetDataSource(track.Uri);
                 player.Prepare();
             }
+            Notificate();
+            OntrackChanged(this, new EventArgs());
         }
 
         object[] IAudio.GetInfo() => player.GetTrackInfo();
@@ -115,12 +161,12 @@ namespace SimpleAudioForms.Droid
 
         public void Next()
         {
-            if (Queue is null) return;
+            if (Queue is null || Queue.Count == 0) return;
             if (Position != Queue.Count - 1)
             {
                 PlayAudioFile(Queue[Position + 1]);
             }
-            if (OnCompleted != null) OnCompleted(null, new EventArgs());
+            if (OnCompleted != null) OnCompleted(this, new EventArgs());
         }
 
         public void Prev()
@@ -178,7 +224,37 @@ namespace SimpleAudioForms.Droid
 
         public void RemoveFromQueue(Track track)
         {
-            Queue.Remove(track);
+            if (track is null)
+            {
+                return;
+            }
+
+            Queue?.Remove(track);
+        }
+
+        private async void AddToRecentlyPlayed(Track playedTrack)
+        {
+            await App.Connections.BaseDataBaseService.DataBase.InsertAsync(new RecentlyPlayed() { TrackId = playedTrack.Id, ListenTime = DateTime.Now });
+        }
+
+        private void Notificate()
+        {
+            Notification notification = new NotificationCompat.Builder(DependencyService.Get<IAndroidSystem>().AppContext)
+                .SetSmallIcon(Resource.Drawable.play)
+                .SetContentTitle(CurrentTrack.Title)
+                .SetContentText(CurrentTrack.Artist)
+                .SetColorized(true)
+                .SetAllowSystemGeneratedContextualActions(true)
+                .SetLargeIcon(DependencyService.Get<IImage>().GetBitmap(CurrentTrack.Uri))
+                .SetStyle(new AndroidX.Media.App.NotificationCompat.DecoratedMediaCustomViewStyle())
+                .SetPriority((int)NotificationPriority.Max)
+                .SetAutoCancel(false)
+                .SetVisibility((int)NotificationVisibility.Public)
+                .SetChannelId("108")
+                .Build();
+            NotificationChannel notificationChannel = new NotificationChannel("108", CurrentTrack.Title, NotificationImportance.High);
+            notificationManager.CreateNotificationChannel(notificationChannel);
+            notificationManager.Notify(0, notification);
         }
     }
 }

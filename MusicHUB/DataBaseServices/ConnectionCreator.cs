@@ -19,6 +19,7 @@ namespace MusicHUB.DataBaseServices
             await DataBase.CreateTableAsync<DBLikedTracks>();
             await DataBase.CreateTableAsync<Album>();
             await DataBase.CreateTableAsync<AlbumsTracks>();
+            await DataBase.CreateTableAsync<RecentlyPlayed>();
             return DataBase;
         }
     }

@@ -13,7 +13,7 @@
             <StackLayout Padding="0,10">
                 <StackLayout>
                     <ImageButton Source="arrowdown.png" WidthRequest="50" HeightRequest="20" Aspect="Fill" VerticalOptions="Center" BackgroundColor="Transparent" Command="{Binding ClosePlayerCommand}" HorizontalOptions="Center"/>
-                    <CarouselView ItemsSource="{Binding Tracks}" CurrentItemChangedCommand ="{Binding TrackChange}" CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = CurrentItem}" Loop="False" HeightRequest="300" ItemsUpdatingScrollMode="KeepItemsInView" CurrentItem="{Binding CurrentTrack}" VerticalOptions="Center" HorizontalOptions="FillAndExpand" IsBounceEnabled="True" PeekAreaInsets="40,0" HorizontalScrollBarVisibility="Never" Margin="0,20,0,0">
+                    <CarouselView ItemsSource="{Binding Tracks}" CurrentItemChangedCommand ="{Binding TrackChange}" CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = CurrentItem}" Loop="False" HeightRequest="300" ItemsUpdatingScrollMode="KeepItemsInView" CurrentItem="{Binding CurrentTrack}" VerticalOptions="Center" HorizontalOptions="Center" IsBounceEnabled="True" PeekAreaInsets="40,0" HorizontalScrollBarVisibility="Never" Margin="0,20,0,0">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="Models:Track">
                                 <Image Source="{Binding ImageSource}" Aspect="AspectFit"/>

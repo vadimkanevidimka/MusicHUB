@@ -18,7 +18,8 @@ namespace MusicHUB.ViewModels
     public class PLayListViewModel : BindableObject
     {
         private List<Track> likedTracks;
-        private List<Album> albums; 
+        private List<Album> albums;
+        private List<Track> recentlyPlayed;
         private SQLite.SQLiteAsyncConnection DataBase {get;set;}
         private bool isRefreshing = false;
 
@@ -59,12 +60,39 @@ namespace MusicHUB.ViewModels
             }
         }
 
+        public List<Track> RecentlyPlayed
+        {
+            get => recentlyPlayed;
+            set
+            {
+                recentlyPlayed = value;
+                OnPropertyChanged(nameof(RecentlyPlayed));
+            }
+        }
+
         public ICommand SelectLikedCommand
         {
             get => new AsyncCommand<Track>(async (Track track) => { 
                 DependencyService.Get<IAudio>().SetQueue(LikedTracks);
                 await Task.Delay(100);
                 DependencyService.Get<IAudio>().PlayAudioFile(track);
+            });
+        }
+
+        public ICommand RecentlyPlayedCommand
+        {
+            get => new AsyncCommand<Track>(async (Track track) => {
+                DependencyService.Get<IAudio>().SetQueue(RecentlyPlayed);
+                await Task.Delay(100);
+                DependencyService.Get<IAudio>().PlayAudioFile(track);
+            });
+        }
+
+        public ICommand GetTrackInfo
+        {
+            get => new AsyncCommand<Track>(async (track) =>
+            {
+                await App.Current.MainPage.Navigation.PushPopupAsync(new PopUpContextActionsOnTrack(track, ViewModels.ContextActions.TrackContextActionState.AtList));
             });
         }
 
@@ -79,6 +107,7 @@ namespace MusicHUB.ViewModels
             await Task.Delay(1000);
             LikedTracks = await DataBase.QueryAsync<Track>("select * from Tracks join LikedTracks on Tracks.Id = TrackId");
             Albums = await App.Connections.BaseDataBaseService.DataBase.Table<Album>().ToListAsync();
+            RecentlyPlayed = await App.Connections.BaseDataBaseService.DataBase.QueryAsync<Track>("select * from Tracks join RecentlyPlayed on Tracks.Id = TrackId Limit 5");
             IsRefreshing = false;
         }
 
@@ -91,7 +120,6 @@ namespace MusicHUB.ViewModels
         {
             get => new AsyncCommand<Album>(async (Album album) =>
             {
-                await Task.Delay(100);
                 await App.Current.MainPage.Navigation.PushAsync(new AlbumPage(album));
             });
         }

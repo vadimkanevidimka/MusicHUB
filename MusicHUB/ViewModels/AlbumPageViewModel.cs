@@ -43,5 +43,12 @@ namespace MusicHUB.ViewModels
             AlbumTracks = await App.Connections.BaseDataBaseService.DataBase.QueryAsync<Track>("select * from Tracks join AlbumsTracks on Tracks.Id = TrackId and AlbumId = ?", albumid.ToString());
         }
 
+        public ICommand OptionsClicked
+        {
+            get => new Xamarin.Forms.Command<ImageButton>((c) => 
+            {
+                var a = ((CollectionView)c.Parent.Parent);
+            });
+        }
     }
 }

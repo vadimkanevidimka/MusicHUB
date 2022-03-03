@@ -1,4 +1,6 @@
-﻿using Rg.Plugins.Popup.Pages;
+﻿using MusicHUB.Models;
+using MusicHUB.ViewModels;
+using Rg.Plugins.Popup.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,10 @@ namespace MusicHUB.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CutPopupPage : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public CutPopupPage()
+        public CutPopupPage(Track trackToTrim)
         {
             InitializeComponent();
+            BindingContext = new CutPopupPageViewModel(trackToTrim);
         }
     }
 }

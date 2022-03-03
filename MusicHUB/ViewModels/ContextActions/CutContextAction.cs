@@ -23,8 +23,8 @@ namespace MusicHUB.ViewModels.ContextActions
             if (someobject.GetType() == typeof(Track))
             {
                 await App.Current.MainPage.Navigation.PopPopupAsync();
-                await App.Current.MainPage.Navigation.PushPopupAsync(new CutPopupPage());
-                base.MakeToast($"{((Track)someobject).Title} сохранена");
+                App.Current.MainPage.Navigation.PushPopupAsync(new CutPopupPage((Track)someobject));
+                base.MakeToast($"{((Track)someobject).Title} обрезана и сохранена в папку /storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/");
             }
         }
     }

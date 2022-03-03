@@ -4,7 +4,7 @@
              xmlns:response="clr-namespace:Genius.Models.Response;assembly=Genius"
              xmlns:artist="clr-namespace:Genius.Models.Artist;assembly=Genius"
              xmlns:song="clr-namespace:Genius.Models.Song;assembly=Genius"
-             xmlns:controls="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:controls="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView" xmlns:song1="clr-namespace:Google.Apis.YouTube.v3.Data;assembly=Google.Apis.YouTube.v3" xmlns:viewmodels="clr-namespace:MusicHUB.ViewModels"
              x:Class="MusicHUB.Pages.ArtistPage"
              NavigationPage.HasNavigationBar="True"
              NavigationPage.HasBackButton="True"
@@ -13,16 +13,28 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <Image HeightRequest="222" Aspect="AspectFill" Margin="0,0,0,0" Source="{Binding ArtistInfo.Result.Response.Artist.HeaderImageUrl}"/>
-                <Frame CornerRadius="20" BackgroundColor="White" Margin="0,-30,0,0">
-                    <StackLayout Spacing="10">
-                        <Label Text="{Binding ArtistInfo.Result.Response.Artist.Name}" TextColor="Black" FontSize="Title"/>
+                <Image HeightRequest="200" Aspect="AspectFill" Margin="0,0,0,0" Source="{Binding ArtistInfo.Result.Response.Artist.HeaderImageUrl}"/>
+                <Frame CornerRadius="20" BackgroundColor="White" Margin="0,-30,0,0" VerticalOptions="FillAndExpand" >
+                    <StackLayout>
+                        
+                    <ActivityIndicator IsVisible="{Binding ArtistInfo.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistInfo.IsNotCompleted}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+                    <StackLayout Spacing="10" IsVisible="{Binding ArtistInfo.IsCompleted}">
+                        <FlexLayout JustifyContent="SpaceBetween">
+                            <StackLayout WidthRequest="190">
+                                <Label Text="{Binding ArtistInfo.Result.Response.Artist.Name}" TextColor="Black" FontSize="Title"/>
+                                <Label Text="{Binding ArtistInfo.Result.Response.Artist.AlternateNames[0]}" FontSize="Large"/>
+                            </StackLayout>
+                            <Frame CornerRadius="20" Padding="0" WidthRequest="150" HorizontalOptions="End" VerticalOptions="Center">
+                                <Image HeightRequest="150" WidthRequest="150" Aspect="AspectFill" Source="{Binding ArtistInfo.Result.Response.Artist.ImageUrl}"/>
+                            </Frame>
+                        </FlexLayout>
                         <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
                         <Label Text="Биография" FontSize="Large"/>
-                        <Label TextType="Html" Text="{Binding ArtistInfo.Result.Response.Artist.Description.Html}" FontSize="Body"/>
+                            <Label TextType="Html" Text="{Binding ArtistInfo.Result.Response.Artist.Description.Html}" FontSize="Body">
+                            </Label>
                         <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
                         <Label Text="Популярные треки" FontSize="Large"/>
-                        <CollectionView ItemsSource="{Binding ArtistsSongs.Result.Response.Songs}" HeightRequest="150" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectLikedCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
+                        <CollectionView ItemsSource="{Binding ArtistsSongs.Result.Response.Songs}" Margin="-20,0,-20,0" HeightRequest="190" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectLikedCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
                             <CollectionView.EmptyView>
                                 <StackLayout HorizontalOptions="Center">
                                     <Image Source="NotFound.png"/>
@@ -36,29 +48,27 @@
                             </CollectionView.ItemsLayout>
 
                             <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="song:Song">
-                                    <Grid ColumnSpacing="20">
+                                    <DataTemplate x:DataType="song:Song">
+                                        <Grid Padding="20,10,10,10" ColumnSpacing="10">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="50"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="45"/>
-                                            <ColumnDefinition Width="190"/>
                                             <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="190"/>
                                         </Grid.ColumnDefinitions>
-                                        <Image x:Name="AudioImgBottom" Aspect="AspectFit" Source="{Binding SongArtImageThumbnailUrl}" Grid.Column="0"/>
-                                        <StackLayout Grid.Column="1" VerticalOptions="Center">
-                                            <Label Text="{Binding Title}" LineBreakMode="TailTruncation" />
-                                            <Label Text="{Binding PrimaryArtist.Name}" LineBreakMode="TailTruncation"/>
-                                        </StackLayout>
-                                        <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="2"/>
-                                    </Grid>
+                                            <Image x:Name="AudioImgBottom" Aspect="AspectFit" Source="{Binding SongArtImageThumbnailUrl}" Grid.Column="0"/>
+                                            <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label Text="{Binding Title}" LineBreakMode="TailTruncation" />
+                                                <Label Text="{Binding PrimaryArtist.Name}" LineBreakMode="TailTruncation"/>
+                                            </StackLayout>
+                                        </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                         <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                        <Label Text="Популярные альбомы" FontSize="22" TextColor="Black"/>
-                        <CollectionView ItemsSource="{Binding ArtistsAlbums.Result}" HeightRequest="210" SelectionMode="None" ItemSizingStrategy="MeasureAllItems">
+                        <Label Text="Популярные альбомы" FontSize="Large"/>
+                        <CollectionView Margin="-20,0,-20,0" ItemsSource="{Binding ArtistsAlbums.Result}" HeightRequest="210" SelectionMode="None" ItemSizingStrategy="MeasureAllItems">
                             <CollectionView.EmptyView>
                                 <StackLayout HorizontalOptions="Center" VerticalOptions="Fill">
                                     <ActivityIndicator IsVisible="{Binding ArtistsAlbums.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistsAlbums.IsNotCompleted}" VerticalOptions="End" HorizontalOptions="Center"/>
@@ -74,7 +84,7 @@
 
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="song:Album">
-                                    <Grid ColumnSpacing="20">
+                                    <Grid Padding="20,0,0,0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="150"/>
                                             <RowDefinition Height="25"/>
@@ -96,13 +106,13 @@
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                         <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                        <Label Text="Музыкальные клипы" FontSize="Large"/>
-                        <CollectionView ItemsSource="{Binding ArtistsSongs.Result.Response.Songs[0].Media}" HeightRequest="210" SelectionMode="None" ItemSizingStrategy="MeasureAllItems">
+                        <Label Text="Связанные видео" FontSize="Large"/>
+                        <CollectionView ItemsSource="{Binding ArtistVideos.Result.Items}" Margin="-20,0,-20,0" HeightRequest="250" SelectionMode="Single" SelectionChangedCommand="{Binding PlayYoutubeVideo}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}" ItemSizingStrategy="MeasureAllItems">
                             <CollectionView.EmptyView>
                                 <StackLayout HorizontalOptions="Center" VerticalOptions="Fill">
-                                    <ActivityIndicator IsVisible="{Binding ArtistsAlbums.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistsAlbums.IsNotCompleted}" VerticalOptions="End" HorizontalOptions="Center"/>
-                                    <Image IsVisible="{Binding ArtistsAlbums.IsCompleted}" Source="NotFound.png"/>
-                                    <Label IsVisible="{Binding ArtistsAlbums.IsCompleted}" Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
+                                    <ActivityIndicator IsVisible="{Binding ArtistVideos.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistVideos.IsNotCompleted}" VerticalOptions="End" HorizontalOptions="Center"/>
+                                    <Image IsVisible="{Binding ArtistVideos.IsCompleted}" Source="NotFound.png"/>
+                                    <Label IsVisible="{Binding ArtistVideos.IsCompleted}" Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
                                 </StackLayout>
                             </CollectionView.EmptyView>
 
@@ -112,26 +122,29 @@
                             </CollectionView.ItemsLayout>
 
                             <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="song:Media">
-                                    <Grid ColumnSpacing="20">
+                                <DataTemplate x:DataType="song1:SearchResult">
+                                    <Grid Padding="20,0,0,0" ColumnSpacing="20">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="150"/>
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="150"/>
-                                            <ColumnDefinition Width="20"/>
+                                            <ColumnDefinition Width="266"/>
                                         </Grid.ColumnDefinitions>
+                                        <Frame CornerRadius="10" Padding="0">
+                                            <Image x:Name="AudioImgBottom" Aspect="AspectFill" Source="{Binding Snippet.Thumbnails.Medium.Url}" Grid.Column="0" Grid.Row="0"/>
+                                        </Frame>
                                         <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
-                                            <Label Text="{Binding Url}" FontSize="18" TextColor="Black" LineBreakMode="TailTruncation" />
-                                            <Label Text="{Binding Type}" LineBreakMode="TailTruncation"/>
+                                            <Label Text="{Binding Snippet.Title}" FontSize="18" TextColor="Black" LineBreakMode="TailTruncation" />
+                                            <Label Text="{Binding Snippet.ChannelTitle}" LineBreakMode="TailTruncation"/>
+                                            <Label Text="{Binding Snippet.Description}" LineBreakMode="WordWrap"/>
                                         </StackLayout>
-                                        <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="1" Grid.Row="1"/>
                                     </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                         <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
+                    </StackLayout>
                     </StackLayout>
                 </Frame>
             </StackLayout>

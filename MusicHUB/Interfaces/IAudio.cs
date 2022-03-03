@@ -1,4 +1,5 @@
 ﻿using Android.Content;
+using MusicHUB.EventArgumentss;
 using MusicHUB.Models;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace MusicHUB
         ObservableCollection<Track> Tracks { get; }
 
         event EventHandler OnCompleted;
+        event EventHandler OntrackChanged;
+        event PlayerTimeEventHandler OnPlayerTimeChanged;
         Track GetCurrentTrack();
         object[] GetInfo();
         void Next();

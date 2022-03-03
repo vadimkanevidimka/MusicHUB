@@ -4,6 +4,7 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
+using FFImageLoading.Forms.Platform;
 using Genius;
 using MusicHUB.DataBaseServices;
 using MusicHUB.DependencyInjection;
@@ -27,6 +28,7 @@ namespace MusicHUB.Droid
             Rg.Plugins.Popup.Popup.Init(this);
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 27, 27, 27));
             Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.ForceNotFullscreen);
+            CachedImageRenderer.Init(true);
             GrantPermissions(new string[] { Manifest.Permission.WriteExternalStorage, Manifest.Permission.ReadExternalStorage, Manifest.Permission.AccessMediaLocation });
             var DataBase = await ConnectionCreator.Init();
             Genius.GeniusClient geniusClient = new GeniusClient("AkUpkfIcZocLUFBxkZT8kUUb4pUxiHjo7ioK7eGPdsjy3TtE596RAN5iQZIH9G1B");

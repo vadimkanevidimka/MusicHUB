@@ -21,11 +21,11 @@ namespace MusicHUB.Droid.Mocks
 
         public async Task<Xamarin.Forms.Color> ConfigColorAsync(string filename)
         {
-            GetBitmap(filename);
+            image = GetBitmap(filename);
             return await GetColorAsync(image);
         }
 
-        private void GetBitmap(string filename)
+        public Bitmap GetBitmap(string filename)
         {
             try
             {
@@ -35,13 +35,13 @@ namespace MusicHUB.Droid.Mocks
                     FileInputStream inputStream = new FileInputStream(file);
                     mediaMetadataRetriever.SetDataSource(inputStream.FD);
                     byte[] picture = mediaMetadataRetriever.GetEmbeddedPicture();
-                    image = Android.Graphics.BitmapFactory.DecodeByteArray(picture, 0, picture.Length);
+                    return Android.Graphics.BitmapFactory.DecodeByteArray(picture, 0, picture.Length);
                 }
             }
             catch (Exception ex)
             {
-                image = null;
                 System.Console.WriteLine(ex.Message);
+                return null;
             }
         }
         private async Task<Xamarin.Forms.Color> GetColorAsync(Android.Graphics.Bitmap bitmap)

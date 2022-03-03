@@ -13,6 +13,7 @@ namespace MusicHUB.Models
         public string Artist { get; set; }
         public string Album { get; set; }
         public string Year { get; set; }
+        public int Bitrate { get; set; }
         [Unique]
         public string Uri { get; set; }
         public int Duration { get; set; }

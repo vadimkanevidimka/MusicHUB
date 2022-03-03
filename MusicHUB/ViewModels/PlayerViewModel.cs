@@ -18,6 +18,7 @@ using MvvmHelpers.Commands;
 using Google.Android.Material.BottomSheet;
 using Android.Widget;
 using System.ComponentModel;
+using MusicHUB.EventArgumentss;
 
 namespace MusicHUB.ViewModels
 {
@@ -58,7 +59,7 @@ namespace MusicHUB.ViewModels
             VolumeLevel = Audio.GetVolumeLevel;
             ResourceClass = new ResourceClassPlayerPage();
             Audio.OnCompleted += (obj, e) => OnPropertyChanged(nameof(CurrentTrack));
-            InitTimer();
+            Audio.OnPlayerTimeChanged += CurrentTime;
         }
 
         public Artist CurrentArtist { get; set; }
@@ -86,8 +87,7 @@ namespace MusicHUB.ViewModels
         {
             OnPropertyChanged(nameof(CurrentTrack));
             await IsTrackLiked(CurrentTrack);
-            Artists = new NotifyTaskCompletion<IList<Artist>>(GetArtists());
-            InitTimer();
+            await Task.Run(() => Artists = new NotifyTaskCompletion<IList<Artist>>(GetArtists()));
             await Task.Run(() => { Task.Delay(1000); ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg; } );
         }
 
@@ -95,24 +95,23 @@ namespace MusicHUB.ViewModels
         {
             get => new MvvmHelpers.Commands.Command(() =>
             {
+                Audio.OnPlayerTimeChanged += CurrentTime;
                 Audio.SetTime(PlayerPosition.CurrentPosition);
-                InitTimer();
             });
         }
 
         public ICommand DragPlayerStartedCommand
         {
             get => new MvvmHelpers.Commands.Command(()=>
-                {
-                    timer.Dispose();
-                });
+            {
+                Audio.OnPlayerTimeChanged -= CurrentTime;
+            });
         }
 
         public ICommand TrackChange
         {
             get => new MvvmHelpers.Commands.Command(c =>
             {
-                timer.Dispose();
                 Audio.PlayAudioFile((Track)c);
                 TrackChanging();
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
@@ -122,7 +121,6 @@ namespace MusicHUB.ViewModels
         public ICommand NextTrack {
             get => new MvvmHelpers.Commands.Command(() =>
             {
-                timer.Dispose();
                 Audio.Next();
                 TrackChanging();
                 ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
@@ -132,7 +130,6 @@ namespace MusicHUB.ViewModels
         public ICommand PrevTrack {
             get => new MvvmHelpers.Commands.Command(() =>
             {
-                timer.Dispose();
                 Audio.Prev();
                 TrackChanging();
             }); 
@@ -153,7 +150,7 @@ namespace MusicHUB.ViewModels
 
         private async Task Shufle()
         {
-            Audio.Shuffle();
+            await Audio.Shuffle();
             ResourceClass.Shufle = ResourceClassPlayerPage.ShuffledImg;
             OnPropertyChanged(nameof(Tracks));
             OnPropertyChanged(nameof(ResourceClass));
@@ -189,12 +186,12 @@ namespace MusicHUB.ViewModels
             {
                 if (await IsTrackLiked(CurrentTrack))
                 {
-                    await Connections.BaseDataBaseService.DataBase.QueryAsync<DBLikedTracks>("Delete from LikedTracks where TrackId = ?", CurrentTrack.Id);
+                    await App.Connections.BaseDataBaseService.DataBase.QueryAsync<DBLikedTracks>("Delete from LikedTracks where TrackId = ?", CurrentTrack.Id);
                     Toast.MakeText(Audio.GetContext, $"{CurrentTrack.Title} удалена из любимого", ToastLength.Short).Show();
                 }
                 else
                 {
-                    await Connections.BaseDataBaseService.DataBase.InsertAsync(new DBLikedTracks() { TrackId = CurrentTrack.Id });
+                    await App.Connections.BaseDataBaseService.DataBase.InsertAsync(new DBLikedTracks() { TrackId = CurrentTrack.Id });
                     Toast.MakeText(Audio.GetContext, $"{CurrentTrack.Title} добавлена в любимое", ToastLength.Short).Show();
                 }
                 await IsTrackLiked(CurrentTrack);
@@ -225,8 +222,8 @@ namespace MusicHUB.ViewModels
             List<Artist> ArtistAndImage = new List<Artist>();
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                var rezult = await Connections.GeniusClient.SearchClient.Search($"{CurrentTrack.Title} {CurrentTrack.Artist}");
-                var artists = await Connections.GeniusClient.SongClient.GetSong(rezult.Response.Hits.First().Result.Id);
+                var rezult = await Connections.GeniusClient.SearchClient.Search($"{CurrentTrack.Title} by {CurrentTrack.Artist}");
+                var artists = await Connections.GeniusClient.SongClient.GetSong(rezult.Response.Hits.Where((s)=> s.Result.Stats.PageViews == rezult.Response.Hits.Max((c) => c.Result.Stats.PageViews)).First().Result.Id);
                 
                 ArtistAndImage.Add(artists.Response.Song.PrimaryArtist);
                 if (artists.Response.Song.FeaturedArtists != null)
@@ -238,15 +235,9 @@ namespace MusicHUB.ViewModels
             return ArtistAndImage;
         }
 
-        private void InitTimer()
+        private void CurrentTime(PlayerTimeEventArgs e)
         {
-            TimerCallback callback = CurrentTime;
-            timer = new Timer(callback, null, 0, 500);
-        }
-
-        private void CurrentTime(object c)
-        {
-            PlayerPosition.CurrentPosition = Audio.Time;
+            PlayerPosition.CurrentPosition = e.CurrentTime;
             VolumeLevel = Audio.GetVolumeLevel;
             OnPropertyChanged(nameof(PlayerPosition));
             OnPropertyChanged(nameof(VolumeLevel));

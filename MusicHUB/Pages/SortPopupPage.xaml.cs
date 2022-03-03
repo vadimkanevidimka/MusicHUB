@@ -30,7 +30,7 @@ namespace MusicHUB.Pages
             }
             else
             {
-                SortParams = new SortParams();
+                return;
             }
 
             this.Disappearing += UpdateList;

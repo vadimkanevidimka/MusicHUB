@@ -4,11 +4,21 @@ using Genius.Models.Song;
 using MusicHUB.DependencyInjection;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Google.Apis.YouTube.v3.Data;
+using Google.Apis.Services;
 using Xamarin.Forms;
+using Google.Apis.YouTube.v3;
+using System.Windows.Input;
+using MvvmHelpers.Commands;
+using Java.Net;
+using System;
+using Xamarin.Essentials;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace MusicHUB.ViewModels
 {
-    public class ArtistPageViewModel
+    public class ArtistPageViewModel : BindableObject
     {
         public ArtistPageViewModel(INavigation navigation, Artist response, Connections connections)
         {
@@ -18,15 +28,18 @@ namespace MusicHUB.ViewModels
             ArtistInfo = new NotifyTaskCompletion<ArtistResponse>(Connections.GeniusClient.ArtistClient.GetArtist(Response.Id));
             ArtistsSongs = new NotifyTaskCompletion<ArtistsSongsResponse>(Connections.GeniusClient.ArtistClient.GetArtistsSongs(Response.Id, "popularity", "10"));
             ArtistsAlbums = new NotifyTaskCompletion<List<Genius.Models.Song.Album>>(GetAlbumsAsync(ArtistsSongs));
+            ArtistVideos = new NotifyTaskCompletion<SearchListResponse>(GetEmbededVideos());
         }
 
         public Artist Response { get; set; }
         public Connections Connections { get; set; }
-        public NotifyTaskCompletion<ArtistResponse> ArtistInfo { get; set; }
-        public NotifyTaskCompletion<List<Genius.Models.Song.Album>> ArtistsAlbums { get; set; }
+        public NotifyTaskCompletion<ArtistResponse> ArtistInfo { get => artistInfo; set { artistInfo = value; OnPropertyChanged(nameof(ArtistInfo)); } }
+        public NotifyTaskCompletion<SearchListResponse> ArtistVideos { get; set; }
         public NotifyTaskCompletion<ArtistsSongsResponse> ArtistsSongs { get; set; }
-        public Command CloseArtistPage { get => new Command(() => this.Navigation.PopAsync()); }
+        public NotifyTaskCompletion<List<Genius.Models.Song.Album>> ArtistsAlbums { get; set; }
+        public ICommand CloseArtistPage { get => new Xamarin.Forms.Command(() => this.Navigation.PopAsync()); }
         private INavigation Navigation { get; set; }
+        private NotifyTaskCompletion<ArtistResponse> artistInfo;
 
         private List<Album> GetAlbums(NotifyTaskCompletion<ArtistsSongsResponse> artistsSongs)
         {
@@ -49,6 +62,29 @@ namespace MusicHUB.ViewModels
         private async Task<List<Album>> GetAlbumsAsync(NotifyTaskCompletion<ArtistsSongsResponse> artistsSongs)
         {
             return await Task.Run(() => GetAlbums(artistsSongs));
+        }
+
+        private async Task<SearchListResponse> GetEmbededVideos()
+        {
+            var service = new YouTubeService(new BaseClientService.Initializer() { ApiKey = "AIzaSyAXKtHaocNan7-WeDF0PiQPCMs2H5Bb1Xo", });
+            var reqest = service.Search.List("snippet");
+            reqest.Q = Response.Name;
+            reqest.Order = SearchResource.ListRequest.OrderEnum.Relevance;
+            reqest.MaxResults = 10;
+            reqest.Type = "video";
+            var responce = await reqest.ExecuteAsync();
+            return responce;
+        }
+
+        public ICommand PlayYoutubeVideo
+        {
+            get => new AsyncCommand<SearchResult>(async (e) =>
+               {
+                   DependencyService.Get<IAudio>().Pause();
+                   Uri uri = new Uri("https://www.youtube.com/watch?v=" + e.Id.VideoId);
+                   await Browser.OpenAsync(uri);
+                   e = null;
+               });
         }
     }
 }

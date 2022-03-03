@@ -14,6 +14,8 @@ namespace MusicHUB.Pages
             Children[0].IconImageSource = "library.png";
             Children.Add(new PlayListsPage(connections));
             Children[1].IconImageSource = "playlist2.png";
+            Children.Add(new SettingsPage());
+            Children[2].IconImageSource = "settingsbutton.png";
         }
     }
 }

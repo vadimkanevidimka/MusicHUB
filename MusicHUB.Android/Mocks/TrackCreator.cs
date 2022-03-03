@@ -37,6 +37,7 @@ namespace MusicHUB.Droid
                     Artist = mmdr.ExtractMetadata(MetadataKey.Artist),
                     Year = mmdr.ExtractMetadata(MetadataKey.Year),
                     Album = mmdr.ExtractMetadata(MetadataKey.Album),
+                    Bitrate = Convert.ToInt32(mmdr.ExtractMetadata(MetadataKey.Bitrate)),
                     Uri = filename,
                 };
             }

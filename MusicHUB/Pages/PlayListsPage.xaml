@@ -23,7 +23,7 @@
                     <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
                     <Label Text="Любимые композиции" FontSize="20"/>
                     <CollectionView x:Name="MyListView"
-                            ItemsSource="{Binding LikedTracks}" HeightRequest="150" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectLikedCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
+                            ItemsSource="{Binding LikedTracks}" Margin="-10,0,-10,0" HeightRequest="200" SelectionMode="None" ItemSizingStrategy="MeasureAllItems">
                         <CollectionView.EmptyView>
                             <StackLayout HorizontalOptions="Center">
                                 <Image Source="NotFound.png"/>
@@ -38,21 +38,24 @@
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Track">
-                                <Grid ColumnSpacing="20">
+                                <Grid Padding="10" ColumnSpacing="10" x:Name="Item">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer x:DataType="local:PLayListViewModel" BindingContext="{Binding Source={x:Reference MyListView}, Path=BindingContext}" Command="{Binding SelectLikedCommand}" CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"/>
+                                    </Grid.GestureRecognizers>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="50"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="45"/>
+                                        <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="190"/>
                                         <ColumnDefinition Width="50"/>
                                     </Grid.ColumnDefinitions>
                                     <Image x:Name="AudioImgBottom" Aspect="AspectFit" Source="{Binding ImageSource}" Grid.Column="0"/>
                                     <StackLayout Grid.Column="1" VerticalOptions="Center">
-                                        <Label Text="{Binding Title}" LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Title}" LineBreakMode="TailTruncation" TextColor="Black"/>
                                         <Label Text="{Binding Artist}" LineBreakMode="TailTruncation"/>
                                     </StackLayout>
-                                    <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="2"/>
+                                    <ImageButton x:DataType="local:PLayListViewModel" Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="2" BindingContext="{Binding Source={x:Reference MyListView}, Path=BindingContext}" Command="{Binding GetTrackInfo}" CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -63,7 +66,7 @@
                         <ImageButton Source="addtoplaylist.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding AddNewAlbum}"/>
                     </FlexLayout>
                     <CollectionView x:Name="PlayLists"
-                            ItemsSource="{Binding Albums}" HeightRequest="210" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectAlbum}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
+                            ItemsSource="{Binding Albums}" HeightRequest="210" Margin="-10,0,-10,0" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectAlbum}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
                         <CollectionView.EmptyView>
                             <StackLayout HorizontalOptions="Center">
                                 <Image Source="NotFound.png"/>
@@ -78,7 +81,7 @@
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Album">
-                                <Grid Padding="10" ColumnSpacing="10">
+                                <Grid Padding="10">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="150"/>
                                         <RowDefinition Height="40"/>
@@ -100,6 +103,44 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                     <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
+                    <Label Text="Недавно прослушанные" FontSize="20"/>
+                    <CollectionView ItemsSource="{Binding RecentlyPlayed}" x:Name="RecentlyPlayedList" Margin="-10,0,-10,0" HeightRequest="200" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding RecentlyPlayedCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
+                        <CollectionView.EmptyView>
+                            <StackLayout HorizontalOptions="Center">
+                                <Image Source="NotFound.png"/>
+                                <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal"
+                                        Span="3" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Track">
+                                <Grid Padding="10" ColumnSpacing="10" x:Name="RecentlyPlayedItem">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer x:DataType="local:PLayListViewModel" BindingContext="{Binding Source={x:Reference RecentlyPlayedList}, Path=BindingContext}" Command="{Binding RecentlyPlayedCommand}" CommandParameter="{Binding Source={x:Reference RecentlyPlayedItem}, Path=BindingContext}"/>
+                                    </Grid.GestureRecognizers>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="190"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image x:Name="AudioImgBottom" Aspect="AspectFit" Source="{Binding ImageSource}" Grid.Column="0"/>
+                                    <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                        <Label Text="{Binding Title}" LineBreakMode="TailTruncation" TextColor="Black"/>
+                                        <Label Text="{Binding Artist}" LineBreakMode="TailTruncation"/>
+                                    </StackLayout>
+                                    <ImageButton x:DataType="local:PLayListViewModel" Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="2" BindingContext="{Binding Source={x:Reference RecentlyPlayedList}, Path=BindingContext}" Command="{Binding GetTrackInfo}" CommandParameter="{Binding Source={x:Reference RecentlyPlayedItem}, Path=BindingContext}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
             </ScrollView>
         </RefreshView>

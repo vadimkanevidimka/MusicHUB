@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.IO;
 using Android.Widget;
 using MusicHUB.ViewModels.ContextActions;
+using MvvmHelpers.Commands;
 
 namespace MusicHUB
 {
@@ -42,6 +43,14 @@ namespace MusicHUB
             IContextAction contextAction = e.Item as IContextAction;
             contextAction.ExcecuteAction<Track>(Tracks);
             await this.Navigation.PopPopupAsync();
+        }
+
+        private ICommand GetSongInfo
+        {
+            get => new AsyncCommand(async () =>
+            {
+
+            });
         }
     }
 }

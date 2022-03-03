@@ -3,8 +3,8 @@
             xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-            xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
-            x:Class="MusicHUB.Pages.CutPopupPage">
+            xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    x:Class="MusicHUB.Pages.CutPopupPage">
 
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
@@ -39,18 +39,21 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="150"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Label x:Name="Title" Text="Обрезка файла" HorizontalOptions="Center" FontSize="20" Grid.ColumnSpan="2"/>
-                <Image Source="Oscylogramm.png" Grid.Row="2" Grid.ColumnSpan="2" />
-                <Slider Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="#00FFFFFF" MaximumTrackColor="#00FFFFFF" MinimumTrackColor="#00C6A5A5"/>
-                <Slider Grid.Row="3" Rotation="180" Grid.ColumnSpan="2" BackgroundColor="#00FFFFFF" MaximumTrackColor="#00FFFFFF" MinimumTrackColor="#00C6A5A5"/>
-                <Entry Grid.Row="4" Grid.ColumnSpan="2" Placeholder="Имя файла"/>
-                <Button Text="Обрезать" Grid.Row="5" Style="{StaticResource MainButtonStyle}"/>
+                <Image Source="Oscylogramm.png" Grid.Row="2" Grid.ColumnSpan="2"/>
+                <Label Text="{Binding StartTrimPosition}" Grid.Column="0"/>
+                <Label Text="{Binding EndTrimPosition}" Grid.Column="1"/>
+                <Line X1="0" X2="0" Y1="0" Y2="100" Grid.Column="0" Grid.Row="2" Stroke="Red"/>
+                <Slider Grid.Row="1" Maximum="{Binding EndtrimMax}" Value="{Binding StartTrimPosition}" Grid.ColumnSpan="2" BackgroundColor="#00FFFFFF" MaximumTrackColor="#00FFFFFF" MinimumTrackColor="#00C6A5A5"/>
+                <Slider Grid.Row="3" Maximum="{Binding EndtrimMax}" Value="{Binding EndTrimPosition}" Grid.ColumnSpan="2" BackgroundColor="#00FFFFFF" MaximumTrackColor="#00FFFFFF" MinimumTrackColor="#00C6A5A5"/>
+                <Entry Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding FileOutputPath}" Placeholder="Имя файла"/>
+                <Button Text="Обрезать" Grid.Row="5" Style="{StaticResource MainButtonStyle}" Command="{Binding CutCommand}"/>
                 <Button Text="Установить на рингтон" Grid.Row="5" Grid.Column="1" Style="{StaticResource MainButtonStyle}"/>
             </Grid>
         </Frame>
