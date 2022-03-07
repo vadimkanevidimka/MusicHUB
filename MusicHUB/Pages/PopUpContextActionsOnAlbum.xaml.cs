@@ -1,0 +1,56 @@
+﻿using Rg.Plugins.Popup.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using MusicHUB.Models;
+using System.Windows.Input;
+using System.IO;
+using Android.Widget;
+using MusicHUB.ViewModels.ContextActions;
+using MvvmHelpers.Commands;
+
+namespace MusicHUB
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class PopUpContextActionsOnAlbum : Rg.Plugins.Popup.Pages.PopupPage
+    {
+        public IEnumerable<IContextAction> ContextActions { get; set; }
+        public Album Album { get; set; }
+        public PopUpContextActionsOnAlbum(Album album, TrackContextActionState contextActionState)
+        {
+            InitializeComponent();
+            switch (contextActionState)
+            {
+                case TrackContextActionState.AtList:
+                    ContextActions = new ContextActionsResourses().TrackListContextActions;
+                    break;
+                case TrackContextActionState.AtPlayerPage:
+                    ContextActions = new ContextActionsResourses().TrackContextActions;
+                    break;
+                default:
+                    break;
+            }
+            Album = album;
+            BindingContext = this;
+        }
+
+        private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            IContextAction contextAction = e.Item as IContextAction;
+            contextAction.ExcecuteAction<Track>(Album);
+            await this.Navigation.PopPopupAsync();
+        }
+
+        private ICommand GetSongInfo
+        {
+            get => new AsyncCommand(async () =>
+            {
+
+            });
+        }
+    }
+}

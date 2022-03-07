@@ -142,9 +142,13 @@
               "target": "Package",
               "version": "[1.56.0.2449, )"
             },
-            "NAudio": {
+            "Plugin.MediaManager": {
               "target": "Package",
-              "version": "[2.0.1, )"
+              "version": "[1.1.0, )"
+            },
+            "Plugin.MediaManager.Forms": {
+              "target": "Package",
+              "version": "[1.1.0, )"
             },
             "Plugin.Permissions": {
               "target": "Package",

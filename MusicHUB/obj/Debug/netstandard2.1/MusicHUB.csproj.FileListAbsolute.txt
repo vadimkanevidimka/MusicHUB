@@ -31,3 +31,4 @@ D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\ChosePlayListPo
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\TrackLirycsPopupPage.xaml.g.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\SortPopupPage.xaml.g.cs
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\SettingsPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Debug\netstandard2.1\Pages\PopUpContextActionsOnAlbum.xaml.g.cs

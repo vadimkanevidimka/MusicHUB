@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using FFImageLoading.Forms.Platform;
 using Genius;
+using MediaManager;
 using MusicHUB.DataBaseServices;
 using MusicHUB.DependencyInjection;
 using MusicHUB.Interfaces;
@@ -26,6 +27,7 @@ namespace MusicHUB.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             RequestedOrientation = ScreenOrientation.Portrait;
             Rg.Plugins.Popup.Popup.Init(this);
+            CrossMediaManager.Current.Init(this);
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 27, 27, 27));
             Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.ForceNotFullscreen);
             CachedImageRenderer.Init(true);

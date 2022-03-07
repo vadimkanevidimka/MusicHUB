@@ -36,11 +36,11 @@
                         <Label Text="Популярные треки" FontSize="Large"/>
                         <CollectionView ItemsSource="{Binding ArtistsSongs.Result.Response.Songs}" Margin="-20,0,-20,0" HeightRequest="190" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectLikedCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
                             <CollectionView.EmptyView>
-                                <StackLayout HorizontalOptions="Center">
-                                    <Image Source="NotFound.png"/>
-                                    <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
-                                </StackLayout>
-                            </CollectionView.EmptyView>
+                                    <StackLayout Padding="0,40,0,0">
+                                        <Image HeightRequest="100" Aspect="AspectFit" Source="search_state.gif" IsAnimationPlaying="True"/>
+                                        <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
+                                    </StackLayout>
+                                </CollectionView.EmptyView>
 
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Horizontal"
@@ -70,9 +70,9 @@
                         <Label Text="Популярные альбомы" FontSize="Large"/>
                         <CollectionView Margin="-20,0,-20,0" ItemsSource="{Binding ArtistsAlbums.Result}" HeightRequest="210" SelectionMode="None" ItemSizingStrategy="MeasureAllItems">
                             <CollectionView.EmptyView>
-                                <StackLayout HorizontalOptions="Center" VerticalOptions="Fill">
+                                    <StackLayout Padding="0,40,0,0" HorizontalOptions="Center" VerticalOptions="Fill">
                                     <ActivityIndicator IsVisible="{Binding ArtistsAlbums.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistsAlbums.IsNotCompleted}" VerticalOptions="End" HorizontalOptions="Center"/>
-                                    <Image IsVisible="{Binding ArtistsAlbums.IsCompleted}" Source="NotFound.png"/>
+                                    <Image HeightRequest="100" Aspect="AspectFit" IsVisible="{Binding ArtistsAlbums.IsCompleted}" Source="search_state.gif" IsAnimationPlaying="True"/>
                                     <Label IsVisible="{Binding ArtistsAlbums.IsCompleted}" Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
                                 </StackLayout>
                             </CollectionView.EmptyView>
@@ -109,9 +109,9 @@
                         <Label Text="Связанные видео" FontSize="Large"/>
                         <CollectionView ItemsSource="{Binding ArtistVideos.Result.Items}" Margin="-20,0,-20,0" HeightRequest="250" SelectionMode="Single" SelectionChangedCommand="{Binding PlayYoutubeVideo}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}" ItemSizingStrategy="MeasureAllItems">
                             <CollectionView.EmptyView>
-                                <StackLayout HorizontalOptions="Center" VerticalOptions="Fill">
+                                <StackLayout Padding="0,40,0,0">
                                     <ActivityIndicator IsVisible="{Binding ArtistVideos.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistVideos.IsNotCompleted}" VerticalOptions="End" HorizontalOptions="Center"/>
-                                    <Image IsVisible="{Binding ArtistVideos.IsCompleted}" Source="NotFound.png"/>
+                                    <Image HeightRequest="100" Aspect="AspectFit" IsVisible="{Binding ArtistVideos.IsCompleted}" Source="search_state.gif" IsAnimationPlaying="True"/>
                                     <Label IsVisible="{Binding ArtistVideos.IsCompleted}" Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
                                 </StackLayout>
                             </CollectionView.EmptyView>

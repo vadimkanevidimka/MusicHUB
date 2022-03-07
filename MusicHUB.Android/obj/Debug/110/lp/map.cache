@@ -1,7 +1,16 @@
+ExoPlayer.Core.dll
+ExoPlayer.Dash.dll
+ExoPlayer.dll
+ExoPlayer.Ext.MediaSession.dll
+ExoPlayer.Hls.dll
+ExoPlayer.SmoothStreaming.dll
+ExoPlayer.UI.dll
 FFImageLoading.Forms.Platform.dll
 FFImageLoading.Platform.dll
 FFImageLoading.Transformations.dll
 FormsViewGroup.dll
+MediaManager.dll
+MediaManager.Forms.dll
 MusicHUB.dll
 Plugin.Permissions.dll
 Rg.Plugins.Popup.dll

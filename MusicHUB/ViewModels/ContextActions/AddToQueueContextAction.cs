@@ -14,7 +14,7 @@ namespace MusicHUB.ViewModels.ContextActions
 
         public override string DescriptionText => "Играть далее";
 
-        public override void ExcecuteAction<T>(object someobject)
+        public async override void ExcecuteAction<T>(object someobject)
         {
             if (someobject == null)
             {
@@ -27,6 +27,13 @@ namespace MusicHUB.ViewModels.ContextActions
                 var newtrack = track.MemberWiseClone();
                 newtrack.Id = DependencyService.Get<IAudio>().Tracks.Last().Id + 1;
                 DependencyService.Get<IAudio>().AddToQueue(newtrack);
+                base.MakeToast($"{((Track)someobject).Title} добавлена в очередь.");
+            }
+            else if (someobject.GetType() == typeof(Album))
+            {
+                Album album = someobject as Album;
+                var tracks = await App.Connections.BaseDataBaseService.DataBase.QueryAsync<Track>("select * from Tracks join AlbumsTracks on Tracks.Id = AlbumsTracks.TrackId");
+                DependencyService.Get<IAudio>().AddToQueue(tracks);
                 base.MakeToast($"{((Track)someobject).Title} добавлена в очередь.");
             }
         }

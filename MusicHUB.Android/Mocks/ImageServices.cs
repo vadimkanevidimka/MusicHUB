@@ -97,7 +97,7 @@ namespace MusicHUB.Droid.Mocks
             catch (Exception ex)
             {
                 System.Console.WriteLine(ex.Message);
-                return ImageSource.FromFile("BoyOnNine.jpg");
+                return ImageSource.FromFile("DefaultMusicIcon.png");
             }
         }
 
@@ -124,7 +124,7 @@ namespace MusicHUB.Droid.Mocks
             catch (Exception ex)
             {
                 System.Console.WriteLine(ex.Message);
-                return ImageSource.FromFile("BoyOnNine.jpg");
+                return ImageSource.FromFile("DefaultMusicIcon.png");
             }
         }
     }

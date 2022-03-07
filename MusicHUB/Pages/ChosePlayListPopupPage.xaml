@@ -42,8 +42,8 @@
                 <CollectionView x:Name="PlayLists"
                             ItemsSource="{Binding Albums}" HeightRequest="210" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectedItem="{Binding SelectedAlbum}">
                     <CollectionView.EmptyView>
-                        <StackLayout HorizontalOptions="Center">
-                            <Image Source="NotFound.png"/>
+                        <StackLayout Padding="0,40,0,0">
+                            <Image HeightRequest="100" Aspect="AspectFit" Source="search_state.gif" IsAnimationPlaying="True"/>
                             <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
                         </StackLayout>
                     </CollectionView.EmptyView>

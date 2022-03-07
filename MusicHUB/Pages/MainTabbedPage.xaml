@@ -8,6 +8,7 @@
             SelectedTabColor="White"
             xmlns:android ="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom">
+    
     <TabbedPage.ToolbarItems>
         <ToolbarItem IconImageSource="search.png"/>
     </TabbedPage.ToolbarItems>

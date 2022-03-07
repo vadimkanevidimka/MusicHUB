@@ -1,5 +1,6 @@
 ﻿using MusicHUB.Helpers;
 using MusicHUB.Models;
+using MusicHUB.ViewModels.Properties;
 using MvvmHelpers.Commands;
 using Rg.Plugins.Popup.Extensions;
 using System;
@@ -18,7 +19,15 @@ namespace MusicHUB.ViewModels
         private string fileInputPath;
         private string fileOutputPath;
         private Track track;
+        private double startpositionLineX;
+        private double endpositionLineX;
 
+
+        #region Propreties     
+        public PlayerPosition playerPosition { get; set; }
+        public double SliderKoefficient { get; set; }
+        public double StartpositionLineX { get => startpositionLineX; set { startpositionLineX = value; OnPropertyChanged(nameof(StartpositionLineX)); } }
+        public double EndpositionLineX { get => endpositionLineX; set { endpositionLineX = value; OnPropertyChanged(nameof(EndpositionLineX)); } }
         public int StarttrimMax { get; set; }
         public int EndtrimMax { get; set; }
         public string FileOutputPath { get => fileOutputPath; set { fileOutputPath = value; OnPropertyChanged(nameof(FileOutputPath)); } }
@@ -28,8 +37,11 @@ namespace MusicHUB.ViewModels
             set 
             {
                 startTrimPosition = value;
+                if(SliderKoefficient != 0) StartpositionLineX = (startTrimPosition * SliderKoefficient);
+                playerPosition.CurrentPosition = startTrimPosition;
+                OnPropertyChanged(nameof(playerPosition));
 
-                if(startTrimPosition + 50000 >= endTrimPosition && EndTrimPosition < EndtrimMax)
+                if (startTrimPosition + 50000 >= endTrimPosition && EndTrimPosition < EndtrimMax)
                 {
                     EndTrimPosition = startTrimPosition + 50000;
                 }
@@ -42,17 +54,22 @@ namespace MusicHUB.ViewModels
             set 
             {
                 endTrimPosition = value;
+                if (SliderKoefficient != 0) EndpositionLineX = (endTrimPosition * SliderKoefficient);
+                playerPosition.Duration = endTrimPosition;
+                OnPropertyChanged(nameof(playerPosition));
 
-                if (startTrimPosition > endTrimPosition - 50000 && StartTrimPosition > 0)
+                    if (startTrimPosition > endTrimPosition - 50000 && StartTrimPosition > 0)
                 {
                     StartTrimPosition = endTrimPosition - 50000;
                 }
                 OnPropertyChanged(nameof(EndTrimPosition)); 
             } 
         }
+#endregion Properties
 
         public CutPopupPageViewModel(Track track)
         {
+            playerPosition = new PlayerPosition();
             musicFileTrimmer = new MusicFileTrimmer();
             fileInputPath = track.Uri;
             StartTrimPosition = 0;
@@ -60,6 +77,7 @@ namespace MusicHUB.ViewModels
             StarttrimMax = track.Duration;
             EndtrimMax = track.Duration;
             this.track = track;
+            SliderKoefficient = 340F / (double)EndtrimMax;
         }
 
         public ICommand CutCommand

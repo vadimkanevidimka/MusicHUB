@@ -50,11 +50,7 @@ namespace MusicHUB.Pages
             UpdateFileList();
             Audio.OntrackChanged += SetBottomPanelData;
             Audio.OnPlayerTimeChanged += SetTimeStamp;
-        }
-
-        protected override void OnAppearing()
-        {
-            
+            Audio.OnstateChanged += stateChanged;
         }
 
         async void UpdateFileList()
@@ -76,6 +72,12 @@ namespace MusicHUB.Pages
         {
             CurrentTrack = Audio.GetCurrentTrack();
             ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
+        }
+
+        private void stateChanged(object sender, EventArgs e)
+        {
+            ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
+            OnPropertyChanged(nameof(ResourceClass));
         }
 
         private void SetTimeStamp(PlayerTimeEventArgs e)

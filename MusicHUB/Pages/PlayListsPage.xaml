@@ -25,8 +25,8 @@
                     <CollectionView x:Name="MyListView"
                             ItemsSource="{Binding LikedTracks}" Margin="-10,0,-10,0" HeightRequest="200" SelectionMode="None" ItemSizingStrategy="MeasureAllItems">
                         <CollectionView.EmptyView>
-                            <StackLayout HorizontalOptions="Center">
-                                <Image Source="NotFound.png"/>
+                            <StackLayout Padding="0,40,0,0">
+                                <Image HeightRequest="100" Aspect="AspectFit" Source="search_state.gif" IsAnimationPlaying="True"/>
                                 <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
                             </StackLayout>
                         </CollectionView.EmptyView>
@@ -68,8 +68,8 @@
                     <CollectionView x:Name="PlayLists"
                             ItemsSource="{Binding Albums}" HeightRequest="210" Margin="-10,0,-10,0" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectAlbum}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
                         <CollectionView.EmptyView>
-                            <StackLayout HorizontalOptions="Center">
-                                <Image Source="NotFound.png"/>
+                            <StackLayout Padding="0,40,0,0">
+                                <Image HeightRequest="100" Aspect="AspectFit" Source="search_state.gif" IsAnimationPlaying="True"/>
                                 <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
                             </StackLayout>
                         </CollectionView.EmptyView>
@@ -81,7 +81,7 @@
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Album">
-                                <Grid Padding="10">
+                                <Grid Padding="10" x:Name="AlbumItem">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="150"/>
                                         <RowDefinition Height="40"/>
@@ -97,7 +97,7 @@
                                         <Label Text="{Binding Title}" FontSize="20" TextColor="Black" LineBreakMode="TailTruncation" />
                                         <Label Text="{Binding Artist}" LineBreakMode="TailTruncation"/>
                                     </StackLayout>
-                                    <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="1" Grid.Row="1"/>
+                                    <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="1" Grid.Row="1" BindingContext="{Binding Source={x:Reference PlayLists}, Path=BindingContext}" Command="{Binding AlbumOptionsCommand}" CommandParameter="{Binding Source={x:Reference AlbumItem}, Path=BindingContext}"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -106,8 +106,8 @@
                     <Label Text="Недавно прослушанные" FontSize="20"/>
                     <CollectionView ItemsSource="{Binding RecentlyPlayed}" x:Name="RecentlyPlayedList" Margin="-10,0,-10,0" HeightRequest="200" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding RecentlyPlayedCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
                         <CollectionView.EmptyView>
-                            <StackLayout HorizontalOptions="Center">
-                                <Image Source="NotFound.png"/>
+                            <StackLayout Padding="0,40,0,0">
+                                <Image Source="search_state.gif" IsAnimationPlaying="True"/>
                                 <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
                             </StackLayout>
                         </CollectionView.EmptyView>

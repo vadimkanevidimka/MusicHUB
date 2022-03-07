@@ -19,7 +19,8 @@
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
     <PackageReference Include="Genius.NET" Version="4.0.1" />
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.56.0.2449" />
-    <PackageReference Include="NAudio" Version="2.0.1" />
+    <PackageReference Include="Plugin.MediaManager" Version="1.1.0" />
+    <PackageReference Include="Plugin.MediaManager.Forms" Version="1.1.0" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
@@ -45,6 +46,9 @@
   <ItemGroup>
     <Compile Update="Pages\AddingAlbumPopupPage.xaml.cs">
       <DependentUpon>AddingAlbumPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\PopUpContextActionsOnAlbum.xaml.cs">
+      <DependentUpon>PopUpContextActionsOnAlbum.xaml</DependentUpon>
     </Compile>
     <Compile Update="Pages\QueuePopupPage.xaml.cs">
       <DependentUpon>QueuePopupPage.xaml</DependentUpon>

@@ -19,16 +19,13 @@ using Google.Android.Material.BottomSheet;
 using Android.Widget;
 using System.ComponentModel;
 using MusicHUB.EventArgumentss;
+using System;
 
 namespace MusicHUB.ViewModels
 {
     public class PlayerViewModel : BindableObject
     {
         private readonly IAudio Audio = DependencyService.Get<IAudio>();
-
-        private Toast ToastMessage { get; set; }
-
-        private Timer timer;
 
         private Connections Connections { get; set; }
 
@@ -54,12 +51,13 @@ namespace MusicHUB.ViewModels
         {
             Navigation = navigation;
             Connections = connections;
+            ResourceClass = new ResourceClassPlayerPage();
             PlayerPosition = new PlayerPosition();
             MaxVolumeLevel = Audio.GetMaxVolumeLevel;
             VolumeLevel = Audio.GetVolumeLevel;
-            ResourceClass = new ResourceClassPlayerPage();
             Audio.OnCompleted += (obj, e) => OnPropertyChanged(nameof(CurrentTrack));
             Audio.OnPlayerTimeChanged += CurrentTime;
+            Audio.OnstateChanged += stateChanged;
         }
 
         public Artist CurrentArtist { get; set; }
@@ -238,9 +236,16 @@ namespace MusicHUB.ViewModels
         private void CurrentTime(PlayerTimeEventArgs e)
         {
             PlayerPosition.CurrentPosition = e.CurrentTime;
+            PlayerPosition.Duration = e.Duration;
             VolumeLevel = Audio.GetVolumeLevel;
             OnPropertyChanged(nameof(PlayerPosition));
             OnPropertyChanged(nameof(VolumeLevel));
+        }
+
+        private void stateChanged(object sender, EventArgs e)
+        {
+            ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
+            OnPropertyChanged(nameof(ResourceClass));
         }
     }
 }

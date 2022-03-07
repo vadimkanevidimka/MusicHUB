@@ -11,6 +11,8 @@ namespace MusicHUB.ViewModels.Properties
 
         public int CurrentPosition { get; set; }
 
+        public int Duration { get; set; }
+
         public int Maximum { get => DependencyService.Get<IAudio>().GetCurrentTrack().Duration; }
 
         public string CurrentPOsitionString
@@ -22,6 +24,14 @@ namespace MusicHUB.ViewModels.Properties
         }
 
         public string DurationString
+        {
+            get
+            {
+                return GetStringTime(Duration);
+            }
+        }
+
+        public string Maximumstring
         {
             get
             {

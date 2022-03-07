@@ -123,5 +123,10 @@ namespace MusicHUB.ViewModels
                 await App.Current.MainPage.Navigation.PushAsync(new AlbumPage(album));
             });
         }
+
+        public ICommand AlbumOptionsCommand
+        {
+            get => new AsyncCommand<Album>(async (album) => { await App.Current.MainPage.Navigation.PushPopupAsync(new PopUpContextActionsOnAlbum(album, ContextActions.TrackContextActionState.AtList)); });
+        }
     }
 }
