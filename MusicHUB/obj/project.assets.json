@@ -451,6 +451,15 @@
           "lib/netstandard2.0/_._": {}
         }
       },
+      "taglib-sharp-netstandard2.0/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/taglib-sharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/taglib-sharp.dll": {}
+        }
+      },
       "Xamarin.Essentials/1.7.1": {
         "type": "package",
         "dependencies": {
@@ -514,6 +523,19 @@
         "build": {
           "buildTransitive/Xamarin.Forms.props": {},
           "buildTransitive/Xamarin.Forms.targets": {}
+        }
+      },
+      "Xamarin.Rating/1.0.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Essentials": "1.6.1",
+          "Xamarin.Forms": "5.0.0.2012"
+        },
+        "compile": {
+          "lib/netstandard2.0/Rating.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Rating.dll": {}
         }
       }
     }
@@ -1818,6 +1840,18 @@
         "version.txt"
       ]
     },
+    "taglib-sharp-netstandard2.0/2.1.0": {
+      "sha512": "w45LreEPpV/vOfgpYBI1cNqiLvj8yQ8f7kJaMYtzTAsg26ZdHWnh5vPuy2/F9tCKhmgNB0s+zOBwdcEb4qk3Tg==",
+      "type": "package",
+      "path": "taglib-sharp-netstandard2.0/2.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/taglib-sharp.dll",
+        "taglib-sharp-netstandard2.0.2.1.0.nupkg.sha512",
+        "taglib-sharp-netstandard2.0.nuspec"
+      ]
+    },
     "Xamarin.Essentials/1.7.1": {
       "sha512": "u7pUgvHJKTYo5ATiwRZvYviq2O0AQXIqxdna+sMxqidfWpbD7FBgFOLNAZzWKSll/AQBPeDrqLAWZNLq+ztpmQ==",
       "type": "package",
@@ -2221,6 +2255,18 @@
         "xamarin.forms.5.0.0.2337.nupkg.sha512",
         "xamarin.forms.nuspec"
       ]
+    },
+    "Xamarin.Rating/1.0.0.2": {
+      "sha512": "udVmz8Y+GeqMHG6zgAlNnvenyWv/PrwKZnw+8dqh9h7t/IeBGm2xtNpjBug+K9vFl+fjFSODwP+Xgut+yILI8Q==",
+      "type": "package",
+      "path": "xamarin.rating/1.0.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Rating.dll",
+        "xamarin.rating.1.0.0.2.nupkg.sha512",
+        "xamarin.rating.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -2240,7 +2286,9 @@
       "Xamarin.FFImageLoading.Forms >= 2.4.11.982",
       "Xamarin.FFImageLoading.Transformations >= 2.4.11.982",
       "Xamarin.Forms >= 5.0.0.2337",
-      "sqlite-net-pcl >= 1.8.116"
+      "Xamarin.Rating >= 1.0.0.2",
+      "sqlite-net-pcl >= 1.8.116",
+      "taglib-sharp-netstandard2.0 >= 2.1.0"
     ]
   },
   "packageFolders": {
@@ -2347,9 +2395,17 @@
             "target": "Package",
             "version": "[5.0.0.2337, )"
           },
+          "Xamarin.Rating": {
+            "target": "Package",
+            "version": "[1.0.0.2, )"
+          },
           "sqlite-net-pcl": {
             "target": "Package",
             "version": "[1.8.116, )"
+          },
+          "taglib-sharp-netstandard2.0": {
+            "target": "Package",
+            "version": "[2.1.0, )"
           }
         },
         "imports": [
@@ -2367,7 +2423,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.211\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.212\\RuntimeIdentifierGraph.json"
       }
     }
   }

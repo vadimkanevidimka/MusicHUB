@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:response="clr-namespace:Genius.Models.Response;assembly=Genius"
+             xmlns:artist="clr-namespace:Genius.Models.Artist;assembly=Genius"
+             xmlns:song="clr-namespace:Genius.Models.Song;assembly=Genius"
+             xmlns:controls="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView" xmlns:song1="clr-namespace:Google.Apis.YouTube.v3.Data;assembly=Google.Apis.YouTube.v3" xmlns:viewmodels="clr-namespace:MusicHUB.ViewModels"
+             x:Class="MusicHUB.Pages.TrackPage"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="True"
+             Title="{Binding Song.Result.Response.Song.Title}">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="10,0" BackgroundColor="White">
+                <ActivityIndicator IsVisible="{Binding ArtistInfo.IsNotCompleted}" Color="Wheat" IsRunning="{Binding Song.IsNotCompleted}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+                <StackLayout Spacing="10" IsVisible="{Binding Song.IsCompleted}" VerticalOptions="FillAndExpand">
+                    <Image HeightRequest="400" WidthRequest="400" Aspect="AspectFill" Margin="-11,-60,-10,0" Source="{Binding Song.Result.Response.Song.SongArtImageUrl}"/>
+                    <StackLayout WidthRequest="190">
+                        <Label Text="{Binding  Song.Result.Response.Song.Title}" TextColor="Black" FontSize="30"/>
+                        <Label Text="{Binding Song.Result.Response.Song.PrimaryArtist.Name}" FontSize="Large"/>
+                        <StackLayout Orientation="Horizontal" Spacing="20">
+                            <ImageButton Source="facebook.png" Style="{StaticResource buttonStyle}" Command="{Binding GoToFaceBook}"/>
+                            <ImageButton Source="instagram.png" Style="{StaticResource buttonStyle}" Command="{Binding GoToInstagram}"/>
+                            <ImageButton Source="twitter.png" Style="{StaticResource buttonStyle}" Command="{Binding GoToTwitter}"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
+                    <Label Text="Информация" FontSize="Large"/>
+                    <Label Text="{Binding Song.Result.Response.Song.FullTitle, StringFormat='Полное название: {0}'}" FontSize="Large"/>
+                    <Label Text="{Binding Song.Result.Response.Song.PrimaryArtist.Name, StringFormat='Исполнитель: {0}'}" FontSize="Large"/>
+                    <Label Text="{Binding Song.Result.Response.Song.ReleaseDateForDisplay, StringFormat='Выпущен: {0}'}" FontSize="Large"/>
+                    <Label Text="{Binding Song.Result.Response.Song.RecordingLocation, StringFormat='Место записи: {0}'}" FontSize="Large"/>
+                    <Label Text="{Binding Song.Result.Response.Song.Stats.PageViews, StringFormat='Прослушиваний: {0}'}" FontSize="Large"/>
+                    <Label Text="{Binding Song.Result.Response.Song.WriterArtists[0].Name, StringFormat='Композитор: {0}'}" FontSize="Large"/>
+                    <Label Text="{Binding Song.Result.Response.Song.ProducerArtists[1].Name, StringFormat='Продюссер: {0}'}" FontSize="Large"/>
+                    <Label Text="Альбом" FontSize="Large"/>
+                    <StackLayout>
+                        <Frame CornerRadius="10" WidthRequest="150" HorizontalOptions="Start" Padding="0">
+                            <Image Source="{Binding Song.Result.Response.Song.Album.CoverArtUrl}" HorizontalOptions="Start" WidthRequest="150"/>
+                        </Frame>
+                        <Label Text="{Binding Song.Result.Response.Song.Album.Name}" FontSize="Large"/>
+                    </StackLayout>
+                    <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
+                    <Label Text="Описание" FontSize="Large"/>
+                    <Frame BackgroundColor="Wheat" CornerRadius="20">
+                        <Label TextType="Html" Text="{Binding Song.Result.Response.Song.Description.Html}" FontSize="Body"></Label>
+                    </Frame>
+                    <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0" IsVisible="{Binding Song.Result.Response.Song.FeaturedVideo}"/>
+                    <Label Text="Музыкальный клип" FontSize="Large"/>
+                    <StackLayout>
+                        <Frame CornerRadius="10" WidthRequest="300" HorizontalOptions="Start" Padding="0">
+                            <Image Source="{Binding Video.Result.Snippet.Thumbnails.Medium.Url}" Aspect="AspectFit"/>
+                        </Frame>
+                        <Label Text="{Binding Song.Result.Response.Song.Album.Name}" FontSize="Large"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

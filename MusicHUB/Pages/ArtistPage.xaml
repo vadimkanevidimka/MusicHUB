@@ -16,13 +16,18 @@
                 <Image HeightRequest="200" Aspect="AspectFill" Margin="0,0,0,0" Source="{Binding ArtistInfo.Result.Response.Artist.HeaderImageUrl}"/>
                 <Frame CornerRadius="20" BackgroundColor="White" Margin="0,-30,0,0" VerticalOptions="FillAndExpand" >
                     <StackLayout>
-                        
-                    <ActivityIndicator IsVisible="{Binding ArtistInfo.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistInfo.IsNotCompleted}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                    <StackLayout Spacing="10" IsVisible="{Binding ArtistInfo.IsCompleted}">
+
+                        <ActivityIndicator IsVisible="{Binding ArtistInfo.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistInfo.IsNotCompleted}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+                        <StackLayout Spacing="10" IsVisible="{Binding ArtistInfo.IsCompleted}">
                         <FlexLayout JustifyContent="SpaceBetween">
                             <StackLayout WidthRequest="190">
                                 <Label Text="{Binding ArtistInfo.Result.Response.Artist.Name}" TextColor="Black" FontSize="Title"/>
                                 <Label Text="{Binding ArtistInfo.Result.Response.Artist.AlternateNames[0]}" FontSize="Large"/>
+                                    <StackLayout Orientation="Horizontal" Spacing="20">
+                                        <ImageButton Source="facebook.png" Style="{StaticResource buttonStyle}" Command="{Binding GoToFaceBook}"/>
+                                        <ImageButton Source="instagram.png" Style="{StaticResource buttonStyle}" Command="{Binding GoToInstagram}"/>
+                                        <ImageButton Source="twitter.png" Style="{StaticResource buttonStyle}" Command="{Binding GoToTwitter}"/>
+                                    </StackLayout>
                             </StackLayout>
                             <Frame CornerRadius="20" Padding="0" WidthRequest="150" HorizontalOptions="End" VerticalOptions="Center">
                                 <Image HeightRequest="150" WidthRequest="150" Aspect="AspectFill" Source="{Binding ArtistInfo.Result.Response.Artist.ImageUrl}"/>
@@ -34,7 +39,7 @@
                             </Label>
                         <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
                         <Label Text="Популярные треки" FontSize="Large"/>
-                        <CollectionView ItemsSource="{Binding ArtistsSongs.Result.Response.Songs}" Margin="-20,0,-20,0" HeightRequest="190" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectLikedCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
+                        <CollectionView ItemsSource="{Binding ArtistsSongs.Result.Response.Songs}" Margin="-20,0,-20,0" HeightRequest="190" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectTrackCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
                             <CollectionView.EmptyView>
                                     <StackLayout Padding="0,40,0,0">
                                         <Image HeightRequest="100" Aspect="AspectFit" Source="search_state.gif" IsAnimationPlaying="True"/>

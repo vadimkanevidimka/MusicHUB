@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="nav_controller_view_tag" type="id"/>
-    <declare-styleable name="ActivityNavigator">
-        <attr name="android:name"/>
-        <attr format="string" name="action"/>
-        <attr format="string" name="data"/>
-        <attr format="string" name="dataPattern"/>
-        <attr format="string" name="targetPackage"/>
-    </declare-styleable>
-    <declare-styleable name="NavHost">
-        <attr format="reference" name="navGraph"/>
-    </declare-styleable>
-    <declare-styleable name="NavInclude">
-        <attr format="reference" name="graph"/>
+    <attr format="reference" name="drawerLayoutStyle"/>
+    <attr format="dimension" name="elevation"/>
+    <dimen name="def_drawer_elevation">10dp</dimen>
+    <declare-styleable name="DrawerLayout">
+        <!-- The height difference between the drawer and the base surface. Only takes effect on API 21 and above -->
+        <attr name="elevation"/>
     </declare-styleable>
 </resources>

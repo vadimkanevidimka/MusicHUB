@@ -31,19 +31,17 @@ namespace MusicHUB.ViewModels
 
         private INavigation Navigation { get; set; }
 
-        private NotifyTaskCompletion<IList<Artist>> artist;
-
         public PlayerPosition PlayerPosition { get; set; }
 
         public int VolumeLevel { get; set; }
 
         public int MaxVolumeLevel { get; set; }
 
-        public NotifyTaskCompletion<Color> PrimaryColor { get; set; } 
+        public NotifyTaskCompletion<Color> PrimaryColor { get; set; }
 
         public ResourceClassPlayerPage ResourceClass { get; set; }
 
-        public NotifyTaskCompletion<IList<Artist>> Artists { get => artist; set { artist = value; OnPropertyChanged(nameof(Artists)); } }
+        public NotifyTaskCompletion<IList<Artist>> Artists { get; set; }
 
         public ObservableCollection<Track> Tracks { get => Audio.Tracks; }
 
@@ -60,16 +58,17 @@ namespace MusicHUB.ViewModels
             Audio.OnstateChanged += stateChanged;
         }
 
-        public Artist CurrentArtist { get; set; }
-
-        public Color BackGround { get => BackGround; 
-            set 
+        public Color BackGround
+        {
+            get => BackGround;
+            set
             {
                 BackGround = value;
             }
         }
 
-        public ICommand SetVolumeCommand { 
+        public ICommand SetVolumeCommand
+        {
             get => new MvvmHelpers.Commands.Command(() => Audio.SetVolumeLevel(VolumeLevel));
         }
 
@@ -85,9 +84,17 @@ namespace MusicHUB.ViewModels
         {
             OnPropertyChanged(nameof(CurrentTrack));
             await IsTrackLiked(CurrentTrack);
-            await Task.Run(() => Artists = new NotifyTaskCompletion<IList<Artist>>(GetArtists()));
-            await Task.Run(() => { Task.Delay(1000); ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg; } );
+            if (Artists is null)
+            {
+                await Task.Run(() => Artists = new NotifyTaskCompletion<IList<Artist>>(GetArtists()));
+            }
+            else
+            {
+                Artists = new NotifyTaskCompletion<IList<Artist>>(GetArtists());
+            }
+            OnPropertyChanged(nameof(Artists));
         }
+
 
         public ICommand SeekPlayerSlider
         {
@@ -100,7 +107,7 @@ namespace MusicHUB.ViewModels
 
         public ICommand DragPlayerStartedCommand
         {
-            get => new MvvmHelpers.Commands.Command(()=>
+            get => new MvvmHelpers.Commands.Command(() =>
             {
                 Audio.OnPlayerTimeChanged -= CurrentTime;
             });
@@ -116,7 +123,8 @@ namespace MusicHUB.ViewModels
             });
         }
 
-        public ICommand NextTrack {
+        public ICommand NextTrack
+        {
             get => new MvvmHelpers.Commands.Command(() =>
             {
                 Audio.Next();
@@ -125,15 +133,17 @@ namespace MusicHUB.ViewModels
             });
         }
 
-        public ICommand PrevTrack {
+        public ICommand PrevTrack
+        {
             get => new MvvmHelpers.Commands.Command(() =>
             {
                 Audio.Prev();
                 TrackChanging();
-            }); 
+            });
         }
 
-        public ICommand PlayPause {
+        public ICommand PlayPause
+        {
             get => new MvvmHelpers.Commands.Command(() =>
             {
                 Audio.PlayPause();
@@ -142,7 +152,8 @@ namespace MusicHUB.ViewModels
             });
         }
 
-        public AsyncCommand ShuffleCommand {
+        public AsyncCommand ShuffleCommand
+        {
             get => new AsyncCommand(async () => await Shufle());
         }
 
@@ -156,15 +167,16 @@ namespace MusicHUB.ViewModels
 
         public ICommand ArtistPageCommand
         {
-            get => new MvvmHelpers.Commands.Command(
-            async (c) =>
+            get => new MvvmHelpers.Commands.Command<Artist>(
+            async (artist) =>
             {
                 await App.Current.MainPage.Navigation.PopModalAsync();
-                await App.Current.MainPage.Navigation.PushAsync(new ArtistPage(CurrentArtist, Connections));
+                await App.Current.MainPage.Navigation.PushAsync(new ArtistPage(artist, Connections));
             });
         }
 
-        public ICommand RepeatCommand {
+        public ICommand RepeatCommand
+        {
             get => new MvvmHelpers.Commands.Command(() =>
             {
                 Audio.LoopChange();
@@ -199,7 +211,8 @@ namespace MusicHUB.ViewModels
         private async Task<bool> IsTrackLiked(Track track)
         {
             var liked = await Connections.BaseDataBaseService.DataBase.Table<DBLikedTracks>().ToListAsync();
-            if(liked.Exists((context) => context.TrackId == CurrentTrack.Id))
+            await Task.Delay(100);
+            if (liked.Exists((context) => context.TrackId == track.Id))
             {
                 ResourceClass.Like = ResourceClassPlayerPage.LikedImg;
                 OnPropertyChanged(nameof(ResourceClass));
@@ -213,7 +226,7 @@ namespace MusicHUB.ViewModels
             }
         }
 
-        public ICommand ClosePlayerCommand => new MvvmHelpers.Commands.AsyncCommand( async () => {await this.Navigation.PopModalAsync(); Audio.OnCompleted -= (obj, e) => OnPropertyChanged(nameof(CurrentTrack)); });
+        public ICommand ClosePlayerCommand => new MvvmHelpers.Commands.AsyncCommand(async () => { await this.Navigation.PopModalAsync(); Audio.OnCompleted -= (obj, e) => OnPropertyChanged(nameof(CurrentTrack)); });
 
         private async Task<IList<Artist>> GetArtists()
         {
@@ -221,8 +234,8 @@ namespace MusicHUB.ViewModels
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 var rezult = await Connections.GeniusClient.SearchClient.Search($"{CurrentTrack.Title} by {CurrentTrack.Artist}");
-                var artists = await Connections.GeniusClient.SongClient.GetSong(rezult.Response.Hits.Where((s)=> s.Result.Stats.PageViews == rezult.Response.Hits.Max((c) => c.Result.Stats.PageViews)).First().Result.Id);
-                
+                var artists = await Connections.GeniusClient.SongClient.GetSong(rezult.Response.Hits.Where((c) => c.Result.Stats.PageViews == rezult.Response.Hits.Max((c) => c.Result.Stats.PageViews)).First().Result.Id);
+
                 ArtistAndImage.Add(artists.Response.Song.PrimaryArtist);
                 if (artists.Response.Song.FeaturedArtists != null)
                 {

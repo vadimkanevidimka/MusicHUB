@@ -7,10 +7,6 @@
             xmlns:models="clr-namespace:MusicHUB.Models" xmlns:viewmodels="clr-namespace:MusicHUB.ViewModels" xmlns:converters="clr-namespace:MusicHUB.Helpers.Converters"
     x:Class="MusicHUB.Pages.ChosePlayListPopupPage">
 
-    <pages:PopupPage.BindingContext>
-        <viewmodels:QueuePopupPageViewModel/>
-    </pages:PopupPage.BindingContext>
-
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
             PositionIn="Bottom"

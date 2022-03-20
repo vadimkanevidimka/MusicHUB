@@ -27,11 +27,13 @@
     <PackageReference Include="Sigil" Version="5.0.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
+    <PackageReference Include="taglib-sharp-netstandard2.0" Version="2.1.0" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
+    <PackageReference Include="Xamarin.Rating" Version="1.0.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +48,12 @@
   <ItemGroup>
     <Compile Update="Pages\AddingAlbumPopupPage.xaml.cs">
       <DependentUpon>AddingAlbumPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\RatePopupPage.xaml.cs">
+      <DependentUpon>RatePopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\TrackPage.xaml.cs">
+      <DependentUpon>TrackPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Pages\PopUpContextActionsOnAlbum.xaml.cs">
       <DependentUpon>PopUpContextActionsOnAlbum.xaml</DependentUpon>
@@ -72,6 +80,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\CutPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\EditMusicTagsPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\MainPage.xaml">

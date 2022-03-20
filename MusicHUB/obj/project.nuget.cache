@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "vTP63Zlea2scfKx9aE22s79dstv13hPgl0+Ja85sFMBbobWgKJuHq9bL7m5W5uh78lo+2iXfK6E029MqvDutPQ==",
+  "dgSpecHash": "ANsWUr1swMkgQU4HjUhY9dYkQJeTc7ggj279KNJ7sqlkvt3ih++HlXMUZDZ3pFrif+uqK6Ose1VBF3fAORIRtg==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Mus\\MusicHUB\\MusicHUB\\MusicHUB.csproj",
   "expectedPackageFiles": [
@@ -39,11 +39,13 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\taglib-sharp-netstandard2.0\\2.1.0\\taglib-sharp-netstandard2.0.2.1.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.essentials\\1.7.1\\xamarin.essentials.1.7.1.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.ffimageloading\\2.4.11.982\\xamarin.ffimageloading.2.4.11.982.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.ffimageloading.forms\\2.4.11.982\\xamarin.ffimageloading.forms.2.4.11.982.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.ffimageloading.transformations\\2.4.11.982\\xamarin.ffimageloading.transformations.2.4.11.982.nupkg.sha512",
-    "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.forms\\5.0.0.2337\\xamarin.forms.5.0.0.2337.nupkg.sha512"
+    "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.forms\\5.0.0.2337\\xamarin.forms.5.0.0.2337.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.rating\\1.0.0.2\\xamarin.rating.1.0.0.2.nupkg.sha512"
   ],
   "logs": []
 }

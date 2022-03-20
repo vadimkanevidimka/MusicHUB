@@ -23,3 +23,15 @@ D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\MusicHUB.csproj.Cop
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\MusicHUB.dll
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\ref\MusicHUB.dll
 D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\MusicHUB.pdb
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\AddingAlbumPopupPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\AlbumPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\ChosePlayListPopupPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\CutPopupPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\EditMusicTagsPopupPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\PopUpContextActionsOnAlbum.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\QueuePopupPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\SettingsPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\SortPopupPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\TrackLirycsPopupPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\TrackPage.xaml.g.cs
+D:\Projects\Mus\MusicHUB\MusicHUB\obj\Release\netstandard2.1\Pages\RatePopupPage.xaml.g.cs

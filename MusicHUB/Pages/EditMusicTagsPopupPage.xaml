@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MusicHUB.Pages.EditMusicTagsPopupPage"
+             xmlns:pages="clr-namespace:MusicHUB.Pages" xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:ffTransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="LabelStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=White}"/>
+            </Style>
+            <Style TargetType="Entry" x:Key="EntryStyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=White}"/>
+            </Style>
+            <Style x:Key="SaveButtonStyle" TargetType="Button">
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
+                <Setter Property="CornerRadius" Value="30"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand">
+            <Image Source="{Binding TrackToEdit.ImageSource}" HeightRequest="765" Aspect="AspectFill"/>
+            <StackLayout Padding="10,100,10,0" Margin="0,-775,0,0" HeightRequest="1000"  BackgroundColor="#aa000000">
+                <Frame CornerRadius="20"
+                       Padding="0"
+                       HeightRequest="150"
+                       WidthRequest="150"
+                       HorizontalOptions="Center">
+                    <Image Source="{Binding CoverArt}" Aspect="AspectFill"/>
+                </Frame>
+                <Label Text="Сменить облжку" Style="{StaticResource LabelStyle}" HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeCoverCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Название" Style="{StaticResource LabelStyle}"/>
+                <Entry Text="{Binding TrackTitle}" Style="{StaticResource EntryStyle}"/>
+                <Label Text="Альбом" Style="{StaticResource LabelStyle}"/>
+                <Entry Text="{Binding Album}" Style="{StaticResource EntryStyle}"/>
+                <Label Text="Артист" Style="{StaticResource LabelStyle}"/>
+                <Entry Text="{Binding Artist}" Style="{StaticResource EntryStyle}"/>
+                <Label Text="Год" Style="{StaticResource LabelStyle}"/>
+                <Entry Text="{Binding Year}" Style="{StaticResource EntryStyle}" MaxLength="4" Keyboard="Numeric"/>
+                <Button Text="Сохранить" Command="{Binding SaveCommand}" Style="{StaticResource SaveButtonStyle}"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

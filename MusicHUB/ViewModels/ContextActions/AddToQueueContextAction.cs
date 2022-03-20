@@ -10,7 +10,7 @@ namespace MusicHUB.ViewModels.ContextActions
 {
     class AddToQueueContextAction : BaseContextAction
     {
-        public override string ImageURl => "addtoplaylist.png";
+        public override string ImageURl => "playlist1.png";
 
         public override string DescriptionText => "Играть далее";
 
@@ -25,7 +25,7 @@ namespace MusicHUB.ViewModels.ContextActions
             {
                 Track track = someobject as Track;
                 var newtrack = track.MemberWiseClone();
-                newtrack.Id = DependencyService.Get<IAudio>().Tracks.Last().Id + 1;
+                newtrack.UniquePosition = DependencyService.Get<IAudio>().Tracks.Count + 1;
                 DependencyService.Get<IAudio>().AddToQueue(newtrack);
                 base.MakeToast($"{((Track)someobject).Title} добавлена в очередь.");
             }
@@ -34,7 +34,7 @@ namespace MusicHUB.ViewModels.ContextActions
                 Album album = someobject as Album;
                 var tracks = await App.Connections.BaseDataBaseService.DataBase.QueryAsync<Track>("select * from Tracks join AlbumsTracks on Tracks.Id = AlbumsTracks.TrackId");
                 DependencyService.Get<IAudio>().AddToQueue(tracks);
-                base.MakeToast($"{((Track)someobject).Title} добавлена в очередь.");
+                base.MakeToast($"{((Album)someobject).Title} добавлена в очередь.");
             }
         }
     }

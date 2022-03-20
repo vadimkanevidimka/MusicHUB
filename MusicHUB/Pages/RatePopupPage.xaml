@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:rating="clr-namespace:Rating;assembly=Rating"
+             x:Class="MusicHUB.Pages.RatePopupPage"
+             BackgroundColor="Transparent">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="MainButtonStyle" TargetType="Button">
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="WidthRequest" Value="70"/>
+                <Setter Property="CornerRadius" Value="30"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="End" Margin="0,-100,0,0" BackgroundColor="Transparent">
+            <ScrollView VerticalOptions="Start" BackgroundColor="Transparent">
+                <StackLayout Padding="0,300,0,0" BackgroundColor="Transparent">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClosePopupPage}"/>
+                    </StackLayout.GestureRecognizers>
+                    <Frame CornerRadius="20" VerticalOptions="End" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="170">
+                        <Grid BackgroundColor="Transparent">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="70"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Row="0" Source="{Binding Image}"/>
+                            <rating:RatingBar Grid.Row="1" SelectedStarValue="{Binding Rating}" HorizontalOptions="Center" FlowDirection="LeftToRight" ImageHeight="30" ImageWidth="30" FillStarImage="starfill.png" EmptyStarImage="starempty.png"/>
+                            <Button Style="{StaticResource MainButtonStyle}" Text="Отправить отзыв" Grid.Row="2" Command="{Binding SendEmailCommand}"/>
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

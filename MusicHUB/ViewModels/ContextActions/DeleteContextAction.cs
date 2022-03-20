@@ -18,7 +18,7 @@ namespace MusicHUB.ViewModels.ContextActions
         public override string ImageURl => "deletebutton.png";
         public override string DescriptionText => "Удалить";
 
-        public override void ExcecuteAction<T>(object someobject)
+        public async override void ExcecuteAction<T>(object someobject)
         {
             if (someobject == null)
             {
@@ -72,9 +72,9 @@ namespace MusicHUB.ViewModels.ContextActions
                     intentSender?.SendIntent(DependencyService.Get<IAndroidSystem>().AppContext, Result.FirstUser, intent, null, new Handler((Message) => base.MakeToast($"{track.Title} удален")));
                 }
             }
-            else
+            else if (typeof(T) == typeof(Album))
             {
-
+                await App.Connections.BaseDataBaseService.DataBase.DeleteAsync((Album)someobject);
             }
         }
     }

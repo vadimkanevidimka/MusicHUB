@@ -16,13 +16,14 @@ using MvvmHelpers.Commands;
 using MusicHUB.Helpers.Sorters;
 using MusicHUB.ViewModels;
 using MusicHUB.EventArgumentss;
+using MvvmHelpers;
 
 namespace MusicHUB.Pages
 {
     public partial class MainPage : ContentPage
     {
         private IAudio Audio = DependencyService.Get<IAudio>();
-        private ObservableCollection<Track> tracks { get; set; }
+        private ObservableRangeCollection<Track> tracks { get; set; }
         private Connections Connections { get; set; }
         private Genius.GeniusClient GeniusClient { get; set; }
         private SortParams SorterParams { get; set; }
@@ -31,7 +32,7 @@ namespace MusicHUB.Pages
         public Track CurrentTrack { get => currentTrack; set { currentTrack = value; OnPropertyChanged(nameof(CurrentTrack)); } }
         public bool isUpdating { get => isupdating; set { isupdating = value; OnPropertyChanged(nameof(isUpdating)); } }
         private MusicFilesCollector MusicFilesCollector = new MusicFilesCollector();
-        public ObservableCollection<Track> Tracks { get => tracks; set { tracks = value; OnPropertyChanged(nameof(Tracks)); } }
+        public ObservableRangeCollection<Track> Tracks { get => tracks; set { tracks = value; OnPropertyChanged(nameof(Tracks)); } }
         private ResourceClassPlayerPage resourceClass { get; set; }
         public ResourceClassPlayerPage ResourceClass { get => resourceClass; set { resourceClass = value; OnPropertyChanged(nameof(ResourceClass)); } }
         private float progress = 0;
@@ -44,20 +45,24 @@ namespace MusicHUB.Pages
             BindingContext = this;
             isUpdating = false;
             ResourceClass = new ResourceClassPlayerPage();
-            Tracks = new ObservableCollection<Track>();
+            Tracks = new ObservableRangeCollection<Track>();
             SorterParams = new SortParams();
             this.Connections = connections;
             UpdateFileList();
+            BottomPlayerPanel.TranslationY += 100;
             Audio.OntrackChanged += SetBottomPanelData;
             Audio.OnPlayerTimeChanged += SetTimeStamp;
             Audio.OnstateChanged += stateChanged;
+            this.Appearing += SetBottomPanelData;
         }
 
         async void UpdateFileList()
         {
             isUpdating = true;
+            await Task.Delay(2000);
             Tracks.Clear();
-            Tracks = new ObservableCollection<Track>(await MusicFilesCollector.GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" }));
+            var searchedtracks = await MusicFilesCollector.GetTracks(new string[] { $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/", $"/storage/emulated/0/{Android.OS.Environment.DirectoryDownloads}/" });
+            Tracks.AddRange(searchedtracks);
             isUpdating = false;
         }
 
@@ -68,9 +73,16 @@ namespace MusicHUB.Pages
             Audio.PlayAudioFile(track);
         }//НАжатие на элемент для проигрывания
 
-        private void SetBottomPanelData(object sender, EventArgs e)
+        private async Task FadeIn()
+        {
+            BottomPlayerPanel.IsVisible = true;
+            await BottomPlayerPanel.TranslateTo(0, 0, 500);
+        }
+
+        private async void SetBottomPanelData(object sender, EventArgs e)
         {
             CurrentTrack = Audio.GetCurrentTrack();
+            if(CurrentTrack != null) await FadeIn();
             ResourceClass.PlayPause = Audio.IsPlaying ? ResourceClassPlayerPage.PauseImg : ResourceClassPlayerPage.PlayImg;
         }
 
@@ -85,11 +97,11 @@ namespace MusicHUB.Pages
             if(e.Duration > 0) Progress = (float)e.CurrentTime / (float)e.Duration;
         }
 
-        private void AudioImgBottom_Clicked(object sender, EventArgs e)
+        private async void AudioImgBottom_Clicked(object sender, EventArgs e)
         {
             if (Navigation.NavigationStack.Count == 1)
             {
-                Navigation.PushModalAsync(new Player(Connections), true);
+                await Navigation.PushModalAsync(new Player(Connections), true);
             }
         }
 
@@ -107,7 +119,7 @@ namespace MusicHUB.Pages
                     async () =>
                     {
                         if (SorterParams is null) return;
-                        Tracks = new ObservableCollection<Track>(await SorterParams.Sorter.SortAsync(Tracks, SorterParams.OrderType));
+                        Tracks = new ObservableRangeCollection<Track>(await SorterParams.Sorter.SortAsync(tracks, SorterParams.OrderType));
                     }));
             });
         }
@@ -123,7 +135,7 @@ namespace MusicHUB.Pages
             {
                 Audio.SetQueue(Tracks.ToList());
                 await Audio.Shuffle();
-                Audio.PlayAudioFile(Audio.Tracks[0]);
+                await Audio.PlayAudioFile(Audio.Tracks[0]);
             });
         }
 
@@ -143,7 +155,8 @@ namespace MusicHUB.Pages
             var searchres = tracks.Where((c) => c.Title.StartsWith(e.NewTextValue, StringComparison.CurrentCultureIgnoreCase)).ToList();
             if (searchres != null && searchres.Count != 0)
             {
-                Tracks = new ObservableCollection<Track>(searchres);
+                Tracks.Clear();
+                Tracks.AddRange(searchres);
             }
             else
             {

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oXHWc1U9P3RcKhsZmKqtdKNCIYxiS8z0050kGQJgrd5HsVneoLfU4uSFXCWV/iDclT84GZ190W8J61MoWFDJ9g==",
+  "dgSpecHash": "gSNvd/rfhQwKJ4Tc1T8MMFoeYzhXSZXWCujSrZY0DrKnB48q//m0Tvc60kKQpTZHasFlzruNAoxG++AJvWGvHw==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Mus\\MusicHUB\\MusicHUB.Android\\MusicHUB.Android.csproj",
   "expectedPackageFiles": [
@@ -30,6 +30,7 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.runtime.interopservices\\4.3.0\\system.runtime.interopservices.4.3.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\taglib-sharp-netstandard2.0\\2.1.0\\taglib-sharp-netstandard2.0.2.1.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xam.plugins.android.exoplayer\\2.11.8\\xam.plugins.android.exoplayer.2.11.8.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xam.plugins.android.exoplayer.core\\2.11.8\\xam.plugins.android.exoplayer.core.2.11.8.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xam.plugins.android.exoplayer.dash\\2.11.8\\xam.plugins.android.exoplayer.dash.2.11.8.nupkg.sha512",
@@ -96,7 +97,8 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.ffimageloading.transformations\\2.4.11.982\\xamarin.ffimageloading.transformations.2.4.11.982.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.forms\\5.0.0.2337\\xamarin.forms.5.0.0.2337.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.google.android.material\\1.4.0.2\\xamarin.google.android.material.1.4.0.2.nupkg.sha512",
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.google.guava.listenablefuture\\1.0.0.2\\xamarin.google.guava.listenablefuture.1.0.0.2.nupkg.sha512"
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\xamarin.google.guava.listenablefuture\\1.0.0.2\\xamarin.google.guava.listenablefuture.1.0.0.2.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\xamarin.rating\\1.0.0.2\\xamarin.rating.1.0.0.2.nupkg.sha512"
   ],
   "logs": []
 }

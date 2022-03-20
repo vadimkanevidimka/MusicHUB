@@ -13,6 +13,7 @@
                 <Setter Property="HeightRequest" Value="40"/>
                 <Setter Property="Padding" Value="10"/>
                 <Setter Property="Aspect" Value="AspectFit"/>
+                <Setter Property="CornerRadius" Value="20"/>
             </Style>
             <Style x:Key="MainButtonStyle" TargetType="ImageButton">
                 <Setter Property="Padding" Value="20"/>
@@ -28,9 +29,14 @@
                 <Setter Property="WidthRequest" Value="60"/>
                 <Setter Property="HeightRequest" Value="60"/>
                 <Setter Property="Aspect" Value="AspectFit"/>
+                <Setter Property="CornerRadius" Value="30"/>
             </Style>
             <Style x:Key="HeaderLabelStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="{AppThemeBinding Dark=#1B1B1B, Light=White}"/>
+            </Style>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="Wheat"/>
+                <Setter Property="BarTextColor" Value="{AppThemeBinding Dark=White, Light=Black}"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

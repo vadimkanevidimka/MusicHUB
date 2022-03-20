@@ -75,7 +75,7 @@ namespace MusicHUB.ViewModels
             get => new AsyncCommand<Track>(async (Track track) => { 
                 DependencyService.Get<IAudio>().SetQueue(LikedTracks);
                 await Task.Delay(100);
-                DependencyService.Get<IAudio>().PlayAudioFile(track);
+                await DependencyService.Get<IAudio>().PlayAudioFile(track);
             });
         }
 
@@ -84,7 +84,7 @@ namespace MusicHUB.ViewModels
             get => new AsyncCommand<Track>(async (Track track) => {
                 DependencyService.Get<IAudio>().SetQueue(RecentlyPlayed);
                 await Task.Delay(100);
-                DependencyService.Get<IAudio>().PlayAudioFile(track);
+                await DependencyService.Get<IAudio>().PlayAudioFile(track);
             });
         }
 
@@ -104,11 +104,19 @@ namespace MusicHUB.ViewModels
         private async Task UpdateData()
         {
             IsRefreshing = true;
-            await Task.Delay(1000);
-            LikedTracks = await DataBase.QueryAsync<Track>("select * from Tracks join LikedTracks on Tracks.Id = TrackId");
-            Albums = await App.Connections.BaseDataBaseService.DataBase.Table<Album>().ToListAsync();
-            RecentlyPlayed = await App.Connections.BaseDataBaseService.DataBase.QueryAsync<Track>("select * from Tracks join RecentlyPlayed on Tracks.Id = TrackId Limit 5");
-            IsRefreshing = false;
+            try
+            {
+                await Task.Delay(1000);
+                LikedTracks = await DataBase.QueryAsync<Track>("select Tracks.Id, Tracks.Title, Tracks.Artist, Tracks.Album, Tracks.Year, Tracks.Bitrate, Tracks.Uri, Tracks.Duration, Tracks.DurationString from Tracks JOIN LikedTracks on Tracks.Id = TrackId");
+                Albums = await App.Connections.BaseDataBaseService.DataBase.Table<Album>().ToListAsync();
+                RecentlyPlayed = await App.Connections.BaseDataBaseService.DataBase.QueryAsync<Track>("select * from Tracks join RecentlyPlayed on Tracks.Id = TrackId Limit 20");
+                IsRefreshing = false;
+
+            }
+            catch (Exception)
+            {
+                IsRefreshing = false;
+            }
         }
 
         public ICommand AddNewAlbum

@@ -20,43 +20,52 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Padding="10,0,10,0">
-                <SearchBar Placeholder="Поиск" TextChanged="SearchBar_TextChanged"/>
-                <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                <FlexLayout JustifyContent="SpaceBetween" VerticalOptions="Start">
-                    <ImageButton Source="filterresultsbutton.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding Sort}"/>
-                    <ImageButton Source="shuffle_non_active.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding ShuffleCommand}"/>
-                </FlexLayout>
-                <ListView ItemsSource="{Binding Tracks}" Margin="-10,0,-10,-10" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshCommand}" 
-                          RefreshControlColor="Wheat" HasUnevenRows="True" IsRefreshing="{Binding isUpdating}" SelectionMode="None" ItemTapped="filesList_ItemTapped">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <Grid Padding="10" ColumnSpacing="20">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="50"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="50"/>
-                                            <ColumnDefinition Width="240"/>
-                                            <ColumnDefinition Width="50"/>
-                                        </Grid.ColumnDefinitions>
-                                        <ffimageloading:CachedImage Source="{Binding ImageSource}" Grid.Column="0" LoadingPriority="Lowest"/>
-                                        <StackLayout Grid.Column="1" VerticalOptions="Center">
-                                            <Label Text="{Binding Title}" LineBreakMode="TailTruncation" TextColor="Black" FontSize="14"/>
-                                            <Label Text="{Binding Artist}" LineBreakMode="TailTruncation" TextColor="DimGray" FontSize="14"/>
-                                        </StackLayout>
-                                        <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Clicked="Options_Clicked" Grid.Column="2"/>
-                                    </Grid>
-                                </ViewCell.View>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-            <Frame CornerRadius="10" BackgroundColor="Wheat" HasShadow="False" Margin="0,0,0,-10" Padding="0,-11,0,10" >
+        <Grid Padding="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <SearchBar Placeholder="Поиск" TextChanged="SearchBar_TextChanged" Grid.Row="0" Grid.ColumnSpan="2"/>
+            <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+            <ImageButton Source="filterresultsbutton.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding Sort}" Grid.Row="2" Grid.Column="0" HorizontalOptions="Start"/>
+            <ImageButton Source="shuffle_non_active.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding ShuffleCommand}" Grid.Row="2" Grid.Column="1" HorizontalOptions="End"/>
+            <ListView ItemsSource="{Binding Tracks}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshCommand}" 
+                              CachingStrategy="RetainElement" RefreshControlColor="Wheat" HasUnevenRows="True" IsRefreshing="{Binding isUpdating}" SelectionMode="None" ItemTapped="filesList_ItemTapped" Margin="-10,0" Grid.Row="3" Grid.ColumnSpan="2">
+                <ListView.Footer>
+                    <StackLayout HeightRequest="70"/>
+                </ListView.Footer>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid Padding="10" ColumnSpacing="20">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="240"/>
+                                        <ColumnDefinition Width="50"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding ImageSource}" Grid.Column="0" Aspect="AspectFill" Margin="0"/>
+                                    <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                        <Label Text="{Binding Title}" LineBreakMode="TailTruncation" TextColor="Black" FontSize="14"/>
+                                        <Label Text="{Binding Artist}" LineBreakMode="TailTruncation" TextColor="DimGray" FontSize="14"/>
+                                    </StackLayout>
+                                    <ImageButton Source="options.png" Style="{StaticResource buttonStyle}" CornerRadius="30" Clicked="Options_Clicked" Grid.Column="2"/>
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Frame x:Name="BottomPlayerPanel" IsVisible="false" CornerRadius="10" VerticalOptions="EndAndExpand" BackgroundColor="Wheat" HasShadow="False" Margin="-10,0,-10,0" Padding="0,-11,0,0" Grid.Row="3" Grid.ColumnSpan="2">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="AudioImgBottom_Clicked"/>
                 </Frame.GestureRecognizers>
@@ -72,15 +81,15 @@
                             <ColumnDefinition Width="50"/>
                         </Grid.ColumnDefinitions>
                         <ProgressBar  ProgressColor="Black" BackgroundColor="Wheat" Progress="{Binding Progress}" HeightRequest="5" Visual="Material" Grid.Row="0" Grid.ColumnSpan="3" Margin="-10,0,0,0"/>
-                        <ffimageloading:CachedImage Source="{Binding CurrentTrack.ImageSource}" Grid.Column="0" Grid.Row="1" LoadingPriority="Lowest"/>
+                        <ffimageloading:CachedImage Source="{Binding CurrentTrack.ImageSource}" Grid.Column="0" Grid.Row="1" Aspect="AspectFill" LoadingPriority="Lowest"/>
                         <StackLayout Grid.Column="1" Grid.Row="1" VerticalOptions="Center">
                             <Label Text="{Binding CurrentTrack.Title}" LineBreakMode="TailTruncation" TextColor="Black" FontSize="14"/>
                             <Label Text="{Binding CurrentTrack.Artist}" LineBreakMode="TailTruncation" FontSize="14"/>
                         </StackLayout>
-                        <customelements:WheatButton Source="{Binding ResourceClass.PlayPause}" CornerRadius="30" Style="{StaticResource ButtonOnWheatBackGround}" Command="{Binding PlayPauseCommand}" Grid.Column="2" Grid.Row="1"/>
+                        <customelements:WheatButton Source="{Binding ResourceClass.PlayPause}" Style="{StaticResource ButtonOnWheatBackGround}" Command="{Binding PlayPauseCommand}" Grid.Column="2" Grid.Row="1"/>
                     </Grid>
                 </StackLayout>
             </Frame>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

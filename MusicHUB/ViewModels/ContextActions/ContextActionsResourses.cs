@@ -16,8 +16,8 @@ namespace MusicHUB.ViewModels.ContextActions
                 new AddToQueueContextAction(),
                 new RemoveFromQueueContextAction(),
                 new SetAsRingtoneContextAction(),
+                new EditMetaDataContextAction(),
             };
-            set => TrackContextActions = value;
         }
 
         public IList<IContextAction> TrackContextActions
@@ -31,8 +31,39 @@ namespace MusicHUB.ViewModels.ContextActions
                 new CutContextAction(),
                 new SetAsRingtoneContextAction(),
                 new AddToPlayListContextAction(),
+                new EditMetaDataContextAction(),
             };
-            set => TrackContextActions = value;
+        }
+
+        public IList<IContextAction> AlbumListContextActions
+        {
+            get => new List<IContextAction>()
+            {
+                new DeleteContextAction(),
+                new AddToQueueContextAction(),
+                new EditMetaDataContextAction(),
+            };
+        }
+
+        public IList<IContextAction> AlbumPageContextActions
+        {
+            get => new List<IContextAction>()
+            {
+                new AddToQueueContextAction(),
+                new EditMetaDataContextAction(),
+            };
+        }
+
+        public IList<IContextAction> TrackInAlbumListContextActions
+        {
+            get => new List<IContextAction>()
+            {
+                new ShareContextAction(),
+                new DeleteFromAlbumContextAction(),
+                new QueueContextAction(),
+                new AddToQueueContextAction(),
+                new RemoveFromQueueContextAction(),
+            };
         }
     }
 }

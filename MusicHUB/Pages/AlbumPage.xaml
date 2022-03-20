@@ -2,49 +2,61 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:models="clr-namespace:MusicHUB.Models" xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="MusicHUB.Pages.AlbumPage"
-             Title="{Binding CurrentAlbum.Title}">
-    <NavigationPage.IconColor>#000000</NavigationPage.IconColor>
-    
+             Title="{Binding CurrentAlbum.Title}"
+             BackgroundImageSource="{Binding AlbumImage}">
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="options.png"/>
+        <ToolbarItem IconImageSource="options.png" Command="{Binding AlbumOptionsClick}"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout>
-                <Frame CornerRadius="10" HeightRequest="200" WidthRequest="200" HorizontalOptions="Center" Padding="0" Margin="0,30,0,0">
+            <StackLayout BackgroundColor="#B23A3A3A">
+                <Frame CornerRadius="20" HeightRequest="200" WidthRequest="200" HorizontalOptions="Center" Padding="0" Margin="0,30,0,0">
                     <Image x:Name="AudioImgBottom" Aspect="AspectFill" Source="{Binding AlbumImage}" Grid.ColumnSpan="2" Grid.Row="0"/>
                 </Frame>
-                <Label FontSize="22" TextColor="Black" Text="{Binding Title}" HorizontalOptions="Center"/>
+                <Label FontSize="22" TextColor="White" Text="{Binding Title}" HorizontalOptions="Center"/>
                 <Label FontSize="18" HorizontalOptions="Center" Text="{Binding Artist}"/>
                 <Frame CornerRadius="20" BackgroundColor="White" Margin="0,0,0,0">
                     <StackLayout Spacing="10" VerticalOptions="Center">
                         <FlexLayout JustifyContent="SpaceBetween">
-                            <ImageButton Source="addtoplaylist.png" CornerRadius="30" Style="{StaticResource buttonStyle}"/>
+                            <ImageButton Source="playlist1.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding PlayNextCommand}"/>
                             <ImageButton Source="addtoplaylist.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding AddTracksToPlayList}"/>
                         </FlexLayout>
-                        <CollectionView ItemsSource="{Binding AlbumTracks}" Margin="-20,0,-20,0" SelectionMode="Single" ItemsUpdatingScrollMode="KeepScrollOffset" HeightRequest="690">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Padding="10" ColumnSpacing="20">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="50"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="50"/>
-                                            <ColumnDefinition Width="240"/>
-                                            <ColumnDefinition Width="50"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Image x:Name="AudioImgBottom" Aspect="AspectFit" Source="{Binding ImageSource}" Grid.Column="0"/>
-                                        <StackLayout Grid.Column="1" VerticalOptions="Center">
-                                            <Label Text="{Binding Title}" LineBreakMode="TailTruncation" TextColor="Black" FontSize="14"/>
-                                            <Label Text="{Binding Artist}" LineBreakMode="TailTruncation" FontSize="14"/>
-                                        </StackLayout>
-                                        <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding OptionsClicked}" CommandParameter="{Binding Source={RelativeSource Self}}" Grid.Column="2"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                        <RefreshView Margin="-20,0,-20,0" Command="{Binding RefreshCommand}" RefreshColor="Wheat" IsRefreshing="{Binding IsRefreshing}">
+                            <CollectionView x:Name="AlbumsTracks" ItemsSource="{Binding AlbumTracks}" SelectionMode="None" ItemsUpdatingScrollMode="KeepScrollOffset" HeightRequest="690">
+                                <CollectionView.EmptyView>
+                                    <StackLayout>
+                                        <Image HeightRequest="100" Aspect="AspectFit" Source="search_state.gif" IsAnimationPlaying="True"/>
+                                        <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
+                                        <Button Text="Добавить музыку" Style="{StaticResource Key=ButtonOnWheatBackGround}" CornerRadius="30" HorizontalOptions="Center" WidthRequest="170" Command="{Binding AddMusicCommand}"/>
+                                    </StackLayout>
+                                </CollectionView.EmptyView>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="10" ColumnSpacing="20" x:Name="DataItem">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer BindingContext="{Binding Source={x:Reference AlbumsTracks}, Path=BindingContext}" Command="{Binding TrackClicked}" CommandParameter="{Binding Source={x:Reference DataItem}, Path=BindingContext}"/>
+                                            </Grid.GestureRecognizers>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="50"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="240"/>
+                                                <ColumnDefinition Width="50"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image x:Name="AudioImgBottom" Aspect="AspectFill" Source="{Binding ImageSource}" Grid.Column="0"/>
+                                            <StackLayout Grid.Column="1" VerticalOptions="Center">
+                                                <Label Text="{Binding Title}" LineBreakMode="TailTruncation" TextColor="Black" FontSize="14"/>
+                                                <Label Text="{Binding Artist}" LineBreakMode="TailTruncation" FontSize="14"/>
+                                            </StackLayout>
+                                            <ImageButton Source="options.png" CornerRadius="30" BindingContext="{Binding Source={x:Reference AlbumsTracks}, Path=BindingContext}" Style="{StaticResource buttonStyle}" Command="{Binding OptionsClicked}" CommandParameter="{Binding Source={x:Reference DataItem}, Path=BindingContext}" Grid.Column="2"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </RefreshView>
                     </StackLayout>
                 </Frame>
             </StackLayout>

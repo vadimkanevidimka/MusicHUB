@@ -41,9 +41,9 @@ namespace MusicHUB.ViewModels
                 playerPosition.CurrentPosition = startTrimPosition;
                 OnPropertyChanged(nameof(playerPosition));
 
-                if (startTrimPosition + 50000 >= endTrimPosition && EndTrimPosition < EndtrimMax)
+                if (startTrimPosition + 5000 >= endTrimPosition && EndTrimPosition < EndtrimMax)
                 {
-                    EndTrimPosition = startTrimPosition + 50000;
+                    EndTrimPosition = startTrimPosition + 5000;
                 }
                 OnPropertyChanged(nameof(StartTrimPosition)); 
             } 
@@ -58,9 +58,9 @@ namespace MusicHUB.ViewModels
                 playerPosition.Duration = endTrimPosition;
                 OnPropertyChanged(nameof(playerPosition));
 
-                    if (startTrimPosition > endTrimPosition - 50000 && StartTrimPosition > 0)
+                    if (startTrimPosition > endTrimPosition - 5000 && StartTrimPosition > 0)
                 {
-                    StartTrimPosition = endTrimPosition - 50000;
+                    StartTrimPosition = endTrimPosition - 5000;
                 }
                 OnPropertyChanged(nameof(EndTrimPosition)); 
             } 

@@ -31,20 +31,20 @@
     <StackLayout 
         VerticalOptions="EndAndExpand" 
         HorizontalOptions="FillAndExpand">
-        <Frame CornerRadius="20" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="350">
+        <Frame x:Name="Pageframe" CornerRadius="20" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="350">
             <StackLayout>
                 <Frame CornerRadius="20" Padding="0,0,20,0">
                     <FlexLayout JustifyContent="SpaceBetween" HorizontalOptions="FillAndExpand">
-                        <Image Source="{Binding Tracks.ImageSource}" Aspect="AspectFill" HeightRequest="100"></Image>
-                        <StackLayout Padding="20,10,0,0" WidthRequest="190">
+                        <Image Source="{Binding Tracks.ImageSource}" Aspect="AspectFill" HeightRequest="100" WidthRequest="100"></Image>
+                        <StackLayout Padding="20,10,0,0" WidthRequest="170">
                             <Label x:Name="Title" Text="{Binding Tracks.Title}" FontSize="18"/>
                             <Label x:Name="Artist" Text="{Binding Tracks.Artist}" FontSize="14"/>
                             <Label Text="{Binding Tracks.DurationString}"/>
                         </StackLayout>
-                        <ImageButton Source="arrowdown.png" Style="{StaticResource Key=buttonStyle}" VerticalOptions="Start" CornerRadius="30" Rotation="-90" Command="{Binding GetSongInfo}"/>
+                        <ImageButton Source="arrowdown.png" Style="{StaticResource Key=buttonStyle}" CornerRadius="30" Rotation="-90" Command="{Binding GetSongInfo}"/>
                     </FlexLayout>
                 </Frame>
-                <ListView ItemsSource="{Binding ContextActions}" SelectionMode="None" ItemTapped="ListView_ItemTapped" Margin="-10,0">
+                <ListView x:Name="Actions" ItemsSource="{Binding ContextActions}" SelectionMode="None" ItemTapped="ListView_ItemTapped" Margin="-10,0">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="Models1:IContextAction">
                             <ViewCell>

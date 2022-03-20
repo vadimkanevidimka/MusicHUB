@@ -9,20 +9,40 @@
     ".NETStandard,Version=v2.1/": {
       "MusicHUB/1.0.0": {
         "dependencies": {
+          "DLToolkit.Forms.Controls.FlowListView": "2.0.11",
           "Genius.NET": "4.0.1",
+          "Google.Apis.YouTube.v3": "1.56.0.2449",
+          "Plugin.MediaManager": "1.1.0",
+          "Plugin.MediaManager.Forms": "1.1.0",
           "Plugin.Permissions": "6.0.1",
           "Refractored.MvvmHelpers": "1.6.2",
           "Rg.Plugins.Popup": "2.1.0",
           "Sigil": "5.0.0",
           "System.Runtime.InteropServices": "4.3.0",
           "Xamarin.Essentials": "1.7.1",
+          "Xamarin.FFImageLoading": "2.4.11.982",
+          "Xamarin.FFImageLoading.Forms": "2.4.11.982",
+          "Xamarin.FFImageLoading.Transformations": "2.4.11.982",
           "Xamarin.Forms": "5.0.0.2337",
+          "Xamarin.Rating": "1.0.0.2",
           "sqlite-net-pcl": "1.8.116",
+          "taglib-sharp-netstandard2.0": "2.1.0",
           "Mono.Android": "0.0.0.0",
           "Xamarin.Google.Android.Material": "1.0.0.0"
         },
         "runtime": {
           "MusicHUB.dll": {}
+        }
+      },
+      "DLToolkit.Forms.Controls.FlowListView/2.0.11": {
+        "dependencies": {
+          "Xamarin.Forms": "5.0.0.2337"
+        },
+        "runtime": {
+          "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+netstandard1.0/DLToolkit.Forms.Controls.FlowListView.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "Genius.NET/4.0.1": {
@@ -33,6 +53,56 @@
           "lib/netstandard2.1/Genius.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Google.Apis/1.56.0": {
+        "dependencies": {
+          "Google.Apis.Core": "1.56.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.dll": {
+            "assemblyVersion": "1.56.0.0",
+            "fileVersion": "1.56.0.0"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.56.0": {
+        "dependencies": {
+          "Google.Apis": "1.56.0",
+          "Google.Apis.Core": "1.56.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Auth.PlatformServices.dll": {
+            "assemblyVersion": "1.56.0.0",
+            "fileVersion": "1.56.0.0"
+          },
+          "lib/netstandard2.0/Google.Apis.Auth.dll": {
+            "assemblyVersion": "1.56.0.0",
+            "fileVersion": "1.56.0.0"
+          }
+        }
+      },
+      "Google.Apis.Core/1.56.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.Core.dll": {
+            "assemblyVersion": "1.56.0.0",
+            "fileVersion": "1.56.0.0"
+          }
+        }
+      },
+      "Google.Apis.YouTube.v3/1.56.0.2449": {
+        "dependencies": {
+          "Google.Apis": "1.56.0",
+          "Google.Apis.Auth": "1.56.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.YouTube.v3.dll": {
+            "assemblyVersion": "1.56.0.2449",
+            "fileVersion": "1.56.0.2449"
           }
         }
       },
@@ -58,6 +128,34 @@
       },
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
+      "Newtonsoft.Json/13.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.1.25517"
+          }
+        }
+      },
+      "Plugin.MediaManager/1.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/MediaManager.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        }
+      },
+      "Plugin.MediaManager.Forms/1.1.0": {
+        "dependencies": {
+          "Plugin.MediaManager": "1.1.0",
+          "Xamarin.Forms": "5.0.0.2337"
+        },
+        "runtime": {
+          "lib/netstandard2.0/MediaManager.Forms.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        }
+      },
       "Plugin.Permissions/6.0.1": {
         "dependencies": {
           "Xamarin.Essentials": "1.7.1"
@@ -246,6 +344,14 @@
         }
       },
       "System.ValueTuple/4.5.0": {},
+      "taglib-sharp-netstandard2.0/2.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/taglib-sharp.dll": {
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.0.0"
+          }
+        }
+      },
       "Xamarin.Essentials/1.7.1": {
         "dependencies": {
           "System.Numerics.Vectors": "4.5.0"
@@ -254,6 +360,41 @@
           "lib/netstandard2.0/Xamarin.Essentials.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Xamarin.FFImageLoading/2.4.11.982": {
+        "runtime": {
+          "lib/netstandard1.0/FFImageLoading.Platform.dll": {
+            "assemblyVersion": "2.4.11.982",
+            "fileVersion": "2.4.11.982"
+          },
+          "lib/netstandard1.0/FFImageLoading.dll": {
+            "assemblyVersion": "2.4.11.982",
+            "fileVersion": "2.4.11.982"
+          }
+        }
+      },
+      "Xamarin.FFImageLoading.Forms/2.4.11.982": {
+        "dependencies": {
+          "Xamarin.FFImageLoading": "2.4.11.982",
+          "Xamarin.Forms": "5.0.0.2337"
+        },
+        "runtime": {
+          "lib/netstandard1.0/FFImageLoading.Forms.dll": {
+            "assemblyVersion": "2.4.11.982",
+            "fileVersion": "2.4.11.982"
+          }
+        }
+      },
+      "Xamarin.FFImageLoading.Transformations/2.4.11.982": {
+        "dependencies": {
+          "Xamarin.FFImageLoading": "2.4.11.982"
+        },
+        "runtime": {
+          "lib/netstandard1.0/FFImageLoading.Transformations.dll": {
+            "assemblyVersion": "2.4.11.982",
+            "fileVersion": "2.4.11.982"
           }
         }
       },
@@ -270,6 +411,18 @@
           "lib/netstandard2.0/Xamarin.Forms.Xaml.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "5.0.0.884"
+          }
+        }
+      },
+      "Xamarin.Rating/1.0.0.2": {
+        "dependencies": {
+          "Xamarin.Essentials": "1.7.1",
+          "Xamarin.Forms": "5.0.0.2337"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Rating.dll": {
+            "assemblyVersion": "1.0.0.2",
+            "fileVersion": "1.0.0.2"
           }
         }
       },
@@ -297,12 +450,47 @@
       "serviceable": false,
       "sha512": ""
     },
+    "DLToolkit.Forms.Controls.FlowListView/2.0.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-n/TIbW3a7q/h5wA5vt8VfkN3eecJN8nMlPVu3NS7hvFODg0YqFHXDgbX1O/a9agcuk5Km6DZqJqpxpcYRS9sOQ==",
+      "path": "dltoolkit.forms.controls.flowlistview/2.0.11",
+      "hashPath": "dltoolkit.forms.controls.flowlistview.2.0.11.nupkg.sha512"
+    },
     "Genius.NET/4.0.1": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-iGr9ZFbXtOMrt+M/ODCkKVCK+z/xVOMHsioSOXGrxv7Te5hXr7LxBvB5ozEQxQVjNYT4lHBQUI55ua+/fAhksg==",
       "path": "genius.net/4.0.1",
       "hashPath": "genius.net.4.0.1.nupkg.sha512"
+    },
+    "Google.Apis/1.56.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Oi/M8PmtmXo+3gBX0ZxaijQULuZKnNjDNIceRA+OcUUn3pmYhljGSAWcsWUY64KgdzurM9kF5MoCSWqevzR/UA==",
+      "path": "google.apis/1.56.0",
+      "hashPath": "google.apis.1.56.0.nupkg.sha512"
+    },
+    "Google.Apis.Auth/1.56.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/TXElJg0lP47/MdYKtzWnrf2suwovKmeHslyUbyITQ9SGby4yj7Aj07QOufc9FjdciA8MrNZXsEqExID7LKblw==",
+      "path": "google.apis.auth/1.56.0",
+      "hashPath": "google.apis.auth.1.56.0.nupkg.sha512"
+    },
+    "Google.Apis.Core/1.56.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mhntBSe9/bXVP6EeB2g+Db6N4dzVYL12t+nkVcNTZzaI6fEFIp1l5BggmMMk6vY1Q/HUpZ5iHA/+h7j2pWWX5w==",
+      "path": "google.apis.core/1.56.0",
+      "hashPath": "google.apis.core.1.56.0.nupkg.sha512"
+    },
+    "Google.Apis.YouTube.v3/1.56.0.2449": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Tba4sMejol4d5YwVR2/cr/r+4o2GfaaJHv2iOmavp6LO+EEg0c2CTOOJ7/tOfAEIfSIYzbyXIsKrF8v3PHbN6A==",
+      "path": "google.apis.youtube.v3/1.56.0.2449",
+      "hashPath": "google.apis.youtube.v3.1.56.0.2449.nupkg.sha512"
     },
     "Jil/2.17.0": {
       "type": "package",
@@ -331,6 +519,27 @@
       "sha512": "sha512-aOZA3BWfz9RXjpzt0sRJJMjAscAUm3Hoa4UWAfceV9UTYxgwZ1lZt5nO2myFf+/jetYQo4uTP7zS8sJY67BBxg==",
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
+      "path": "newtonsoft.json/13.0.1",
+      "hashPath": "newtonsoft.json.13.0.1.nupkg.sha512"
+    },
+    "Plugin.MediaManager/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LORwWEKgRXnrN/gdnBhhZjko2/q/6zZmhiMKzw1L7Rue9luvHWaC55X8NoEMa4q6sS9yrkiVLXkMHR8C+XF/jg==",
+      "path": "plugin.mediamanager/1.1.0",
+      "hashPath": "plugin.mediamanager.1.1.0.nupkg.sha512"
+    },
+    "Plugin.MediaManager.Forms/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gNnPucUrm/Nus4s9IFeUKKxjQ3EfCzNeFBN18LXHjsoB01JXApCaSEULoIWks8hvKeguBSgjEhIXbqcEdEg+NQ==",
+      "path": "plugin.mediamanager.forms/1.1.0",
+      "hashPath": "plugin.mediamanager.forms.1.1.0.nupkg.sha512"
     },
     "Plugin.Permissions/6.0.1": {
       "type": "package",
@@ -486,6 +695,13 @@
       "path": "system.valuetuple/4.5.0",
       "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
+    "taglib-sharp-netstandard2.0/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-w45LreEPpV/vOfgpYBI1cNqiLvj8yQ8f7kJaMYtzTAsg26ZdHWnh5vPuy2/F9tCKhmgNB0s+zOBwdcEb4qk3Tg==",
+      "path": "taglib-sharp-netstandard2.0/2.1.0",
+      "hashPath": "taglib-sharp-netstandard2.0.2.1.0.nupkg.sha512"
+    },
     "Xamarin.Essentials/1.7.1": {
       "type": "package",
       "serviceable": true,
@@ -493,12 +709,40 @@
       "path": "xamarin.essentials/1.7.1",
       "hashPath": "xamarin.essentials.1.7.1.nupkg.sha512"
     },
+    "Xamarin.FFImageLoading/2.4.11.982": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-M0sNIQgUPs+le6C2TS4RmZQAURnzaRVizRtnZIZ6/1//qGcEAtEXAGt/tBJz6I1zlP6XlMxq8io6b4sjFP5N9Q==",
+      "path": "xamarin.ffimageloading/2.4.11.982",
+      "hashPath": "xamarin.ffimageloading.2.4.11.982.nupkg.sha512"
+    },
+    "Xamarin.FFImageLoading.Forms/2.4.11.982": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7X4t3J1wJj0/0o8+vd91hzSYlrqEeMFC7Mj+0T8O+fcbRSHo/c+QbWscEQiT4AaKCwyO709xq+7aY2XXbK/H7g==",
+      "path": "xamarin.ffimageloading.forms/2.4.11.982",
+      "hashPath": "xamarin.ffimageloading.forms.2.4.11.982.nupkg.sha512"
+    },
+    "Xamarin.FFImageLoading.Transformations/2.4.11.982": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cNG6zhiEBTENAGgIc9lY54YMJ0tg2dJ9+tj8tYgrOEQT8gxlj3OUzzNWZgaQWpcx28y5iIt/qM+Bd6jUwtAn1Q==",
+      "path": "xamarin.ffimageloading.transformations/2.4.11.982",
+      "hashPath": "xamarin.ffimageloading.transformations.2.4.11.982.nupkg.sha512"
+    },
     "Xamarin.Forms/5.0.0.2337": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-2AYl2V1YHjEDEmA5d+aP382ielCKr8d/jo3zCgPSvLE/4Pw/em7pHBGmN3yZ/WzxIMV16f7wBfoFCHesMud0AA==",
       "path": "xamarin.forms/5.0.0.2337",
       "hashPath": "xamarin.forms.5.0.0.2337.nupkg.sha512"
+    },
+    "Xamarin.Rating/1.0.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-udVmz8Y+GeqMHG6zgAlNnvenyWv/PrwKZnw+8dqh9h7t/IeBGm2xtNpjBug+K9vFl+fjFSODwP+Xgut+yILI8Q==",
+      "path": "xamarin.rating/1.0.0.2",
+      "hashPath": "xamarin.rating.1.0.0.2.nupkg.sha512"
     },
     "Mono.Android/0.0.0.0": {
       "type": "reference",

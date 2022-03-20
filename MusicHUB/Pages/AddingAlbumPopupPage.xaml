@@ -23,7 +23,7 @@
             <Style x:Key="MainButtonStyle" TargetType="Button">
                 <Setter Property="Padding" Value="10"/>
                 <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
-                <Setter Property="TextColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=Black}"/>
                 <Setter Property="HeightRequest" Value="40"/>
                 <Setter Property="CornerRadius" Value="30"/>
             </Style>

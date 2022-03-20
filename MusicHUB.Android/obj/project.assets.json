@@ -316,6 +316,15 @@
           "lib/MonoAndroid10/_._": {}
         }
       },
+      "taglib-sharp-netstandard2.0/2.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/taglib-sharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/taglib-sharp.dll": {}
+        }
+      },
       "Xam.Plugins.Android.ExoPlayer/2.11.8": {
         "type": "package",
         "dependencies": {
@@ -1994,6 +2003,19 @@
           "buildTransitive/monoandroid50/Xamarin.Google.Guava.ListenableFuture.targets": {}
         }
       },
+      "Xamarin.Rating/1.0.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Xamarin.Essentials": "1.6.1",
+          "Xamarin.Forms": "5.0.0.2012"
+        },
+        "compile": {
+          "lib/netstandard2.0/Rating.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Rating.dll": {}
+        }
+      },
       "MusicHUB/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
@@ -2013,7 +2035,9 @@
           "Xamarin.FFImageLoading.Forms": "2.4.11.982",
           "Xamarin.FFImageLoading.Transformations": "2.4.11.982",
           "Xamarin.Forms": "5.0.0.2337",
-          "sqlite-net-pcl": "1.8.116"
+          "Xamarin.Rating": "1.0.0.2",
+          "sqlite-net-pcl": "1.8.116",
+          "taglib-sharp-netstandard2.0": "2.1.0"
         },
         "compile": {
           "bin/placeholder/MusicHUB.dll": {}
@@ -2788,6 +2812,18 @@
         "system.valuetuple.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "taglib-sharp-netstandard2.0/2.1.0": {
+      "sha512": "w45LreEPpV/vOfgpYBI1cNqiLvj8yQ8f7kJaMYtzTAsg26ZdHWnh5vPuy2/F9tCKhmgNB0s+zOBwdcEb4qk3Tg==",
+      "type": "package",
+      "path": "taglib-sharp-netstandard2.0/2.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/taglib-sharp.dll",
+        "taglib-sharp-netstandard2.0.2.1.0.nupkg.sha512",
+        "taglib-sharp-netstandard2.0.nuspec"
       ]
     },
     "Xam.Plugins.Android.ExoPlayer/2.11.8": {
@@ -4595,6 +4631,18 @@
         "xamarin.google.guava.listenablefuture.nuspec"
       ]
     },
+    "Xamarin.Rating/1.0.0.2": {
+      "sha512": "udVmz8Y+GeqMHG6zgAlNnvenyWv/PrwKZnw+8dqh9h7t/IeBGm2xtNpjBug+K9vFl+fjFSODwP+Xgut+yILI8Q==",
+      "type": "package",
+      "path": "xamarin.rating/1.0.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Rating.dll",
+        "xamarin.rating.1.0.0.2.nupkg.sha512",
+        "xamarin.rating.nuspec"
+      ]
+    },
     "MusicHUB/1.0.0": {
       "type": "project",
       "path": "../MusicHUB/MusicHUB.csproj",
@@ -4614,7 +4662,9 @@
       "Xamarin.FFImageLoading.Forms >= 2.4.11.982",
       "Xamarin.FFImageLoading.Transformations >= 2.4.11.982",
       "Xamarin.Forms >= 5.0.0.2337",
-      "sqlite-net-pcl >= 1.8.116"
+      "Xamarin.Rating >= 1.0.0.2",
+      "sqlite-net-pcl >= 1.8.116",
+      "taglib-sharp-netstandard2.0 >= 2.1.0"
     ]
   },
   "packageFolders": {
@@ -4699,9 +4749,17 @@
             "target": "Package",
             "version": "[5.0.0.2337, )"
           },
+          "Xamarin.Rating": {
+            "target": "Package",
+            "version": "[1.0.0.2, )"
+          },
           "sqlite-net-pcl": {
             "target": "Package",
             "version": "[1.8.116, )"
+          },
+          "taglib-sharp-netstandard2.0": {
+            "target": "Package",
+            "version": "[2.1.0, )"
           }
         }
       }

@@ -24,7 +24,9 @@
           "Xamarin.FFImageLoading.Forms": "2.4.11.982",
           "Xamarin.FFImageLoading.Transformations": "2.4.11.982",
           "Xamarin.Forms": "5.0.0.2337",
+          "Xamarin.Rating": "1.0.0.2",
           "sqlite-net-pcl": "1.8.116",
+          "taglib-sharp-netstandard2.0": "2.1.0",
           "Mono.Android": "0.0.0.0",
           "Xamarin.Google.Android.Material": "1.0.0.0"
         },
@@ -342,6 +344,14 @@
         }
       },
       "System.ValueTuple/4.5.0": {},
+      "taglib-sharp-netstandard2.0/2.1.0": {
+        "runtime": {
+          "lib/netstandard2.0/taglib-sharp.dll": {
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.0.0"
+          }
+        }
+      },
       "Xamarin.Essentials/1.7.1": {
         "dependencies": {
           "System.Numerics.Vectors": "4.5.0"
@@ -401,6 +411,18 @@
           "lib/netstandard2.0/Xamarin.Forms.Xaml.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "5.0.0.884"
+          }
+        }
+      },
+      "Xamarin.Rating/1.0.0.2": {
+        "dependencies": {
+          "Xamarin.Essentials": "1.7.1",
+          "Xamarin.Forms": "5.0.0.2337"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Rating.dll": {
+            "assemblyVersion": "1.0.0.2",
+            "fileVersion": "1.0.0.2"
           }
         }
       },
@@ -673,6 +695,13 @@
       "path": "system.valuetuple/4.5.0",
       "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
+    "taglib-sharp-netstandard2.0/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-w45LreEPpV/vOfgpYBI1cNqiLvj8yQ8f7kJaMYtzTAsg26ZdHWnh5vPuy2/F9tCKhmgNB0s+zOBwdcEb4qk3Tg==",
+      "path": "taglib-sharp-netstandard2.0/2.1.0",
+      "hashPath": "taglib-sharp-netstandard2.0.2.1.0.nupkg.sha512"
+    },
     "Xamarin.Essentials/1.7.1": {
       "type": "package",
       "serviceable": true,
@@ -707,6 +736,13 @@
       "sha512": "sha512-2AYl2V1YHjEDEmA5d+aP382ielCKr8d/jo3zCgPSvLE/4Pw/em7pHBGmN3yZ/WzxIMV16f7wBfoFCHesMud0AA==",
       "path": "xamarin.forms/5.0.0.2337",
       "hashPath": "xamarin.forms.5.0.0.2337.nupkg.sha512"
+    },
+    "Xamarin.Rating/1.0.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-udVmz8Y+GeqMHG6zgAlNnvenyWv/PrwKZnw+8dqh9h7t/IeBGm2xtNpjBug+K9vFl+fjFSODwP+Xgut+yILI8Q==",
+      "path": "xamarin.rating/1.0.0.2",
+      "hashPath": "xamarin.rating.1.0.0.2.nupkg.sha512"
     },
     "Mono.Android/0.0.0.0": {
       "type": "reference",

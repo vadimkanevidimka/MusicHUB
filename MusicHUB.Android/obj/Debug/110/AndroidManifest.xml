@@ -16,7 +16,9 @@
   <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-  <application android:label="MusicHUB.Android" android:theme="@style/MainTheme" android:icon="@mipmap/musichub" android:name="android.app.Application" android:allowBackup="true" android:debuggable="true" android:extractNativeLibs="true">
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+  <application android:label="MusicHUB" android:theme="@style/MainTheme" android:icon="@mipmap/musichub" android:name="android.app.Application" android:allowBackup="true" android:debuggable="true" android:extractNativeLibs="true">
     <activity android:configChanges="orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:icon="@mipmap/musichub" android:label="MusicHUB" android:theme="@style/MainTheme" android:name="crc641d083f1fece1a6b9.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -47,4 +49,10 @@
       </intent-filter>
     </receiver>
   </application>
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.SENDTO" />
+      <data android:scheme="mailto" />
+    </intent>
+  </queries>
 </manifest>

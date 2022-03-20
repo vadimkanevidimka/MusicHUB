@@ -32,5 +32,13 @@ namespace MusicHUB.Pages
         {
             base.OnAppearing();
         }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
     }
 }

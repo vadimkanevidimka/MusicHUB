@@ -12,16 +12,19 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <Style TargetType="Label" x:Key="Labelstyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=Black}"/>
+            </Style>
             <converters:ImageConverter x:Key="ImgConvert" />
         </ResourceDictionary>
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+        <RefreshView Command="{Binding RefreshCommand}" RefreshColor="Wheat" IsRefreshing="{Binding IsRefreshing}">
             <ScrollView HeightRequest="1500">
                 <StackLayout Padding="10" Spacing="10" VerticalOptions="Fill">
                     <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                    <Label Text="Любимые композиции" FontSize="20"/>
+                    <Label Text="Любимые композиции" FontSize="20" Style="{StaticResource Labelstyle}"/>
                     <CollectionView x:Name="MyListView"
                             ItemsSource="{Binding LikedTracks}" Margin="-10,0,-10,0" HeightRequest="200" SelectionMode="None" ItemSizingStrategy="MeasureAllItems">
                         <CollectionView.EmptyView>
@@ -62,11 +65,11 @@
                     </CollectionView>
                     <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
                     <FlexLayout JustifyContent="SpaceBetween" VerticalOptions="Start">
-                        <Label Text="Плейлисты" FontSize="20"/>
+                        <Label Text="Плейлисты" FontSize="20" Style="{StaticResource Labelstyle}"/>
                         <ImageButton Source="addtoplaylist.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Command="{Binding AddNewAlbum}"/>
                     </FlexLayout>
                     <CollectionView x:Name="PlayLists"
-                            ItemsSource="{Binding Albums}" HeightRequest="210" Margin="-10,0,-10,0" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectAlbum}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
+                            ItemsSource="{Binding Albums}" HeightRequest="210" Margin="-10,0,-10,0" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems">
                         <CollectionView.EmptyView>
                             <StackLayout Padding="0,40,0,0">
                                 <Image HeightRequest="100" Aspect="AspectFit" Source="search_state.gif" IsAnimationPlaying="True"/>
@@ -82,6 +85,9 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Album">
                                 <Grid Padding="10" x:Name="AlbumItem">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer x:DataType="local:PLayListViewModel" BindingContext="{Binding Source={x:Reference PlayLists}, Path=BindingContext}" Command="{Binding SelectAlbum}" CommandParameter="{Binding Source={x:Reference AlbumItem}, Path=BindingContext}"/>
+                                    </Grid.GestureRecognizers>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="150"/>
                                         <RowDefinition Height="40"/>
@@ -97,17 +103,17 @@
                                         <Label Text="{Binding Title}" FontSize="20" TextColor="Black" LineBreakMode="TailTruncation" />
                                         <Label Text="{Binding Artist}" LineBreakMode="TailTruncation"/>
                                     </StackLayout>
-                                    <ImageButton Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="1" Grid.Row="1" BindingContext="{Binding Source={x:Reference PlayLists}, Path=BindingContext}" Command="{Binding AlbumOptionsCommand}" CommandParameter="{Binding Source={x:Reference AlbumItem}, Path=BindingContext}"/>
+                                    <ImageButton x:DataType="local:PLayListViewModel" Source="options.png" CornerRadius="30" Style="{StaticResource buttonStyle}" Grid.Column="1" Grid.Row="1" BindingContext="{Binding Source={x:Reference PlayLists}, Path=BindingContext}" Command="{Binding AlbumOptionsCommand}" CommandParameter="{Binding Source={x:Reference AlbumItem}, Path=BindingContext}"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
                     <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                    <Label Text="Недавно прослушанные" FontSize="20"/>
+                    <Label Text="Недавно прослушанные" FontSize="20" Style="{StaticResource Labelstyle}"/>
                     <CollectionView ItemsSource="{Binding RecentlyPlayed}" x:Name="RecentlyPlayedList" Margin="-10,0,-10,0" HeightRequest="200" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding RecentlyPlayedCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
                         <CollectionView.EmptyView>
                             <StackLayout Padding="0,40,0,0">
-                                <Image Source="search_state.gif" IsAnimationPlaying="True"/>
+                                <Image HeightRequest="100" Aspect="AspectFit" Source="search_state.gif" IsAnimationPlaying="True"/>
                                 <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
                             </StackLayout>
                         </CollectionView.EmptyView>

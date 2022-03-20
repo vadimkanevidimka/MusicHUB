@@ -8,5 +8,6 @@ namespace MusicHUB.ViewModels.ContextActions
     {
         AtList,
         AtPlayerPage,
+        AtAlbumPage
     }
 }

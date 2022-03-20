@@ -42,7 +42,7 @@ public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
         {
             propertyChanged(this,
               new PropertyChangedEventArgs("IsSuccessfullyCompleted"));
-            propertyChanged(this, new PropertyChangedEventArgs(nameof(Result)));
+            propertyChanged(this, new PropertyChangedEventArgs("Result"));
         }
     }
     public Task<TResult> Task { get; private set; }
@@ -50,8 +50,7 @@ public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
     {
         get
         {
-            return (Task.Status == TaskStatus.RanToCompletion) ?
-Task.Result : default(TResult);
+            return (Task.Status == TaskStatus.RanToCompletion) ? Task.Result : default(TResult);
         }
     }
     public TaskStatus Status { get { return Task.Status; } }
@@ -61,8 +60,7 @@ Task.Result : default(TResult);
     {
         get
         {
-            return Task.Status ==
-TaskStatus.RanToCompletion;
+            return Task.Status == TaskStatus.RanToCompletion;
         }
     }
     public bool IsCanceled { get { return Task.IsCanceled; } }
@@ -72,16 +70,14 @@ TaskStatus.RanToCompletion;
     {
         get
         {
-            return (Exception == null) ?
-null : Exception.InnerException;
+            return (Exception == null) ? null : Exception.InnerException;
         }
     }
     public string ErrorMessage
     {
         get
         {
-            return (InnerException == null) ?
-null : InnerException.Message;
+            return (InnerException == null) ? null : InnerException.Message;
         }
     }
     public event PropertyChangedEventHandler PropertyChanged;

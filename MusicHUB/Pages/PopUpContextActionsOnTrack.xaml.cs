@@ -12,6 +12,7 @@ using System.IO;
 using Android.Widget;
 using MusicHUB.ViewModels.ContextActions;
 using MvvmHelpers.Commands;
+using MusicHUB.Pages;
 
 namespace MusicHUB
 {
@@ -20,6 +21,9 @@ namespace MusicHUB
     {
         public IEnumerable<IContextAction> ContextActions { get; set; }
         public Track Tracks { get; set; }
+        private int pageHeight;
+        public int PageHeight { get => pageHeight; set { pageHeight = value; OnPropertyChanged(nameof(PageHeight)); } }
+
         public PopUpContextActionsOnTrack(Track track, TrackContextActionState contextActionState)
         {
             InitializeComponent();
@@ -31,11 +35,16 @@ namespace MusicHUB
                 case TrackContextActionState.AtPlayerPage:
                     ContextActions = new ContextActionsResourses().TrackContextActions;
                     break;
+                case TrackContextActionState.AtAlbumPage:
+                    ContextActions = new ContextActionsResourses().TrackInAlbumListContextActions;
+                    break;
                 default:
                     break;
             }
             Tracks = track;
             BindingContext = this;
+            Actions.HeightRequest = ContextActions.Count() * 40;
+            Pageframe.HeightRequest = Actions.HeightRequest + 140;
         }
 
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -45,11 +54,16 @@ namespace MusicHUB
             await this.Navigation.PopPopupAsync();
         }
 
-        private ICommand GetSongInfo
+        public ICommand GetSongInfo
         {
             get => new AsyncCommand(async () =>
             {
-
+                await App.Current.MainPage.Navigation.PopPopupAsync();
+                if (App.Current.MainPage.Navigation.ModalStack.Count > 0)
+                {
+                    await App.Current.MainPage.Navigation.PopModalAsync();
+                }
+                await App.Current.MainPage.Navigation.PushAsync(new TrackPage(0, Tracks.Artist, Tracks.Title));
             });
         }
     }

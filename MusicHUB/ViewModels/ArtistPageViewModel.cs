@@ -15,6 +15,8 @@ using System;
 using Xamarin.Essentials;
 using System.Net.Http;
 using Newtonsoft.Json;
+using MusicHUB.Pages;
+using System.Linq;
 
 namespace MusicHUB.ViewModels
 {
@@ -26,7 +28,7 @@ namespace MusicHUB.ViewModels
             this.Connections = connections;
             this.Navigation = navigation;
             ArtistInfo = new NotifyTaskCompletion<ArtistResponse>(Connections.GeniusClient.ArtistClient.GetArtist(Response.Id));
-            ArtistsSongs = new NotifyTaskCompletion<ArtistsSongsResponse>(Connections.GeniusClient.ArtistClient.GetArtistsSongs(Response.Id, "popularity", "10"));
+            ArtistsSongs = new NotifyTaskCompletion<ArtistsSongsResponse>(Connections.GeniusClient.ArtistClient.GetArtistsSongs(Response.Id, "popularity", "20"));
             ArtistsAlbums = new NotifyTaskCompletion<List<Genius.Models.Song.Album>>(GetAlbumsAsync(ArtistsSongs));
             ArtistVideos = new NotifyTaskCompletion<SearchListResponse>(GetEmbededVideos());
         }
@@ -44,17 +46,24 @@ namespace MusicHUB.ViewModels
         private List<Album> GetAlbums(NotifyTaskCompletion<ArtistsSongsResponse> artistsSongs)
         {
             List<Album> Albums = new List<Album>();
-            while (true)
+            try
             {
-                if (!artistsSongs.IsCompleted) continue;
-                foreach (var item in artistsSongs.Result.Response.Songs)
+                while (true)
                 {
-                    var Song = Connections.GeniusClient.SongClient.GetSong(item.Id).Result;
-                    if (!Albums.Exists((album) => album.Id == Song.Response.Song.Album.Id))
+                    if (!artistsSongs.IsCompleted) continue;
+                    foreach (var item in artistsSongs.Result.Response.Songs)
                     {
-                        Albums.Add(Song.Response.Song.Album);
+                        var Song = Connections.GeniusClient.SongClient.GetSong(item.Id).Result;
+                        if (!Albums.Exists((album) => album.Id == Song?.Response.Song.Album.Id))
+                        {
+                            Albums.Add(Song?.Response.Song.Album);
+                        }
                     }
+                    return Albums;
                 }
+            }
+            catch (Exception)
+            {
                 return Albums;
             }
         }
@@ -85,6 +94,38 @@ namespace MusicHUB.ViewModels
                    await Browser.OpenAsync(uri);
                    e = null;
                });
+        }
+
+        public ICommand GoToFaceBook
+        {
+            get => new AsyncCommand(async () =>
+            {
+                Uri uri = new Uri($"https://www.facebook.com/{ArtistInfo.Result.Response.Artist.FacebookName}");
+                await Browser.OpenAsync(uri);
+            });
+        }
+
+        public ICommand GoToTwitter
+        {
+            get => new AsyncCommand(async () =>
+            {
+                Uri uri = new Uri($"https://twitter.com/{ArtistInfo.Result.Response.Artist.FacebookName}");
+                await Browser.OpenAsync(uri);
+            });
+        }
+
+        public ICommand GoToInstagram 
+        {
+            get => new AsyncCommand(async () =>
+            {
+                Uri uri = new Uri($"https://www.instagram.com/{ArtistInfo.Result.Response.Artist.TwitterName}/");
+                await Browser.OpenAsync(uri);
+            });
+        }
+
+        public ICommand SelectTrackCommand
+        {
+            get => new AsyncCommand<Song>(async (track) => await App.Current.MainPage.Navigation.PushAsync(new TrackPage(track.Id)));
         }
     }
 }

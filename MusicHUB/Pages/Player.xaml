@@ -13,10 +13,12 @@
             <StackLayout Padding="0,10">
                 <StackLayout>
                     <ImageButton Source="arrowdown.png" WidthRequest="50" HeightRequest="20" Aspect="Fill" VerticalOptions="Center" BackgroundColor="Transparent" Command="{Binding ClosePlayerCommand}" HorizontalOptions="Center"/>
-                    <CarouselView ItemsSource="{Binding Tracks}" CurrentItemChangedCommand ="{Binding TrackChange}" CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = CurrentItem}" Loop="False" HeightRequest="300" ItemsUpdatingScrollMode="KeepItemsInView" CurrentItem="{Binding CurrentTrack}" VerticalOptions="Center" HorizontalOptions="Center" IsBounceEnabled="True" PeekAreaInsets="40,0" HorizontalScrollBarVisibility="Never" Margin="0,20,0,0">
+                    <CarouselView ItemsSource="{Binding Tracks}" CurrentItemChangedCommand ="{Binding TrackChange}" CurrentItemChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = CurrentItem}" Loop="False" HeightRequest="300" ItemsUpdatingScrollMode="KeepItemsInView" CurrentItem="{Binding CurrentTrack}" IsBounceEnabled="True" PeekAreaInsets="40,0" HorizontalScrollBarVisibility="Never" Margin="0,20,0,0">
                         <CarouselView.ItemTemplate>
                             <DataTemplate x:DataType="Models:Track">
-                                <Image Source="{Binding ImageSource}" Aspect="AspectFit"/>
+                                <Frame Padding="10,0" HasShadow="True" CornerRadius="0">
+                                    <Image Source="{Binding ImageSource}" Aspect="AspectFill"/>
+                                </Frame>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
                     </CarouselView>
@@ -24,7 +26,7 @@
                         <StackLayout Padding="20,20">
                             <FlexLayout AlignContent="SpaceAround" JustifyContent="SpaceBetween">
                                 <StackLayout WidthRequest="270">
-                                    <Label BindingContext="{Binding CurrentTrack}" FontSize="Large" Padding="10,0" Text="{Binding Title}" LineBreakMode="TailTruncation"/>
+                                    <Label BindingContext="{Binding CurrentTrack}" FontSize="Large" Padding="10,0" Text="{Binding Title}" TextColor="Black" LineBreakMode="TailTruncation"/>
                                     <Label  BindingContext="{Binding CurrentTrack}" Text="{Binding Artist}" Padding="10,0" LineBreakMode="TailTruncation"/>
                                 </StackLayout>
                                 <ImageButton Style="{StaticResource buttonStyle}" Source="{Binding ResourceClass.Like}" Command="{Binding LikeCommand}" CornerRadius="30"/>
@@ -54,25 +56,32 @@
                         </StackLayout>
                     </ContentView>
                     <ActivityIndicator IsVisible="{Binding Artists.IsNotCompleted}" Color="Wheat" IsRunning="{Binding Artists.IsNotCompleted}"/>
-                    <CarouselView ItemsSource="{Binding Artists.Result}" HeightRequest="150" ItemsUpdatingScrollMode="KeepItemsInView" CurrentItem="{Binding CurrentArtist}" Loop="False" IsBounceEnabled="True" PeekAreaInsets="10,0" HorizontalOptions="Center">
-                        <CarouselView.EmptyView>
-                            <StackLayout HorizontalOptions="Center" IsVisible="{Binding Artists.IsCompleted}">
-                                <Image Source="NotFound.png" Aspect="AspectFit" WidthRequest="100" HeightRequest="100"/>
+                    <CollectionView  x:Name="Artists" ItemsSource="{Binding Artists.Result}" HeightRequest="150" SelectionMode="None" ItemSizingStrategy="MeasureAllItems">
+                        <CollectionView.EmptyView>
+                            <StackLayout IsVisible="{Binding Artists.IsCompleted}">
+                                <Image HeightRequest="100" Aspect="AspectFit" Source="search_state.gif" IsAnimationPlaying="True"/>
                                 <Label Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
                             </StackLayout>
-                        </CarouselView.EmptyView>
-                        <CarouselView.ItemTemplate>
+                        </CollectionView.EmptyView>
+
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal"/>
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame CornerRadius="20" BackgroundColor="Wheat" HasShadow="True" Padding="0">
-                                    <AbsoluteLayout>
-                                        <Image x:DataType="response1:Artist" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0,0,150,150" Source="{Binding ImageUrl}"/>
-                                        <Label x:DataType="response1:Artist" Text="{Binding Name}" AbsoluteLayout.LayoutBounds="170,20,180,50" FontSize="Body" TextColor="DimGray"/>
-                                        <ImageButton Source="arrowdown.png" Command="{Binding Source={RelativeSource AncestorType={Type ViewModels:PlayerViewModel}}, Path=ArtistPageCommand}" CommandParameter="{Binding Source={RelativeSource Mode=Self}, Path=CurrentItem}" Style="{StaticResource Key=ButtonOnWheatBackGround}" CornerRadius="30" Rotation="-90" AbsoluteLayout.LayoutBounds="310,90,60,60"/>
-                                    </AbsoluteLayout>
-                                </Frame>
+                                <StackLayout Padding="10,0,10,10" x:Name="CurrentItem">
+                                    <Frame CornerRadius="20" BackgroundColor="Wheat" HasShadow="True" Padding="0">
+                                        <AbsoluteLayout>
+                                            <Image x:DataType="response1:Artist" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0,0,150,150" Source="{Binding ImageUrl}"/>
+                                            <Label x:DataType="response1:Artist" Text="{Binding Name}" AbsoluteLayout.LayoutBounds="170,20,180,50" FontSize="Body" TextColor="DimGray"/>
+                                            <ImageButton Source="arrowdown.png" Command="{Binding Source={RelativeSource AncestorType={Type ViewModels:PlayerViewModel}}, Path=ArtistPageCommand}" BindingContext="{Binding Source={x:Reference Artists}, Path=BindingContext}" CommandParameter="{Binding Source={x:Reference CurrentItem}, Path=BindingContext}" Style="{StaticResource Key=ButtonOnWheatBackGround}" CornerRadius="30" Rotation="-90" AbsoluteLayout.LayoutBounds="310,90,60,60"/>
+                                        </AbsoluteLayout>
+                                    </Frame>
+                                </StackLayout>
                             </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

@@ -25,7 +25,7 @@ namespace MusicHUB.ViewModels.ContextActions
             if (someobject.GetType() == typeof(Track))
             {
                 await App.Current.MainPage.Navigation.PopPopupAsync();
-                await App.Current.MainPage.Navigation.PushPopupAsync(new QueuePopupPage());
+                await App.Current.MainPage.Navigation.PushPopupAsync(new QueuePopupPage(Interfaces.QueuePopupPageState.AddToQueueState));
                 base.MakeToast($"{((Track)someobject).Title} добавлена в очередь.");
             }
         }

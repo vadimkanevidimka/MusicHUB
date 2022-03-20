@@ -19,29 +19,35 @@ namespace MusicHUB
     public partial class PopUpContextActionsOnAlbum : Rg.Plugins.Popup.Pages.PopupPage
     {
         public IEnumerable<IContextAction> ContextActions { get; set; }
-        public Album Album { get; set; }
+        public Album Album { get => album; set { album = value; OnPropertyChanged(nameof(Album)); } }
+        private int pageHeight;
+        public int PageHeight { get => pageHeight; set { pageHeight = value; OnPropertyChanged(nameof(PageHeight)); } }
         public PopUpContextActionsOnAlbum(Album album, TrackContextActionState contextActionState)
         {
             InitializeComponent();
             switch (contextActionState)
             {
                 case TrackContextActionState.AtList:
-                    ContextActions = new ContextActionsResourses().TrackListContextActions;
+                    ContextActions = new ContextActionsResourses().AlbumListContextActions;
                     break;
                 case TrackContextActionState.AtPlayerPage:
-                    ContextActions = new ContextActionsResourses().TrackContextActions;
+                    ContextActions = new ContextActionsResourses().AlbumPageContextActions;
                     break;
                 default:
                     break;
             }
             Album = album;
             BindingContext = this;
+            Actions.HeightRequest = ContextActions.Count() * 40;
+            Pageframe.HeightRequest = Actions.HeightRequest + 120;
         }
+
+        private Album album;
 
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             IContextAction contextAction = e.Item as IContextAction;
-            contextAction.ExcecuteAction<Track>(Album);
+            contextAction.ExcecuteAction<Album>(Album);
             await this.Navigation.PopPopupAsync();
         }
 

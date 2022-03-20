@@ -136,7 +136,7 @@ namespace SimpleAudioForms.Droid
 
         void IAudio.Countinue() => MediaManager.Play();
 
-        public void PlayAudioFile(Track track)
+        public async Task PlayAudioFile(Track track)
         {
             if (track is null) return;
             if (CurrentTrack != null && CurrentTrack != track) AddToRecentlyPlayed(CurrentTrack);
@@ -144,11 +144,14 @@ namespace SimpleAudioForms.Droid
             else if (CurrentTrack.Id == track.Id) return;
             Position = Queue.IndexOf(track);
             CurrentTrack = track;
-            MediaManager.Play(track.Uri);
+            await MediaManager.Play(track.Uri);
             OntrackChanged(this, new EventArgs());
         }
 
-        void IAudio.SetTime(double Time) => MediaManager.SeekTo(new TimeSpan((int)Time * 10000));
+        async void IAudio.SetTime(double Time)
+        {
+            await MediaManager.SeekTo(new TimeSpan((long)Time * 10000));
+        }
 
         public void Next()
         {
@@ -210,6 +213,12 @@ namespace SimpleAudioForms.Droid
 
         public void AddToQueue(Track track)
         {
+            if (Queue.Count == 0)
+            {
+                Queue.Add(track);
+                PlayAudioFile(track);
+                return;
+            }
             Queue.Insert(Position + 1, track);
         }
 
@@ -230,6 +239,12 @@ namespace SimpleAudioForms.Droid
 
         public void AddToQueue(IEnumerable<Track> tracks)
         {
+            if (Queue.Count == 0)
+            {
+                Queue.AddRange(tracks);
+                PlayAudioFile(Queue[0]);
+                return;
+            }
             Queue.InsertRange(Position + 1, tracks);
         }
     }

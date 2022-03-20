@@ -12,7 +12,7 @@
                     </StackLayout.GestureRecognizers>
                     <Frame CornerRadius="20" VerticalOptions="End" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="300">
                         <StackLayout>
-                            <Label Text="Сортировать по"/>
+                            <Label Text="Сортировать по" TextColor="Black" FontSize="Header"/>
                             <ListView ItemsSource="{Binding SortActions}" SelectionMode="None" ItemTapped="ListView_ItemTapped">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>

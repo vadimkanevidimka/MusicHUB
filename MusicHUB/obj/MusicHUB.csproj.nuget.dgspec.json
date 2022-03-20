@@ -104,9 +104,17 @@
               "target": "Package",
               "version": "[5.0.0.2337, )"
             },
+            "Xamarin.Rating": {
+              "target": "Package",
+              "version": "[1.0.0.2, )"
+            },
             "sqlite-net-pcl": {
               "target": "Package",
               "version": "[1.8.116, )"
+            },
+            "taglib-sharp-netstandard2.0": {
+              "target": "Package",
+              "version": "[2.1.0, )"
             }
           },
           "imports": [
@@ -124,7 +132,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.211\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.212\\RuntimeIdentifierGraph.json"
         }
       }
     }

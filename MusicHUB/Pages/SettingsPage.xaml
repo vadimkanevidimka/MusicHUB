@@ -15,17 +15,17 @@
             <TableView.Root>
                 <TableRoot>
                     <TableSection Title="Персональные данные" TextColor="Black">
-                        <EntryCell Label="Логин" Keyboard="Default" Placeholder="Введите логин"/>
-                        <SwitchCell Text="Сохранить" />
+                        <TextCell Text="Очистить базу данных" TextColor="Black" Command="{Binding ClearDataBaseCommand}"/>
                     </TableSection>
                     <TableSection Title="Помощь" TextColor="Black">
-                        <TextCell Text="Политика конфиденциальности" TextColor="Black"/>
-                        <TextCell Text="Отзыв" TextColor="Black"/>
-                        <TextCell Text="Оцените нас" TextColor="Black"/>
+                        <TextCell Text="Руководство" TextColor="Black" Command="{Binding AppTutorialCommand}"/>
+                        <TextCell Text="Отзыв" TextColor="Black" Command="{Binding SendEmailCommand}"/>
+                        <TextCell Text="Оцените нас" TextColor="Black" Command="{Binding RateUsCommand}"/>
                         <TextCell Text="Условия пользование" TextColor="Black"/>
                     </TableSection>
                     <TableSection Title="О приложении" TextColor="Black">
                         <TextCell Text="Версия" Detail="1.0.0.0" TextColor="Black"/>
+                        <TextCell Text="Справка" TextColor="Black" Command="{Binding AppInfoCommand}"/>
                     </TableSection>
                 </TableRoot>
             </TableView.Root>

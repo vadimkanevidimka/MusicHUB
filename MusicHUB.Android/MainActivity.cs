@@ -31,7 +31,7 @@ namespace MusicHUB.Droid
             Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 27, 27, 27));
             Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.ForceNotFullscreen);
             CachedImageRenderer.Init(true);
-            GrantPermissions(new string[] { Manifest.Permission.WriteExternalStorage, Manifest.Permission.ReadExternalStorage, Manifest.Permission.AccessMediaLocation });
+            GrantPermissions(new string[] { Manifest.Permission.WriteExternalStorage, Manifest.Permission.ReadExternalStorage, Manifest.Permission.AccessMediaLocation, Manifest.Permission.ManageExternalStorage, Manifest.Permission.MediaContentControl});
             var DataBase = await ConnectionCreator.Init();
             Genius.GeniusClient geniusClient = new GeniusClient("AkUpkfIcZocLUFBxkZT8kUUb4pUxiHjo7ioK7eGPdsjy3TtE596RAN5iQZIH9G1B");
             Connections connections = new Connections(new DataBaseService(DataBase), geniusClient);
@@ -58,6 +58,12 @@ namespace MusicHUB.Droid
             if (StorrageWrite == PermissionStatus.Denied)
             {
                 await Permissions.RequestAsync<Permissions.StorageWrite>();
+            }
+
+            var media = await Permissions.CheckStatusAsync<Permissions.Media>();
+            if (media == PermissionStatus.Denied)
+            {
+                await Permissions.RequestAsync<Permissions.Media>();
             }
         }
 
