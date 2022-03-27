@@ -34,12 +34,12 @@
                             </Frame>
                         </FlexLayout>
                         <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                        <Label Text="Биография" FontSize="Large"/>
+                        <Label Text="Биография" FontSize="Large" Style="{StaticResource Labelstyle}"/>
                             <Label TextType="Html" Text="{Binding ArtistInfo.Result.Response.Artist.Description.Html}" FontSize="Body">
                             </Label>
                         <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                        <Label Text="Популярные треки" FontSize="Large"/>
-                        <CollectionView ItemsSource="{Binding ArtistsSongs.Result.Response.Songs}" Margin="-20,0,-20,0" HeightRequest="190" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems" SelectionChangedCommand="{Binding SelectTrackCommand}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}">
+                            <Label Text="Популярные треки" FontSize="Large" Style="{StaticResource Labelstyle}"/>
+                        <CollectionView x:Name="ArtistTracks" ItemsSource="{Binding ArtistsSongs.Result.Response.Songs}" Margin="-20,0,-20,0" HeightRequest="190" ItemSizingStrategy="MeasureAllItems">
                             <CollectionView.EmptyView>
                                     <StackLayout Padding="0,40,0,0">
                                         <Image HeightRequest="100" Aspect="AspectFit" Source="search_state.gif" IsAnimationPlaying="True"/>
@@ -54,8 +54,11 @@
 
                             <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="song:Song">
-                                        <Grid Padding="20,10,10,10" ColumnSpacing="10">
-                                        <Grid.RowDefinitions>
+                                        <Grid Padding="20,10,10,10" ColumnSpacing="10" x:Name="Item">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer x:DataType="viewmodels:ArtistPageViewModel" BindingContext="{Binding Source={x:Reference ArtistTracks}, Path=BindingContext}" Command="{Binding SelectTrackCommand}" CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}"/>
+                                            </Grid.GestureRecognizers>
+                                            <Grid.RowDefinitions>
                                             <RowDefinition Height="50"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
@@ -64,7 +67,7 @@
                                         </Grid.ColumnDefinitions>
                                             <Image x:Name="AudioImgBottom" Aspect="AspectFit" Source="{Binding SongArtImageThumbnailUrl}" Grid.Column="0"/>
                                             <StackLayout Grid.Column="1" VerticalOptions="Center">
-                                                <Label Text="{Binding Title}" LineBreakMode="TailTruncation" />
+                                                <Label Text="{Binding Title}" LineBreakMode="TailTruncation" TextColor="Black" />
                                                 <Label Text="{Binding PrimaryArtist.Name}" LineBreakMode="TailTruncation"/>
                                             </StackLayout>
                                         </Grid>
@@ -72,7 +75,7 @@
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                         <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                        <Label Text="Популярные альбомы" FontSize="Large"/>
+                        <Label Text="Популярные альбомы" FontSize="Large" Style="{StaticResource Labelstyle}"/>
                         <CollectionView Margin="-20,0,-20,0" ItemsSource="{Binding ArtistsAlbums.Result}" HeightRequest="210" SelectionMode="None" ItemSizingStrategy="MeasureAllItems">
                             <CollectionView.EmptyView>
                                     <StackLayout Padding="0,40,0,0" HorizontalOptions="Center" VerticalOptions="Fill">
@@ -111,8 +114,8 @@
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                         <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                        <Label Text="Связанные видео" FontSize="Large"/>
-                        <CollectionView ItemsSource="{Binding ArtistVideos.Result.Items}" Margin="-20,0,-20,0" HeightRequest="250" SelectionMode="Single" SelectionChangedCommand="{Binding PlayYoutubeVideo}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}" ItemSizingStrategy="MeasureAllItems">
+                        <Label Text="Связанные видео" FontSize="Large" Style="{StaticResource Labelstyle}"/>
+                        <CollectionView x:Name="FeaturedVideos" ItemsSource="{Binding ArtistVideos.Result.Items}" Margin="-20,0,-20,0" HeightRequest="250" SelectionMode="Single" SelectionChangedCommand="{Binding PlayYoutubeVideo}" SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path = SelectedItem}" ItemSizingStrategy="MeasureAllItems">
                             <CollectionView.EmptyView>
                                 <StackLayout Padding="0,40,0,0">
                                     <ActivityIndicator IsVisible="{Binding ArtistVideos.IsNotCompleted}" Color="Wheat" IsRunning="{Binding ArtistVideos.IsNotCompleted}" VerticalOptions="End" HorizontalOptions="Center"/>
@@ -128,8 +131,11 @@
 
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="song1:SearchResult">
-                                    <Grid Padding="20,0,0,0" ColumnSpacing="20">
-                                        <Grid.RowDefinitions>
+                                    <Grid Padding="20,0,0,0" ColumnSpacing="20" x:Name="video">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer x:DataType="viewmodels:ArtistPageViewModel" BindingContext="{Binding Source={x:Reference FeaturedVideos}, Path=BindingContext}" Command="{Binding PlayYoutubeVideo}" CommandParameter="{Binding Source={x:Reference video}, Path=BindingContext}"/>
+                                            </Grid.GestureRecognizers>
+                                            <Grid.RowDefinitions>
                                             <RowDefinition Height="150"/>
                                             <RowDefinition Height="25"/>
                                         </Grid.RowDefinitions>

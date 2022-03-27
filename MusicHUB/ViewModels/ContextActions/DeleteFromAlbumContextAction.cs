@@ -12,19 +12,19 @@ namespace MusicHUB.ViewModels.ContextActions
 
         public override string DescriptionText => "Удалить из плейлиста";
 
-        public override async void ExcecuteAction<T>(object someobject)
+        public override async void ExcecuteAction<T>(object someobject, Action outAction = null)
         {
             if (someobject == null)
             {
                 return;
             }
 
-            if (someobject.GetType() == typeof(AlbumsTracks))
+            if (someobject.GetType() == typeof(Track))
             {
-                AlbumsTracks track = someobject as AlbumsTracks;
+                Track track = someobject as Track;
 
                 await App.Current.MainPage.Navigation.PopPopupAsync();
-                await App.Connections.BaseDataBaseService.DataBase.QueryAsync<DBLikedTracks>("delete where AlbumId = ? and TrackId = ?", new int[] { track.AlbumId, track.TrackId });
+                await App.Connections.BaseDataBaseService.DataBase.QueryAsync<AlbumsTracks>("delete from AlbumsTracks where TrackId = ?", track.Id);
                 base.MakeToast($"Композиция удвлена из плейлиста");
             }
         }

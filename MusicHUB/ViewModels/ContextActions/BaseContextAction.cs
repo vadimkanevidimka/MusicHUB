@@ -13,7 +13,7 @@ namespace MusicHUB.ViewModels.ContextActions
 
         public abstract string DescriptionText { get; }
 
-        public abstract void ExcecuteAction<T>(object someobject);
+        public abstract void ExcecuteAction<T>(object someobject, Action action = null);
 
         protected void MakeToast(string text)
         {

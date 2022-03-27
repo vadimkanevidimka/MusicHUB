@@ -13,7 +13,7 @@ namespace MusicHUB.ViewModels.ContextActions
 
         public override string DescriptionText => "Установить на звонок";
 
-        public override void ExcecuteAction<T>(object someobject)
+        public override void ExcecuteAction<T>(object someobject, Action outAction = null)
         {
             if (someobject == null)
             {

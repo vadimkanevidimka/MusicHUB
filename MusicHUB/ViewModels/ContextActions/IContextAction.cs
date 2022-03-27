@@ -8,6 +8,6 @@ namespace MusicHUB.ViewModels.ContextActions
     {
         public string ImageURl { get; }
         public string DescriptionText { get; }
-        public void ExcecuteAction<T>(object someobject);
+        public void ExcecuteAction<T>(object someobject, Action action = null);
     }
 }

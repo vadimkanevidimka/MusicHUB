@@ -42,7 +42,7 @@ namespace MusicHUB.Pages
             {
                 var track = DependencyService.Get<IAudio>().GetCurrentTrack();
                 var rezult = await App.Connections.GeniusClient.SearchClient.Search($"{track.Title} by {track.Artist}");
-                var song = await App.Connections.GeniusClient.SongClient.GetSong(rezult.Response.Hits.Where((s) => s.Result.Stats.PageViews == rezult.Response.Hits.Max((c) => c.Result.Stats.PageViews) || s.Result.Title.Contains(track.Title, StringComparison.CurrentCultureIgnoreCase)).First().Result.Id);
+                var song = await App.Connections.GeniusClient.SongClient.GetSong(rezult.Response.Hits.Where((c) => c.Result.FullTitle.Contains(track.Artist) && c.Result.FullTitle.Contains(track.Title) || (c.Result.Stats.PageViews == rezult.Response.Hits.Max((c) => c.Result.Stats.PageViews))).First().Result.Id);
                 return song.Response.Song.Url;
             }
             catch (Exception ex)//<div class="lyrics">

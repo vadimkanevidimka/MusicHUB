@@ -22,25 +22,21 @@ namespace MusicHUB.ViewModels
 {
     public class ArtistPageViewModel : BindableObject
     {
-        public ArtistPageViewModel(INavigation navigation, Artist response, Connections connections)
+        public ArtistPageViewModel(Artist response)
         {
             this.Response = response;
-            this.Connections = connections;
-            this.Navigation = navigation;
-            ArtistInfo = new NotifyTaskCompletion<ArtistResponse>(Connections.GeniusClient.ArtistClient.GetArtist(Response.Id));
-            ArtistsSongs = new NotifyTaskCompletion<ArtistsSongsResponse>(Connections.GeniusClient.ArtistClient.GetArtistsSongs(Response.Id, "popularity", "20"));
+            ArtistInfo = new NotifyTaskCompletion<ArtistResponse>(App.Connections.GeniusClient.ArtistClient.GetArtist(Response.Id));
+            ArtistsSongs = new NotifyTaskCompletion<ArtistsSongsResponse>(App.Connections.GeniusClient.ArtistClient.GetArtistsSongs(Response.Id, "popularity", "20"));
             ArtistsAlbums = new NotifyTaskCompletion<List<Genius.Models.Song.Album>>(GetAlbumsAsync(ArtistsSongs));
             ArtistVideos = new NotifyTaskCompletion<SearchListResponse>(GetEmbededVideos());
         }
 
         public Artist Response { get; set; }
-        public Connections Connections { get; set; }
         public NotifyTaskCompletion<ArtistResponse> ArtistInfo { get => artistInfo; set { artistInfo = value; OnPropertyChanged(nameof(ArtistInfo)); } }
         public NotifyTaskCompletion<SearchListResponse> ArtistVideos { get; set; }
         public NotifyTaskCompletion<ArtistsSongsResponse> ArtistsSongs { get; set; }
         public NotifyTaskCompletion<List<Genius.Models.Song.Album>> ArtistsAlbums { get; set; }
-        public ICommand CloseArtistPage { get => new Xamarin.Forms.Command(() => this.Navigation.PopAsync()); }
-        private INavigation Navigation { get; set; }
+        public ICommand CloseArtistPage { get => new Xamarin.Forms.Command(() => App.Current.MainPage.Navigation.PopAsync()); }
         private NotifyTaskCompletion<ArtistResponse> artistInfo;
 
         private List<Album> GetAlbums(NotifyTaskCompletion<ArtistsSongsResponse> artistsSongs)
@@ -53,7 +49,7 @@ namespace MusicHUB.ViewModels
                     if (!artistsSongs.IsCompleted) continue;
                     foreach (var item in artistsSongs.Result.Response.Songs)
                     {
-                        var Song = Connections.GeniusClient.SongClient.GetSong(item.Id).Result;
+                        var Song = App.Connections.GeniusClient.SongClient.GetSong(item.Id).Result;
                         if (!Albums.Exists((album) => album.Id == Song?.Response.Song.Album.Id))
                         {
                             Albums.Add(Song?.Response.Song.Album);
@@ -125,7 +121,20 @@ namespace MusicHUB.ViewModels
 
         public ICommand SelectTrackCommand
         {
-            get => new AsyncCommand<Song>(async (track) => await App.Current.MainPage.Navigation.PushAsync(new TrackPage(track.Id)));
+            get => new AsyncCommand<Song>(async (track) =>
+            {
+
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                {
+                    await App.Current.MainPage.Navigation.PushAsync(new TrackPage(track.Id));
+                }
+                else
+                {
+                    App.Message.SetText("Отсутствует подключение к интернету");
+                    App.Message.Duration = 0;
+                    App.Message.Show();
+                }
+            });
         }
     }
 }

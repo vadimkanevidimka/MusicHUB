@@ -170,8 +170,17 @@ namespace MusicHUB.ViewModels
             get => new MvvmHelpers.Commands.Command<Artist>(
             async (artist) =>
             {
-                await App.Current.MainPage.Navigation.PopModalAsync();
-                await App.Current.MainPage.Navigation.PushAsync(new ArtistPage(artist, Connections));
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                {
+                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    await App.Current.MainPage.Navigation.PushAsync(new ArtistPage(artist));
+                }
+                else
+                {
+                    App.Message.SetText("Отсутствует подключение к интернету");
+                    App.Message.Duration = 0;
+                    App.Message.Show();
+                }
             });
         }
 
@@ -234,8 +243,8 @@ namespace MusicHUB.ViewModels
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 var rezult = await Connections.GeniusClient.SearchClient.Search($"{CurrentTrack.Title} by {CurrentTrack.Artist}");
-                var artists = await Connections.GeniusClient.SongClient.GetSong(rezult.Response.Hits.Where((c) => c.Result.Stats.PageViews == rezult.Response.Hits.Max((c) => c.Result.Stats.PageViews)).First().Result.Id);
-
+                //var artists = await Connections.GeniusClient.SongClient.GetSong(rezult.Response.Hits.Where((c) => c.Result.Stats.PageViews == rezult.Response.Hits.Max((c) => c.Result.Stats.PageViews)).First().Result.Id);
+                var artists = await Connections.GeniusClient.SongClient.GetSong(rezult.Response.Hits.Where((c) => (c.Result.FullTitle.Contains(CurrentTrack.Artist) && c.Result.FullTitle.Contains(CurrentTrack.Title) && (c.Result.Stats.PageViews == rezult.Response.Hits.Max((c) => c.Result.Stats.PageViews))) || (c.Result.Stats.PageViews == rezult.Response.Hits.Max((c) => c.Result.Stats.PageViews)) ).First().Result.Id);
                 ArtistAndImage.Add(artists.Response.Song.PrimaryArtist);
                 if (artists.Response.Song.FeaturedArtists != null)
                 {

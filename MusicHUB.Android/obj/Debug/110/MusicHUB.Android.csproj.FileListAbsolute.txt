@@ -821,3 +821,6 @@ D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\crying.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\confused.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\neutral.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\smile.png
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\android\src\crc641d083f1fece1a6b9\SplashActivity.java
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\splash_screen.xml
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\res\drawable\launchscreen.png

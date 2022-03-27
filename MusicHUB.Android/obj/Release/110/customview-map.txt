@@ -14,8 +14,10 @@ attr;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\6\jl\res\value
 attr;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\70\jl\res\values\attrs.xml
 background;obj\Release\110\res\mipmap-anydpi-v26\icon.xml
 background;obj\Release\110\res\mipmap-anydpi-v26\icon_round.xml
+bitmap;obj\Release\110\res\drawable\splash_screen.xml
 cache-path;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\69\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
 color;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\6\jl\res\values\values.xml
+color;obj\Release\110\res\drawable\splash_screen.xml
 color;obj\Release\110\res\values\colors.xml
 com.google.android.exoplayer2.ui.AspectRatioFrameLayout;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\6\jl\res\layout\exo_simple_player_view.xml
 com.google.android.exoplayer2.ui.SubtitleView;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\6\jl\res\layout\exo_simple_player_view.xml
@@ -46,7 +48,9 @@ include;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\6\jl\res\la
 integer;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\6\jl\res\values\values.xml
 item;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\6\jl\res\values\values.xml
 item;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\70\jl\res\values\styles.xml
+item;obj\Release\110\res\drawable\splash_screen.xml
 item;obj\Release\110\res\values\styles.xml
+layer-list;obj\Release\110\res\drawable\splash_screen.xml
 LinearLayout;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\6\jl\res\layout\exo_playback_control_view.xml
 LinearLayout;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\70\jl\res\layout\bottomtablayout.xml
 merge;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\lp\6\jl\res\layout\exo_player_control_view.xml

@@ -13,7 +13,7 @@ namespace MusicHUB.ViewModels.ContextActions
 
         public override string DescriptionText => "Добавить в плейлист";
 
-        public override async void ExcecuteAction<T>(object someobject)
+        public override async void ExcecuteAction<T>(object someobject, Action outAction = null)
         {
             if (someobject == null)
             {

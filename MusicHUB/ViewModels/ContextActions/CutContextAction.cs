@@ -13,7 +13,7 @@ namespace MusicHUB.ViewModels.ContextActions
 
         public override string DescriptionText => "Обрезать";
 
-        public override async void ExcecuteAction<T>(object someobject)
+        public override async void ExcecuteAction<T>(object someobject, Action outAction = null)
         {
             if (someobject == null)
             {
@@ -24,7 +24,7 @@ namespace MusicHUB.ViewModels.ContextActions
             {
                 await App.Current.MainPage.Navigation.PopPopupAsync();
                 App.Current.MainPage.Navigation.PushPopupAsync(new CutPopupPage((Track)someobject));
-                base.MakeToast($"{((Track)someobject).Title} обрезана и сохранена в папку /storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/");
+                base.MakeToast($"{((Track)someobject).Title} будет сохранена в папку /storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/");
             }
         }
     }

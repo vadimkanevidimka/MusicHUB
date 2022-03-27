@@ -17,20 +17,17 @@ using Xamarin.Essentials;
 
 namespace MusicHUB.Droid
 {
-    [Activity(Label = "MusicHUB", Icon = "@mipmap/MusicHUB", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+    [Activity(Label = "MusicHUB", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            RequestedOrientation = ScreenOrientation.Portrait;
             Rg.Plugins.Popup.Popup.Init(this);
             CrossMediaManager.Current.Init(this);
-            Window.SetStatusBarColor(Android.Graphics.Color.Argb(255, 27, 27, 27));
-            Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.ForceNotFullscreen);
             CachedImageRenderer.Init(true);
+            RequestedOrientation = ScreenOrientation.Portrait;
+            Window.SetFlags(WindowManagerFlags.Fullscreen, WindowManagerFlags.ForceNotFullscreen);
             GrantPermissions(new string[] { Manifest.Permission.WriteExternalStorage, Manifest.Permission.ReadExternalStorage, Manifest.Permission.AccessMediaLocation, Manifest.Permission.ManageExternalStorage, Manifest.Permission.MediaContentControl});
             var DataBase = await ConnectionCreator.Init();
             Genius.GeniusClient geniusClient = new GeniusClient("AkUpkfIcZocLUFBxkZT8kUUb4pUxiHjo7ioK7eGPdsjy3TtE596RAN5iQZIH9G1B");

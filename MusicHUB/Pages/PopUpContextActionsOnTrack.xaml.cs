@@ -13,6 +13,7 @@ using Android.Widget;
 using MusicHUB.ViewModels.ContextActions;
 using MvvmHelpers.Commands;
 using MusicHUB.Pages;
+using Xamarin.Essentials;
 
 namespace MusicHUB
 {
@@ -58,12 +59,21 @@ namespace MusicHUB
         {
             get => new AsyncCommand(async () =>
             {
-                await App.Current.MainPage.Navigation.PopPopupAsync();
-                if (App.Current.MainPage.Navigation.ModalStack.Count > 0)
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                 {
-                    await App.Current.MainPage.Navigation.PopModalAsync();
+                    await App.Current.MainPage.Navigation.PopPopupAsync();
+                    if (App.Current.MainPage.Navigation.ModalStack.Count > 0)
+                    {
+                        await App.Current.MainPage.Navigation.PopModalAsync();
+                    }
+                    await App.Current.MainPage.Navigation.PushAsync(new TrackPage(0, Tracks.Artist, Tracks.Title));
                 }
-                await App.Current.MainPage.Navigation.PushAsync(new TrackPage(0, Tracks.Artist, Tracks.Title));
+                else
+                {
+                    App.Message.SetText("Отсутствует подключение к интернету");
+                    App.Message.Duration = 0;
+                    App.Message.Show();
+                }
             });
         }
     }

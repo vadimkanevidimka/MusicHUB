@@ -15,7 +15,7 @@ namespace MusicHUB.ViewModels.ContextActions
 
         public override string DescriptionText => "Список воспроизведения";
 
-        public override async void ExcecuteAction<T>(object someobject)
+        public override async void ExcecuteAction<T>(object someobject, Action outAction = null)
         {
             if (someobject == null)
             {
@@ -26,7 +26,6 @@ namespace MusicHUB.ViewModels.ContextActions
             {
                 await App.Current.MainPage.Navigation.PopPopupAsync();
                 await App.Current.MainPage.Navigation.PushPopupAsync(new QueuePopupPage(Interfaces.QueuePopupPageState.AddToQueueState));
-                base.MakeToast($"{((Track)someobject).Title} добавлена в очередь.");
             }
         }
     }

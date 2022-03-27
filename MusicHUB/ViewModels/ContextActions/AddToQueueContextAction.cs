@@ -14,7 +14,7 @@ namespace MusicHUB.ViewModels.ContextActions
 
         public override string DescriptionText => "Играть далее";
 
-        public async override void ExcecuteAction<T>(object someobject)
+        public async override void ExcecuteAction<T>(object someobject, Action outAction = null)
         {
             if (someobject == null)
             {

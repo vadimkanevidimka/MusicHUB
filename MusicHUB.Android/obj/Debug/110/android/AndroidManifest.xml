@@ -28,7 +28,8 @@
     </intent>
   </queries>
   <application android:name="android.app.Application" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:debuggable="true" android:extractNativeLibs="true" android:icon="@mipmap/musichub" android:label="MusicHUB" android:theme="@style/MainTheme">
-    <activity android:name="crc641d083f1fece1a6b9.MainActivity" android:configChanges="orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:icon="@mipmap/musichub" android:label="MusicHUB" android:theme="@style/MainTheme">
+    <activity android:name="crc641d083f1fece1a6b9.MainActivity" android:configChanges="orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:label="MusicHUB" android:theme="@style/MainTheme" />
+    <activity android:name="crc641d083f1fece1a6b9.SplashActivity" android:configChanges="orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:icon="@mipmap/musichub" android:label="MusicHUB" android:noHistory="true" android:theme="@style/MyTheme.Splash">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

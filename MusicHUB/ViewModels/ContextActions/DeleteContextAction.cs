@@ -7,9 +7,11 @@ using Android.Widget;
 using Java.Lang;
 using MusicHUB.Interfaces;
 using MusicHUB.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Xamarin.Forms;
+using Uri = Android.Net.Uri;
 
 namespace MusicHUB.ViewModels.ContextActions
 {
@@ -18,7 +20,7 @@ namespace MusicHUB.ViewModels.ContextActions
         public override string ImageURl => "deletebutton.png";
         public override string DescriptionText => "Удалить";
 
-        public async override void ExcecuteAction<T>(object someobject)
+        public async override void ExcecuteAction<T>(object someobject, Action outAction = null)
         {
             if (someobject == null)
             {
@@ -29,6 +31,8 @@ namespace MusicHUB.ViewModels.ContextActions
             {
                 Track track = someobject as Track;
                 DependencyService.Get<IAudio>().Pause();
+                App.Connections.BaseDataBaseService.DataBase.DeleteAsync(track);
+                DependencyService.Get<IAudio>().Next();
                 DependencyService.Get<IAudio>().RemoveFromQueue(track);
                 var contentresolver = DependencyService.Get<IAndroidSystem>().AppContext.ContentResolver;
                 Uri trackUri = new Uri.Builder().Path(track.Uri).Build();
@@ -44,6 +48,7 @@ namespace MusicHUB.ViewModels.ContextActions
                     {
                         contentresolver.Delete(filesUri, where, selectionArgs);
                     }
+                    base.MakeToast($"{track.Title} удален");
                 }
                 catch (IllegalAccessException)
                 {
@@ -76,6 +81,8 @@ namespace MusicHUB.ViewModels.ContextActions
             {
                 await App.Connections.BaseDataBaseService.DataBase.DeleteAsync((Album)someobject);
             }
+
+            if (outAction != null) outAction();
         }
     }
 }

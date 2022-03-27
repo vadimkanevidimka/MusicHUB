@@ -1,6 +1,9 @@
 MusicHUB.Droid.MainActivity, MusicHUB.Android;crc641d083f1fece1a6b9.MainActivity
 MusicHUB.Droid.MainActivity;crc641d083f1fece1a6b9.MainActivity
 musichub.droid.MainActivity;crc641d083f1fece1a6b9.MainActivity
+MusicHUB.Droid.SplashActivity, MusicHUB.Android;crc641d083f1fece1a6b9.SplashActivity
+MusicHUB.Droid.SplashActivity;crc641d083f1fece1a6b9.SplashActivity
+musichub.droid.SplashActivity;crc641d083f1fece1a6b9.SplashActivity
 Com.Google.Android.Exoplayer2.IPlayerEventListenerImplementor, ExoPlayer.Core;mono.com.google.android.exoplayer2.Player_EventListenerImplementor
 Com.Google.Android.Exoplayer2.IPlayerEventListenerImplementor;mono.com.google.android.exoplayer2.Player_EventListenerImplementor
 mono.com.google.android.exoplayer2.Player_EventListenerImplementor;mono.com.google.android.exoplayer2.Player_EventListenerImplementor

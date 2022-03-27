@@ -84,8 +84,28 @@ namespace MusicHUB.ViewModels
         {
             get => new Xamarin.Forms.Command(() =>
             {
-                musicFileTrimmer.TrimWavFile(fileInputPath, $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/{fileOutputPath}.mp3", new TimeSpan(startTrimPosition), new TimeSpan(track.Duration - endTrimPosition), track);
-                App.Current.MainPage.Navigation.PopPopupAsync();
+                try
+                {
+                    if (string.IsNullOrEmpty(fileOutputPath)) throw new ArgumentNullException();
+                    foreach (char item in fileOutputPath)
+                    {
+                        if (char.IsControl(item)) throw new ArgumentException();
+                    }
+                    musicFileTrimmer.TrimWavFile(fileInputPath, $"/storage/emulated/0/{Android.OS.Environment.DirectoryMusic}/{fileOutputPath}.mp3", new TimeSpan(startTrimPosition), new TimeSpan(track.Duration - endTrimPosition), track);
+                    App.Current.MainPage.Navigation.PopPopupAsync();
+                }
+                catch (ArgumentNullException ArgNullex)
+                {
+                    App.Message.SetText("Имя файла не может быть пустым");
+                    App.Message.Duration = Android.Widget.ToastLength.Short;
+                    App.Message.Show();
+                }
+                catch (ArgumentException ex)
+                {
+                    App.Message.SetText("Имя файла не может содержать символы управления");
+                    App.Message.Duration = Android.Widget.ToastLength.Short;
+                    App.Message.Show();
+                }
             });
         }
 
@@ -93,8 +113,28 @@ namespace MusicHUB.ViewModels
         {
             get => new Xamarin.Forms.Command(() =>
             {
-                musicFileTrimmer.SetAsRingtone(fileInputPath, fileOutputPath, new TimeSpan(startTrimPosition), new TimeSpan(endTrimPosition), track);
-                App.Current.MainPage.Navigation.PopPopupAsync();
+                try
+                {
+                    if (string.IsNullOrEmpty(fileOutputPath)) throw new ArgumentNullException();
+                    foreach (char item in fileOutputPath)
+                    {
+                        if (char.IsControl(item)) throw new ArgumentException();
+                    }
+                    musicFileTrimmer.SetAsRingtone(fileInputPath, $"/storage/emulated/0/Ringtones/{fileOutputPath}.mp3", new TimeSpan(startTrimPosition), new TimeSpan(endTrimPosition), track);
+                    App.Current.MainPage.Navigation.PopPopupAsync();
+                }
+                catch (ArgumentNullException ArgNullex)
+                {
+                    App.Message.SetText("Имя файла не может быть пустым");
+                    App.Message.Duration = Android.Widget.ToastLength.Short;
+                    App.Message.Show();
+                }
+                catch (ArgumentException ex)
+                {
+                    App.Message.SetText("Имя файла не может содержать символы управления");
+                    App.Message.Duration = Android.Widget.ToastLength.Short;
+                    App.Message.Show();
+                }
             });
         }
     }

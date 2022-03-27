@@ -74,7 +74,7 @@
                                     <Frame CornerRadius="20" BackgroundColor="Wheat" HasShadow="True" Padding="0">
                                         <AbsoluteLayout>
                                             <Image x:DataType="response1:Artist" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0,0,150,150" Source="{Binding ImageUrl}"/>
-                                            <Label x:DataType="response1:Artist" Text="{Binding Name}" AbsoluteLayout.LayoutBounds="170,20,180,50" FontSize="Body" TextColor="DimGray"/>
+                                            <Label x:DataType="response1:Artist" Text="{Binding Name}" AbsoluteLayout.LayoutBounds="170,20,180,50" FontSize="Large" TextColor="Black"/>
                                             <ImageButton Source="arrowdown.png" Command="{Binding Source={RelativeSource AncestorType={Type ViewModels:PlayerViewModel}}, Path=ArtistPageCommand}" BindingContext="{Binding Source={x:Reference Artists}, Path=BindingContext}" CommandParameter="{Binding Source={x:Reference CurrentItem}, Path=BindingContext}" Style="{StaticResource Key=ButtonOnWheatBackGround}" CornerRadius="30" Rotation="-90" AbsoluteLayout.LayoutBounds="310,90,60,60"/>
                                         </AbsoluteLayout>
                                     </Frame>

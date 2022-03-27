@@ -14,8 +14,12 @@ attr;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\6\jl\res\values\
 attr;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\70\jl\res\values\attrs.xml
 background;obj\Debug\110\res\mipmap-anydpi-v26\icon.xml
 background;obj\Debug\110\res\mipmap-anydpi-v26\icon_round.xml
+bitmap;obj\Debug\110\res\drawable\splash_screen.xml
+bitmap;obj\Debug\110\res\drawable\splashscreen.xml
 cache-path;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\69\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
 color;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\6\jl\res\values\values.xml
+color;obj\Debug\110\res\drawable\splash_screen.xml
+color;obj\Debug\110\res\drawable\splashscreen.xml
 color;obj\Debug\110\res\values\colors.xml
 com.google.android.exoplayer2.ui.AspectRatioFrameLayout;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\6\jl\res\layout\exo_simple_player_view.xml
 com.google.android.exoplayer2.ui.SubtitleView;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\6\jl\res\layout\exo_simple_player_view.xml
@@ -46,7 +50,11 @@ include;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\6\jl\res\layo
 integer;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\6\jl\res\values\values.xml
 item;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\6\jl\res\values\values.xml
 item;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\70\jl\res\values\styles.xml
+item;obj\Debug\110\res\drawable\splash_screen.xml
+item;obj\Debug\110\res\drawable\splashscreen.xml
 item;obj\Debug\110\res\values\styles.xml
+layer-list;obj\Debug\110\res\drawable\splash_screen.xml
+layer-list;obj\Debug\110\res\drawable\splashscreen.xml
 LinearLayout;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\6\jl\res\layout\exo_playback_control_view.xml
 LinearLayout;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\70\jl\res\layout\bottomtablayout.xml
 merge;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\6\jl\res\layout\exo_player_control_view.xml
@@ -239,6 +247,7 @@ resources;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\70\jl\res\v
 resources;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\70\jl\res\values\styles.xml
 resources;obj\Debug\110\res\values\colors.xml
 resources;obj\Debug\110\res\values\styles.xml
+scale;obj\Debug\110\res\drawable\splash_screen.xml
 ScrollView;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\6\jl\res\layout\exo_track_selection_dialog.xml
 set;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\70\jl\res\anim\enterfromleft.xml
 set;D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Debug\110\lp\70\jl\res\anim\enterfromright.xml

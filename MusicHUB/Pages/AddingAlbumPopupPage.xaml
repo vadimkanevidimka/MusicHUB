@@ -20,13 +20,7 @@
 
     <pages:PopupPage.Resources>
         <ResourceDictionary>
-            <Style x:Key="MainButtonStyle" TargetType="Button">
-                <Setter Property="Padding" Value="10"/>
-                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
-                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=Black}"/>
-                <Setter Property="HeightRequest" Value="40"/>
-                <Setter Property="CornerRadius" Value="30"/>
-            </Style>
+            
         </ResourceDictionary>
     </pages:PopupPage.Resources>
 
@@ -35,12 +29,12 @@
         HorizontalOptions="FillAndExpand">
         <Frame CornerRadius="20" BackgroundColor="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}" HorizontalOptions="FillAndExpand" HeightRequest="150">
             <StackLayout>
-                <Label Text="Новый плейлист" FontSize="20" Padding="10"/>
+                <Label Text="Новый плейлист" FontSize="20" Padding="10" Style="{StaticResource Labelstyle}"/>
                 <StackLayout Orientation="Horizontal">
                     <Entry Placeholder="Название плейлиста." Text="{Binding NewAlbum.Title, Mode=TwoWay}" WidthRequest="300" ClearButtonVisibility="WhileEditing"/>
                     <ImageButton Style="{StaticResource ButtonOnWheatBackGround}" Source="insertpicturebutton.png" Command="{Binding ChoseAlbumPic}"/>
                 </StackLayout>
-                <Button Style="{StaticResource MainButtonStyle}" BackgroundColor="White" Text="Добавить" Command="{Binding AddNewAlbumCommand}"/>
+                <Button Style="{StaticResource StyledButton}" BackgroundColor="White" Text="Добавить" Command="{Binding AddNewAlbumCommand}"/>
             </StackLayout>
         </Frame>
     </StackLayout>

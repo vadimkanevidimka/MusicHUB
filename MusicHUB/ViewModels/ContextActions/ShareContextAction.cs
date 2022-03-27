@@ -12,7 +12,7 @@ namespace MusicHUB.ViewModels.ContextActions
 
         public override string DescriptionText => "Поделиться";
 
-        public override async void ExcecuteAction<T>(object someobject)
+        public override async void ExcecuteAction<T>(object someobject, Action outAction = null)
         {
             if (someobject == null)
             {

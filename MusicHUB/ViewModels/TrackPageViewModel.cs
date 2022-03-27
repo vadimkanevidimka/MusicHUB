@@ -1,13 +1,18 @@
-﻿using Genius.Models.Response;
+﻿using Genius.Models.Artist;
+using Genius.Models.Response;
 using Genius.Models.Song;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
+using MusicHUB.Pages;
+using MvvmHelpers.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace MusicHUB.ViewModels
@@ -22,11 +27,24 @@ namespace MusicHUB.ViewModels
         private string Artist { get; set; }
         private string TrackTitle { get; set; }
 
+        private List<Artist> artists;
+        public List<Artist> Artists { get => artists; set { artists = value; OnPropertyChanged(nameof(Artists)); } }
+
         public TrackPageViewModel(ulong id, string artist = null, string title = null)
         {
             Artist = artist;
             TrackTitle = title;
             GetSong(id);
+            Song.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == "Result")
+                {
+                    artists = new List<Artist>();
+                    artists.AddRange(Song.Result.Response.Song.FeaturedArtists.Append(Song.Result.Response.Song.PrimaryArtist));
+                    OnPropertyChanged(nameof(Artists));
+                    Video = new NotifyTaskCompletion<Video>(GetVideo());
+                }
+            };
         }
          
         private void GetSong(ulong id)
@@ -39,8 +57,6 @@ namespace MusicHUB.ViewModels
             {
                 this.Song = new NotifyTaskCompletion<SongResponse>(GetSongBytitleAndArtist(Artist, TrackTitle));
             }
-
-            Video = new NotifyTaskCompletion<Video>(GetVideo());
         }
 
         private async Task<SongResponse> GetSongBytitleAndArtist(string artist, string tracktitle)
@@ -57,19 +73,41 @@ namespace MusicHUB.ViewModels
 
         private async Task<Video> GetVideo()
         {
-            while (true)
+            YouTubeService youTubeService = new YouTubeService(new BaseClientService.Initializer() { ApiKey = "AIzaSyAXKtHaocNan7-WeDF0PiQPCMs2H5Bb1Xo", });
+            var request = youTubeService.Videos.List("snippet");
+            string videoURL = Song?.Result?.Response.Song.Media.Where((c) => c.Provider == "youtube" && c.Type == "video").First().Url;
+            request.Id = videoURL[(videoURL.IndexOf("watch?v=") + "watch?v=".Length)..];
+            var responce = await request.ExecuteAsync();
+            return responce.Items[0];
+        }
+
+        public ICommand YoutubeVideoCommand 
+        {
+            get => new AsyncCommand<Video>(async (vidos) =>
             {
-                if (Song.Result == null) continue;
+                DependencyService.Get<IAudio>().Pause();
+                Uri uri = new Uri("https://www.youtube.com/watch?v=" + video.Result.Id);
+                await Browser.OpenAsync(uri);
+                vidos = null;
+            });
+        }
+
+        public ICommand ArtistClickCommand
+        {
+            get => new AsyncCommand<Artist>(async (artist) =>
+            {
+                if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+                {
+
+                    await App.Current.MainPage.Navigation.PushAsync(new ArtistPage(artist));
+                }
                 else
                 {
-                    YouTubeService youTubeService = new YouTubeService(new BaseClientService.Initializer() { ApiKey = "AIzaSyAXKtHaocNan7-WeDF0PiQPCMs2H5Bb1Xo", });
-                    var request = youTubeService.Videos.List("snippets");
-                    string videoURL = Song?.Result?.Response.Song.Media.Where((c) => c.Provider == "youtube" && c.Type == "video").First().Url;
-                    request.Id = videoURL[videoURL.IndexOf("watch?v=")..];
-                    var responce = await request.ExecuteAsync();
-                    return responce.Items[0];
+                    App.Message.SetText("Отсутствует подключение к интернету");
+                    App.Message.Duration = 0;
+                    App.Message.Show();
                 }
-            }
+            });
         }
     }
 }

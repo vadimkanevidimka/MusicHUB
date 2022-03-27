@@ -50,7 +50,6 @@ namespace MusicHUB.ViewModels.ContextActions
             get => new List<IContextAction>()
             {
                 new AddToQueueContextAction(),
-                new EditMetaDataContextAction(),
             };
         }
 

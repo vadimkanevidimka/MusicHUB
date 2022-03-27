@@ -15,10 +15,10 @@ namespace MusicHUB.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ArtistPage : ContentPage
     {
-        public ArtistPage(Artist response, Connections connections)
+        public ArtistPage(Artist response)
         {
             InitializeComponent();
-            BindingContext = new ArtistPageViewModel(this.Navigation, response, connections);
+            BindingContext = new ArtistPageViewModel(response);
         }
     }
 }

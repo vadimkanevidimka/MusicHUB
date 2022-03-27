@@ -25,12 +25,11 @@ namespace MusicHUB.Droid.Mocks
                 intent.AddFlags(ActivityFlags.NewTask);
                 Android.App.Application.Context.StartActivity(intent);
             }
-            var newringtonefile = $"/storage/emulated/0/Ringtones/{url.Substring(url.LastIndexOf('/'))}";
-            File.Copy(url, newringtonefile);
-            Android.Net.Uri uri = new Android.Net.Uri.Builder().Path(newringtonefile).Build();
+            //var newringtonefile = $"/storage/emulated/0/Ringtones{url.Substring(url.LastIndexOf('/'))}";
+            //File.Copy(url, newringtonefile); 
+            Android.Net.Uri uri = new Android.Net.Uri.Builder().Path(url).Build();
+            var a = RingtoneManager.GetValidRingtoneUri(AppContext);
             RingtoneManager.SetActualDefaultRingtoneUri(AppContext, RingtoneType.Ringtone, uri);
         }
-
-
     }
 }

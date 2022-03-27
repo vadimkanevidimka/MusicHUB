@@ -21,7 +21,6 @@
                         <TextCell Text="Руководство" TextColor="Black" Command="{Binding AppTutorialCommand}"/>
                         <TextCell Text="Отзыв" TextColor="Black" Command="{Binding SendEmailCommand}"/>
                         <TextCell Text="Оцените нас" TextColor="Black" Command="{Binding RateUsCommand}"/>
-                        <TextCell Text="Условия пользование" TextColor="Black"/>
                     </TableSection>
                     <TableSection Title="О приложении" TextColor="Black">
                         <TextCell Text="Версия" Detail="1.0.0.0" TextColor="Black"/>

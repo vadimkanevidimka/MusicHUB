@@ -717,3 +717,6 @@ D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\res\drawable\confused.
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\res\drawable\neutral.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\res\drawable\smile.png
 D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\android\assets\Rating.dll
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\res\drawable\splash_screen.xml
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\res\drawable\launchscreen.png
+D:\Projects\Mus\MusicHUB\MusicHUB.Android\obj\Release\110\android\src\crc641d083f1fece1a6b9\SplashActivity.java

@@ -13,7 +13,7 @@ namespace MusicHUB.ViewModels.ContextActions
         public override string ImageURl => "text.png";
         public override string DescriptionText => "Найти текст песни";
 
-        public override async void ExcecuteAction<T>(object someobject)
+        public override async void ExcecuteAction<T>(object someobject, Action outAction = null)
         {
             if (typeof(T) == typeof(Track))
             {

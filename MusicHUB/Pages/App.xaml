@@ -38,6 +38,16 @@
                 <Setter Property="BarBackgroundColor" Value="Wheat"/>
                 <Setter Property="BarTextColor" Value="{AppThemeBinding Dark=White, Light=Black}"/>
             </Style>
+            <Style TargetType="Label" x:Key="Labelstyle">
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=Black}"/>
+            </Style>
+            <Style x:Key="StyledButton" TargetType="Button">
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark=#3c2e0b, Light=Wheat}"/>
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=Black}"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="CornerRadius" Value="30"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

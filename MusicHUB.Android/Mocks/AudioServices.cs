@@ -34,7 +34,7 @@ namespace SimpleAudioForms.Droid
 
         bool IAudio.IsExists { get { return !(MediaManager is null); } }
         int IAudio.Time { get => MediaManager != null ? MediaManager.Position.Milliseconds : 0; }
-        bool IAudio.Looping { get => (int)MediaManager.RepeatMode == 2; }
+        bool IAudio.Looping { get => (int)MediaManager.RepeatMode == 1; }
         int IAudio.GetVolumeLevel => AudioManager.GetStreamVolume(Stream.Music);
         int IAudio.GetMaxVolumeLevel => AudioManager.GetStreamMaxVolume(Stream.Music);
 
@@ -42,7 +42,7 @@ namespace SimpleAudioForms.Droid
 
         public bool IsPlaying => MediaManager.IsPlaying();
 
-        public bool IsLooping => (int)MediaManager.RepeatMode == 2;
+        public bool IsLooping => (int)MediaManager.RepeatMode == 1;
 
         public Context GetContext => Android.App.Application.Context;
 
@@ -124,7 +124,8 @@ namespace SimpleAudioForms.Droid
 
         public void LoopChange()
         {
-            MediaManager.ToggleRepeat();
+            if ((int)MediaManager.RepeatMode == 1) MediaManager.RepeatMode = 0;
+            else MediaManager.RepeatMode = (MediaManager.Playback.RepeatMode)1;
         }
 
         void IAudio.PlayerDispose()

@@ -12,48 +12,102 @@
 
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="10,0" BackgroundColor="White">
+            <StackLayout Padding="10,0,10,10" BackgroundColor="White">
                 <ActivityIndicator IsVisible="{Binding ArtistInfo.IsNotCompleted}" Color="Wheat" IsRunning="{Binding Song.IsNotCompleted}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
                 <StackLayout Spacing="10" IsVisible="{Binding Song.IsCompleted}" VerticalOptions="FillAndExpand">
                     <Image HeightRequest="400" WidthRequest="400" Aspect="AspectFill" Margin="-11,-60,-10,0" Source="{Binding Song.Result.Response.Song.SongArtImageUrl}"/>
                     <StackLayout WidthRequest="190">
                         <Label Text="{Binding  Song.Result.Response.Song.Title}" TextColor="Black" FontSize="30"/>
                         <Label Text="{Binding Song.Result.Response.Song.PrimaryArtist.Name}" FontSize="Large"/>
-                        <StackLayout Orientation="Horizontal" Spacing="20">
-                            <ImageButton Source="facebook.png" Style="{StaticResource buttonStyle}" Command="{Binding GoToFaceBook}"/>
-                            <ImageButton Source="instagram.png" Style="{StaticResource buttonStyle}" Command="{Binding GoToInstagram}"/>
-                            <ImageButton Source="twitter.png" Style="{StaticResource buttonStyle}" Command="{Binding GoToTwitter}"/>
-                        </StackLayout>
                     </StackLayout>
                     <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                    <Label Text="Информация" FontSize="Large"/>
+                    <Label Text="Информация" FontSize="20" Style="{StaticResource Labelstyle}"/>
                     <Label Text="{Binding Song.Result.Response.Song.FullTitle, StringFormat='Полное название: {0}'}" FontSize="Large"/>
-                    <Label Text="{Binding Song.Result.Response.Song.PrimaryArtist.Name, StringFormat='Исполнитель: {0}'}" FontSize="Large"/>
+                    <Label Text="Исполнители:" FontSize="Large"/>
+
+                    <CollectionView x:Name="ArtistsList" ItemsSource="{Binding Artists}" Margin="-20,0,-20,0" HeightRequest="200" SelectionMode="Single" ItemSizingStrategy="MeasureAllItems">
+                        <CollectionView.EmptyView>
+                            <StackLayout Padding="0,40,0,0">
+                                <Image HeightRequest="100" Aspect="AspectFit" IsVisible="{Binding Song.IsCompleted}" Source="search_state.gif" IsAnimationPlaying="True"/>
+                                <Label IsVisible="{Binding Song.IsCompleted}" Text="Ничего не найдено" FontSize="20" HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal"
+                                    Span="1" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="20,10,20,10"  x:Name="Artist">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ArtistClickCommand}" BindingContext="{Binding Source={x:Reference ArtistsList}, Path=BindingContext}" CommandParameter="{Binding Source={x:Reference Artist}, Path=BindingContext}"/>
+                                    </Grid.GestureRecognizers>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="150"/>
+                                        <RowDefinition Height="20"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Frame CornerRadius="75" WidthRequest="150" HorizontalOptions="Start" Grid.Column="0" Padding="0">
+                                        <Image x:DataType="artist:Artist" Source="{Binding ImageUrl}" HorizontalOptions="Start" WidthRequest="150"/>
+                                    </Frame>
+                                    <Label x:DataType="artist:Artist" Text="{Binding Name}" LineBreakMode="TailTruncation" HorizontalOptions="Center" TextColor="Black" Grid.Row="1" FontSize="Large"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
                     <Label Text="{Binding Song.Result.Response.Song.ReleaseDateForDisplay, StringFormat='Выпущен: {0}'}" FontSize="Large"/>
                     <Label Text="{Binding Song.Result.Response.Song.RecordingLocation, StringFormat='Место записи: {0}'}" FontSize="Large"/>
                     <Label Text="{Binding Song.Result.Response.Song.Stats.PageViews, StringFormat='Прослушиваний: {0}'}" FontSize="Large"/>
                     <Label Text="{Binding Song.Result.Response.Song.WriterArtists[0].Name, StringFormat='Композитор: {0}'}" FontSize="Large"/>
                     <Label Text="{Binding Song.Result.Response.Song.ProducerArtists[1].Name, StringFormat='Продюссер: {0}'}" FontSize="Large"/>
                     <Label Text="Альбом" FontSize="Large"/>
-                    <StackLayout>
-                        <Frame CornerRadius="10" WidthRequest="150" HorizontalOptions="Start" Padding="0">
+                    
+                    <Grid Padding="10" ColumnSpacing="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <Frame CornerRadius="10" WidthRequest="150" HorizontalOptions="Start" Grid.Column="0" Padding="0">
                             <Image Source="{Binding Song.Result.Response.Song.Album.CoverArtUrl}" HorizontalOptions="Start" WidthRequest="150"/>
                         </Frame>
-                        <Label Text="{Binding Song.Result.Response.Song.Album.Name}" FontSize="Large"/>
-                    </StackLayout>
+                        <Label Text="{Binding Song.Result.Response.Song.Album.Name}" HorizontalOptions="Center" TextColor="Black" Grid.Row="1" FontSize="Large"/>
+                    </Grid>
                     <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
-                    <Label Text="Описание" FontSize="Large"/>
+                    <Label Text="Описание" FontSize="20" Style="{StaticResource Labelstyle}"/>
                     <Frame BackgroundColor="Wheat" CornerRadius="20">
                         <Label TextType="Html" Text="{Binding Song.Result.Response.Song.Description.Html}" FontSize="Body"></Label>
                     </Frame>
-                    <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0" IsVisible="{Binding Song.Result.Response.Song.FeaturedVideo}"/>
-                    <Label Text="Музыкальный клип" FontSize="Large"/>
-                    <StackLayout>
-                        <Frame CornerRadius="10" WidthRequest="300" HorizontalOptions="Start" Padding="0">
-                            <Image Source="{Binding Video.Result.Snippet.Thumbnails.Medium.Url}" Aspect="AspectFit"/>
+                    <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
+                    <Label Text="Музыкальный клип" FontSize="20" Style="{StaticResource Labelstyle}"/>
+                    <Grid ColumnSpacing="20">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding YoutubeVideoCommand}" CommandParameter="{Binding Video.Result}"/>
+                        </Grid.GestureRecognizers>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="266"/>
+                        </Grid.ColumnDefinitions>
+                        <Frame CornerRadius="10" Padding="0">
+                            <Image x:Name="AudioImgBottom" Aspect="AspectFill" Source="{Binding Video.Result.Snippet.Thumbnails.Medium.Url}" Grid.Column="0" Grid.Row="0"/>
                         </Frame>
-                        <Label Text="{Binding Song.Result.Response.Song.Album.Name}" FontSize="Large"/>
-                    </StackLayout>
+                        <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center">
+                            <Label Text="{Binding Video.Result.Snippet.Title}" FontSize="18" TextColor="Black" LineBreakMode="TailTruncation" />
+                            <Label Text="{Binding Video.Result.Snippet.ChannelTitle}" LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding Video.Result.Snippet.Description}" LineBreakMode="WordWrap"/>
+                        </StackLayout>
+                    </Grid>
+                    <Line Stroke="Gray" X1="0" X2="380" Y1="0" Y2="0"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

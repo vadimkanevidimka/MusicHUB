@@ -14,7 +14,7 @@ namespace MusicHUB.ViewModels.ContextActions
 
         public override string DescriptionText => "Удалить из очереди";
 
-        public override void ExcecuteAction<T>(object someobject)
+        public override void ExcecuteAction<T>(object someobject, Action outAction = null)
         {
             if (someobject == null)
             {

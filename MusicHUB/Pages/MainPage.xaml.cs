@@ -37,6 +37,7 @@ namespace MusicHUB.Pages
         public ResourceClassPlayerPage ResourceClass { get => resourceClass; set { resourceClass = value; OnPropertyChanged(nameof(ResourceClass)); } }
         private float progress = 0;
         public float Progress { get => progress; set { progress = value; OnPropertyChanged(nameof(Progress)); } }
+
        
 
         public MainPage(Connections connections)
@@ -109,7 +110,7 @@ namespace MusicHUB.Pages
         {
             ImageButton button = sender as ImageButton;
             ViewCell viewCell = button.Parent.Parent as ViewCell;
-            Navigation.PushPopupAsync(new PopUpContextActionsOnTrack((Track)viewCell.BindingContext, ViewModels.ContextActions.TrackContextActionState.AtList));
+            App.Current.MainPage.Navigation.PushPopupAsync(new PopUpContextActionsOnTrack((Track)viewCell.BindingContext, ViewModels.ContextActions.TrackContextActionState.AtList));
         }
 
         public ICommand Sort

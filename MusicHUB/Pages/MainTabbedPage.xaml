@@ -5,7 +5,8 @@
             BarBackgroundColor="Wheat"
             BarTextColor="{AppThemeBinding Dark=White, Light=Black}"
             Title="Главная"
-            SelectedTabColor="White"
+            SelectedTabColor="{AppThemeBinding Dark=Black, Light=White}"
+            UnselectedTabColor="{AppThemeBinding Dark=White, Light=Black}"
             xmlns:android ="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom">
 

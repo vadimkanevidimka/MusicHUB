@@ -12,9 +12,6 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="Label" x:Key="Labelstyle">
-                <Setter Property="TextColor" Value="{AppThemeBinding Dark=White, Light=Black}"/>
-            </Style>
             <converters:ImageConverter x:Key="ImgConvert" />
         </ResourceDictionary>
     </ContentPage.Resources>
